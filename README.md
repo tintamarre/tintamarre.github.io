@@ -1,3 +1,1 @@
-# To deploy
-
-`pnpm docs:dev`
+# Tintamarre
