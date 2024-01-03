@@ -4,6 +4,11 @@
             <router-link :to="post.path">{{ post.title }}</router-link>
         </li>
     </ul>
+
+    <div>
+        {{ $site }}
+        
+    </div>
   </template>
   
   <script>

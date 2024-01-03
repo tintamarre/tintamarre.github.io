@@ -1,5 +1,6 @@
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import { getDirname, path } from '@vuepress/utils'
+
 const { description } = require('../../package')
 
 module.exports = {
@@ -17,10 +18,9 @@ module.exports = {
    * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
    */
   plugins: [
-    '@vuepress/plugin-back-to-top',
-    '@vuepress/plugin-medium-zoom',
      registerComponentsPlugin({
       componentsDir: path.resolve(__dirname, './components'),
     }),
+    'vuepress-plugin-mermaidjs',
   ]
 }

@@ -2,12 +2,6 @@
 home: true
 heroImage:
 tagline: Personal blog of Martin Erpicum
-<!-- features:
-- title: Blog
-  details: asdf
-- title: Technical
-  details: sdfsd
-   -->
 footer: Made by Martin Erpicum with ❤️
 ---
 
