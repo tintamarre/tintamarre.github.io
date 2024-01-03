@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Tintamarre</title>
+        <link>localhost/blog</link>
+        <description>Personal blog of Martin Erpicum</description>
+        <lastBuildDate>Wed, 03 Jan 2024 20:31:37 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+    </channel>
+</rss>

@@ -1,0 +1,1 @@
+import{_ as t,c as a,I as o,o as s,J as n}from"./chunks/framework.41330901.js";const f=JSON.parse('{"title":"","description":"","frontmatter":{"layout":"home"},"headers":[],"relativePath":"blog/tags.md"}'),r={name:"blog/tags.md"};function c(p,_,l,m,d,i){const e=n("VPBTags");return s(),a("div",null,[o(e)])}const u=t(r,[["render",c]]);export{f as __pageData,u as default};
