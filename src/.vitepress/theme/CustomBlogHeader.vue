@@ -6,6 +6,7 @@ const data = usePosts()
 
 <template>
   <div class="w-full text-blue-800">
-    <!-- Newest Content: {{ data.posts[0].title }} -->
+    <h1 class="">grenier</h1>
+    Newest Content: {{ data.posts[0].title }}
   </div>
 </template>

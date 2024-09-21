@@ -3,6 +3,7 @@ import { h } from 'vue'
 import { VPBTheme } from '@jcamp/vitepress-blog-theme'
 import './style.css'
 import CustomBlogHeader from './CustomBlogHeader.vue'
+import ImageCenter from './ImageCenter.vue'
 
 export default {
   ...VPBTheme,
@@ -13,7 +14,8 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     VPBTheme.enhanceApp({ app, router, siteData })
-    app.component('CustomBlogHeader', CustomBlogHeader)
+    app.component('CustomBlogHeader', CustomBlogHeader),
+    app.component('ImageCenter', ImageCenter)
   },
 }
 

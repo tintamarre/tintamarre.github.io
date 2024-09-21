@@ -6,8 +6,8 @@ export default defineConfig({
   description: 'Personal blog of Martin Erpicum',
   themeConfig: {
     blog: {
-      title: "Tintamarre",
-      description: "Personal blog of Martin Erpicum",
+      title: "",
+      description: "Some thoughts",
       defaultAuthor: 'Martin Erpicum',
       categoryIcons: {
         article: 'i-[heroicons-outline/book-open]',
@@ -19,6 +19,10 @@ export default defineConfig({
         github: 'i-[carbon/logo-github]',
         vue: 'i-[carbon/logo-vue]',
       },
+    },
+    footer: {
+      message: 'Made with ❤️',
+      copyright: 'WTFPL License | <a href="https://github.com/tintamarre/tintamarre.github.io">Source code</a>'
     },
     search: {
       provider: 'local',
@@ -53,22 +57,12 @@ export default defineConfig({
         ],
       },
     ],
-
-    // sidebar: [
-    //   {
-    //     text: 'Examples',
-    //     items: [
-    //       { text: 'Markdown Examples', link: '/markdown-examples' },
-    //       { text: 'Runtime API Examples', link: '/api-examples' },
-    //     ],
-    //   },
-    // ],
-
     // socialLinks: [
     //   {
     //     icon: 'github',
-    //     link: 'https://github.com/jcamp-code/vitepress-blog-theme',
+    //     link: 'https://github.com/tintamarre',
     //   },
     // ],
   },
+
 })

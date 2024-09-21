@@ -9,12 +9,12 @@
 
  :root {
   --vp-c-brand: #5f71c9;
-  --vp-c-brand-light: #7a7b79;
+  --vp-c-brand-light: #666;
   --vp-c-brand-lighter: #800f11;
   --vp-c-brand-lightest: #6b718f;
   --vp-c-brand-dark: #aaaaaa;
-  --vp-c-brand-darker: #243ec1;
-  --vp-c-brand-dimm: #aaaaaa;
+  --vp-c-brand-darker: #5f71c9;
+  --vp-c-brand-dimm: #ffffff;
 }
 
 /**
