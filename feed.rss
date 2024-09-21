@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
-        <title>Tintamarre</title>
+        <title></title>
         <link>localhost/blog</link>
-        <description>Personal blog of Martin Erpicum</description>
-        <lastBuildDate>Tue, 09 Jan 2024 08:56:09 GMT</lastBuildDate>
+        <description>Some thoughts</description>
+        <lastBuildDate>Sat, 21 Sep 2024 17:54:16 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Hello World]]></title>
+            <link>localhost/blog/blog/posts/2024/hello_world.html</link>
+            <guid>localhost/blog/blog/posts/2024/hello_world.html</guid>
+            <pubDate>Sat, 21 Sep 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[<h3 id="executive-summary" tabindex="-1">Executive summary <a class="header-anchor" href="#executive-summary" aria-label="Permalink to &quot;Executive summary&quot;">&ZeroWidthSpace;</a></h3>
+<p>I have been thinking about it for a while, and I finally decided to start writing about my work and my interests. I will try to post regularly, but I am not sure I will be able to keep up with it. We will see.</p>
+]]></description>
+            <content:encoded><![CDATA[<h3 id="executive-summary" tabindex="-1">Executive summary <a class="header-anchor" href="#executive-summary" aria-label="Permalink to &quot;Executive summary&quot;">&ZeroWidthSpace;</a></h3>
+<p>I have been thinking about it for a while, and I finally decided to start writing about my work and my interests. I will try to post regularly, but I am not sure I will be able to keep up with it. We will see.</p>
+<hr>
+<div class="tip custom-block"><p class="custom-block-title">TIP</p>
+<p>The views expressed on this website are my own and do not necessarily reflect the views of my employer.</p>
+</div>
+]]></content:encoded>
+        </item>
     </channel>
 </rss>
