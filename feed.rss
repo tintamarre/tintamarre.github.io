@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Wed, 30 Oct 2024 14:05:39 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 30 Oct 2024 14:25:48 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -228,7 +228,7 @@
 <h2 id="understanding-the-data-structure-deep-dive" tabindex="-1">Understanding the data structure - Deep dive <a class="header-anchor" href="#understanding-the-data-structure-deep-dive" aria-label="Permalink to &quot;Understanding the data structure - Deep dive&quot;">&ZeroWidthSpace;</a></h2>
 <p>At first glance, we could think from the variables that a <strong>postcode</strong> include 1 or more municipalities and each municipality include 1 or more streets.</p>
 <p>The model could simply be something like this:</p>
-<ImageCenter src="/assets/diagrams/best_address_simple_model.drawio.png" alt="best address wrong model" width="800" /><p>Let's check the data to see if this is true.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/best_address_simple_model.drawio.png" alt="best address wrong model" width="800" /><p>Let's check the data to see if this is true.</p>
 <p>In some cases, a street can be shared between 2 municipalities. This is the case for example of the street <strong>Rue de la Loi</strong> which is in postcodes <code>['1000', '1012', '1040','1045', '1049']</code> for status_code = 'BE-BRU'.</p>
 <div class="language-sql"><button title="Copy Code" class="copy"></button><span class="lang">sql</span><pre v-pre class="shiki material-theme-palenight" ><code><span class="line"><span style="color: #F78C6C">SELECT</span></span>
 <span class="line"><span style="color: #F78C6C">DISTINCT</span><span style="color: #BABED8">(postcode)</span></span>
@@ -290,7 +290,7 @@
 </table>
 <h2 id="global-overview" tabindex="-1">Global overview <a class="header-anchor" href="#global-overview" aria-label="Permalink to &quot;Global overview&quot;">&ZeroWidthSpace;</a></h2>
 <p>To better understand the relationships between the different entities in the dataset, we can perform some checks to see if there are any <strong>many-to-many</strong> relationships between the entities.</p>
-<ImageCenter src="/assets/diagrams/best_address_postcode_vs_municipality.drawio.png" alt="Let's check the data" width="800" /><h3 id="_1-checking-if-a-postcode-belongs-to-multiple-municipality-id-values" tabindex="-1">1. Checking if a postcode belongs to multiple <code>municipality_id</code> values <a class="header-anchor" href="#_1-checking-if-a-postcode-belongs-to-multiple-municipality-id-values" aria-label="Permalink to &quot;1. Checking if a postcode belongs to multiple `municipality_id` values&quot;">&ZeroWidthSpace;</a></h3>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/best_address_postcode_vs_municipality.drawio.png" alt="Let's check the data" width="800" /><h3 id="_1-checking-if-a-postcode-belongs-to-multiple-municipality-id-values" tabindex="-1">1. Checking if a postcode belongs to multiple <code>municipality_id</code> values <a class="header-anchor" href="#_1-checking-if-a-postcode-belongs-to-multiple-municipality-id-values" aria-label="Permalink to &quot;1. Checking if a postcode belongs to multiple `municipality_id` values&quot;">&ZeroWidthSpace;</a></h3>
 <p>To check if a postcode is associated with multiple <code>municipality_id</code> values, you can group by the postcode and count distinct <code>municipality_id</code> values. If a postcode has more than 1 unique municipality_id, it means that the postcode is associated with multiple municipalities.</p>
 <div class="language-sql"><button title="Copy Code" class="copy"></button><span class="lang">sql</span><pre v-pre class="shiki material-theme-palenight" ><code><span class="line"><span style="color: #F78C6C">SELECT</span><span style="color: #BABED8"> postcode,</span></span>
 <span class="line"><span style="color: #82AAFF">COUNT</span><span style="color: #BABED8">(</span><span style="color: #F78C6C">DISTINCT</span><span style="color: #BABED8"> municipality_id) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> municipality_count</span></span>
@@ -402,7 +402,7 @@
 </table>
 <p>We conclude that each address on the same street can have multiple postnames.</p>
 <h2 id="takeaways-from-the-analysis" tabindex="-1">Takeaways from the analysis <a class="header-anchor" href="#takeaways-from-the-analysis" aria-label="Permalink to &quot;Takeaways from the analysis&quot;">&ZeroWidthSpace;</a></h2>
-<ImageCenter src="/assets/diagrams/best_address_model.drawio.png" alt="Let's check the data" width="800" /><ul>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/best_address_model.drawio.png" alt="Let's check the data" width="800" /><ul>
 <li>The <code>postcode</code> can be associated with multiple <code>municipality_id</code> values and a <code>municipality_id</code> can be associated with multiple <code>postcode</code> values. The relationship between postcodes and municipalities is then a <strong>many-to-many relationship</strong>.</li>
 <li>The <code>municipality_id</code> is unique in the dataset, which is mean that a municipality is unique in each region and is not shared between regions.</li>
 <li>The <code>address_id</code> is unique in each dataset but is not unique throughout the three datasets. A same <code>address_id</code> can be found in multiple regions.</li>
