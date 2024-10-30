@@ -169,7 +169,7 @@ At first glance, we could think from the variables that a **postcode** include 1
 
 The model could simply be something like this:
 
-<ImageCenter src="/assets/diagrams/best_address_simple_model.drawio.png" alt="best address wrong model" width="800" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/best_address_simple_model.drawio.png" alt="best address wrong model" width="800" />
 
 Let's check the data to see if this is true.
 
@@ -234,7 +234,7 @@ GROUP BY all;
 
 To better understand the relationships between the different entities in the dataset, we can perform some checks to see if there are any **many-to-many** relationships between the entities.
 
-<ImageCenter src="/assets/diagrams/best_address_postcode_vs_municipality.drawio.png" alt="Let's check the data" width="800" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/best_address_postcode_vs_municipality.drawio.png" alt="Let's check the data" width="800" />
 
 ### 1. Checking if a postcode belongs to multiple `municipality_id` values
 
@@ -327,7 +327,7 @@ We conclude that each address on the same street can have multiple postnames.
 
 ## Takeaways from the analysis
 
-<ImageCenter src="/assets/diagrams/best_address_model.drawio.png" alt="Let's check the data" width="800" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/best_address_model.drawio.png" alt="Let's check the data" width="800" />
 
 - The `postcode` can be associated with multiple `municipality_id` values and a `municipality_id` can be associated with multiple `postcode` values. The relationship between postcodes and municipalities is then a **many-to-many relationship**.
 - The `municipality_id` is unique in the dataset, which is mean that a municipality is unique in each region and is not shared between regions.
