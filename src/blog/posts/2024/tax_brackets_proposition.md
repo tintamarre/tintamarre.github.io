@@ -8,7 +8,7 @@ tags:
   - data exploration
 ---
 
-**Excutive summary**: The Belgian tax system is notably intricate, characterized by numerous tax brackets that determine the tax liability based on an individual's income. We take a look at the proposed changes to the tax brackets proposed by Bart De Wever in the latest version of the Super Nota (202410).
+**Executive summary**: The Belgian tax system is notably intricate, characterized by numerous tax brackets that determine the tax liability based on an individual's income. We take a look at the proposed changes to the tax brackets proposed by Bart De Wever in the latest version of the Super Nota (202410).
 
 ---
 
@@ -26,7 +26,7 @@ This analysis aims to provide a clearer understanding of the proposed changes to
 
 ![Tax brackets](https://github.com/tintamarre/tax_brakets_belgium/blob/main/imposition.png?raw=true)
 
-_As observed, the changes are quite significant. Each income decile will experience a reduction in the tax rate. The most substantial tax decrease will benefit those in the 60th percentile and above._
+_As observed, the changes are quite significant. Each income decile will experience a reduction in the tax rate. The most substantial tax decrease will benefit those earning 20k euros annually (+4.7%) and those earning above 65k euros, with a reduction of > +4.7%._
 
 ## References
 
