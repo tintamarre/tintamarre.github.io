@@ -4,12 +4,12 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jcamp-code/starter-vitepress-blog.git"
+    "url": "git+https://github.com/jcamp- code/starter-vitepress-blog.git"
   },
   "devDependencies": {
     "@jcamp/vitepress-blog-theme": "0.3.0",
     "vitepress": "1.0.0-alpha.74",
-    "vue": "^3.2.47"
+    "vue": "^3.5.10"
   },
   "scripts": {
     "dev": "vitepress dev src",
