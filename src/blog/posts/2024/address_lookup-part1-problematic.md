@@ -323,7 +323,7 @@ GROUP BY all;
 | Chastre          |            32 |
 | Villeroux        |             1 |
 
-We conclude that each address on the same street can have multiple postnames.
+We conclude that a street can be associated with multiple postnames.
 
 ## Takeaways from the analysis
 
