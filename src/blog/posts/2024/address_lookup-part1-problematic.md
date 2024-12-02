@@ -335,10 +335,14 @@ We conclude that a street can be associated with multiple postnames.
 - The `street_id` shows that a street can be shared between multiple municipalities and that a municipality can have multiple streets. The relationship between streets and municipalities is then a **many-to-many relationship**.
 - Postname are not unique for a street. A single street can have multiple postnames. We will consider the `postname_*` as an attribute of the address and not as a key.
 
+## Next steps
+
+In the next article, we will explore build a Big Table model of the dataset to use it in a more efficient way for address lookup.
+
+Next steps: [Address lookup - Part 2 - Sourcing](/blog/posts/2024/address_lookup-part2-sourcing)
+
 ### Références
 
 - [NIS codes](https://en.wikipedia.org/wiki/NIS_code)
 - [Pourquoi une adresse belge, c'est compliqué ?](https://www.smalsresearch.be/pourquoi-une-adresse-belge-cest-complique/)
 - [BOSA - BeStAddress](https://bosa.belgium.be/fr/services/best-address-services)
-
-<!-- Next steps: [Address lookup - Part 2 - Sourcing](/blog/posts/drafts/address_lookup-part2-sourcing) -->
