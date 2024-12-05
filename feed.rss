@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Thu, 05 Dec 2024 04:22:21 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 05 Dec 2024 04:25:18 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -159,11 +159,11 @@
 <span class="line"><span style="color: #BABED8">    levenshtein(a.default_streetname, b.default_streetname) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> levenshtein_distance</span></span>
 <span class="line"><span style="color: #F78C6C">FROM</span><span style="color: #BABED8"> combination_with_distances_filtered</span></span>
 <span class="line"><span style="color: #F78C6C">LEFT JOIN</span><span style="color: #BABED8"> unique_streetname </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> a</span></span>
-<span class="line"><span style="color: #F78C6C">ON</span><span style="color: #BABED8"> a.municipality_id </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> municipality_id_1</span></span>
-<span class="line"><span style="color: #F78C6C">AND</span><span style="color: #BABED8"> a.street_id </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> street_id_1</span></span>
+<span class="line"><span style="color: #BABED8">   </span><span style="color: #F78C6C">ON</span><span style="color: #BABED8"> a.municipality_id </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> municipality_id_1</span></span>
+<span class="line"><span style="color: #BABED8">      </span><span style="color: #F78C6C">AND</span><span style="color: #BABED8"> a.street_id </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> street_id_1</span></span>
 <span class="line"><span style="color: #F78C6C">LEFT JOIN</span><span style="color: #BABED8"> unique_streetname </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> b</span></span>
-<span class="line"><span style="color: #F78C6C">ON</span><span style="color: #BABED8"> b.municipality_id </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> municipality_id_2</span></span>
-<span class="line"><span style="color: #F78C6C">AND</span><span style="color: #BABED8"> b.street_id </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> street_id_2</span></span>
+<span class="line"><span style="color: #BABED8">   </span><span style="color: #F78C6C">ON</span><span style="color: #BABED8"> b.municipality_id </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> municipality_id_2</span></span>
+<span class="line"><span style="color: #BABED8">      </span><span style="color: #F78C6C">AND</span><span style="color: #BABED8"> b.street_id </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> street_id_2</span></span>
 <span class="line"><span style="color: #BABED8">)</span></span>
 <span class="line"><span style="color: #F78C6C">SELECT</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">*</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">FROM</span><span style="color: #BABED8"> levenstein_distance</span></span>
 <span class="line"><span style="color: #F78C6C">WHERE</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">1</span><span style="color: #89DDFF">=</span><span style="color: #F78C6C">1</span></span>
@@ -339,7 +339,7 @@
 </tbody>
 </table>
 <h2 id="further-exploration" tabindex="-1">Further exploration <a class="header-anchor" href="#further-exploration" aria-label="Permalink to &quot;Further exploration&quot;">&ZeroWidthSpace;</a></h2>
-<ImageCenter src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTZ6NW5nbXU2Z3hudGszMDljM2lodjR3bHJyZ3Zva3VvZTF5Z3ZqYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KEXq9JVp3OyZmxZw0W/giphy.gif" alt="Let's check the data" width="800" /><p>This dataset is rich in information and can be used to answer a wide range of questions. Here are a few examples of other queries that can be run on the BeStAddress dataset:</p>
+<ImageCenter src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTZ6NW5nbXU2Z3hudGszMDljM2lodjR3bHJyZ3Zva3VvZTF5Z3ZqYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KEXq9JVp3OyZmxZw0W/giphy.gif" alt="Further exploration" width="800" /><p>This dataset is rich in information and can be used to answer a wide range of questions. Here are a few examples of other queries that can be run on the BeStAddress dataset:</p>
 <h3 id="finding-all-unique-combinations-of-two-different-street-id-within-the-same-municipality-id" tabindex="-1">Finding all unique combinations of two different street_id within the same municipality_id <a class="header-anchor" href="#finding-all-unique-combinations-of-two-different-street-id-within-the-same-municipality-id" aria-label="Permalink to &quot;Finding all unique combinations of two different street_id within the same municipality_id&quot;">&ZeroWidthSpace;</a></h3>
 <p>To retrieve all unique combinations of two different street IDs within the same municipality_id from a SQL database, you can use a self-join. A self-join allows you to pair rows from the same table where certain conditions are met (in this case, two differents street IDs but the same municipality ID).</p>
 <div class="language-sql"><button title="Copy Code" class="copy"></button><span class="lang">sql</span><pre v-pre class="shiki material-theme-palenight has-diff" ><code><span class="line"><span style="color: #F78C6C">WITH</span><span style="color: #BABED8"> DistinctStreets </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> (</span></span>
