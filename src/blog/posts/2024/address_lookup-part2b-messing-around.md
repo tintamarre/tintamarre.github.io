@@ -174,11 +174,11 @@ SELECT
     levenshtein(a.default_streetname, b.default_streetname) AS levenshtein_distance
 FROM combination_with_distances_filtered
 LEFT JOIN unique_streetname AS a
-ON a.municipality_id = municipality_id_1
-AND a.street_id = street_id_1
+   ON a.municipality_id = municipality_id_1
+      AND a.street_id = street_id_1
 LEFT JOIN unique_streetname AS b
-ON b.municipality_id = municipality_id_2
-AND b.street_id = street_id_2
+   ON b.municipality_id = municipality_id_2
+      AND b.street_id = street_id_2
 )
 SELECT * FROM levenstein_distance
 WHERE 1=1
@@ -211,7 +211,7 @@ That's it! We have successfully identified pairs of streets with similar names t
 
 ## Further exploration
 
-<ImageCenter src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTZ6NW5nbXU2Z3hudGszMDljM2lodjR3bHJyZ3Zva3VvZTF5Z3ZqYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KEXq9JVp3OyZmxZw0W/giphy.gif" alt="Let's check the data" width="800" />
+<ImageCenter src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTZ6NW5nbXU2Z3hudGszMDljM2lodjR3bHJyZ3Zva3VvZTF5Z3ZqYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KEXq9JVp3OyZmxZw0W/giphy.gif" alt="Further exploration" width="800" />
 
 This dataset is rich in information and can be used to answer a wide range of questions. Here are a few examples of other queries that can be run on the BeStAddress dataset:
 
