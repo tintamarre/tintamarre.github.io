@@ -5,8 +5,8 @@ const data = usePosts()
 </script>
 
 <template>
-  <div class="w-full text-blue-800">
+  <!-- <div class="w-full text-blue-800">
     <h1 class="">grenier</h1>
     Newest Content: {{ data.posts[0].title }}
-  </div>
+  </div> -->
 </template>
