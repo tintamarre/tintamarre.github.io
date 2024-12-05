@@ -341,7 +341,7 @@ In the next article, we will explore build a Big Table model of the dataset to u
 
 Next steps: [Address lookup - Part 2 - Sourcing](/blog/posts/2024/address_lookup-part2-sourcing)
 
-### Références
+### References
 
 - [NIS codes](https://en.wikipedia.org/wiki/NIS_code)
 - [Pourquoi une adresse belge, c'est compliqué ?](https://www.smalsresearch.be/pourquoi-une-adresse-belge-cest-complique/)
