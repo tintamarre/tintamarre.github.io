@@ -4,10 +4,81 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Thu, 05 Dec 2024 04:45:32 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 26 Mar 2025 16:39:57 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Comment savoir si on peut réutiliser un calendrier pour une année donnée en SQL ?]]></title>
+            <link>localhost/blog/blog/posts/2025/how-to-reuse-a-calendar.html</link>
+            <guid>localhost/blog/blog/posts/2025/how-to-reuse-a-calendar.html</guid>
+            <pubDate>Wed, 26 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[<p><strong>Executive summary</strong>: Comment savoir si on peut réutiliser un calendrier pour une année donnée en SQL ?</p>
+]]></description>
+            <content:encoded><![CDATA[<p><strong>Executive summary</strong>: Comment savoir si on peut réutiliser un calendrier pour une année donnée en SQL ?</p>
+<hr>
+<h1 id="comment-savoir-si-on-peut-reutiliser-un-calendrier-pour-une-annee-donnee-en-sql" tabindex="-1">Comment savoir si on peut réutiliser un calendrier pour une année donnée en SQL ? <a class="header-anchor" href="#comment-savoir-si-on-peut-reutiliser-un-calendrier-pour-une-annee-donnee-en-sql" aria-label="Permalink to &quot;Comment savoir si on peut réutiliser un calendrier pour une année donnée en SQL ?&quot;">&ZeroWidthSpace;</a></h1>
+<h2 id="introduction" tabindex="-1">Introduction <a class="header-anchor" href="#introduction" aria-label="Permalink to &quot;Introduction&quot;">&ZeroWidthSpace;</a></h2>
+<blockquote>
+<p>Comment on peut réutiliser un calendrier pour une année donnée ?</p>
+</blockquote>
+<p>Et si on essayait de la faire en <strong>SQL</strong> ?</p>
+<p>La logique est la suivante : si le 1er janvier et le 1er mars tombent le même jour de la semaine, alors on peut réutiliser le calendrier de l'année précédente.</p>
+<p>On peut donc générer une clé composée de 2 chiffres en base 7 (de 0 à 6) pour chaque année, en fonction du jour de la semaine du 1er janvier et du 1er mars.</p>
+<p>En joignant les calendriers de chaque année, on peut alors identifier les années où on peut réutiliser le calendrier de l'année précédente.</p>
+<h2 id="experimentation-en-duckdb" tabindex="-1">Experimentation en DuckDB <a class="header-anchor" href="#experimentation-en-duckdb" aria-label="Permalink to &quot;Experimentation en DuckDB&quot;">&ZeroWidthSpace;</a></h2>
+<div class="language-sql"><button title="Copy Code" class="copy"></button><span class="lang">sql</span><pre v-pre class="shiki material-theme-palenight" ><code><span class="line"><span style="color: #F78C6C">SET</span><span style="color: #BABED8"> VARIABLE start_year </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">2000</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">;</span></span>
+<span class="line"><span style="color: #F78C6C">SET</span><span style="color: #BABED8"> VARIABLE end_year </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">2030-12-31</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">::</span><span style="color: #C792EA">date</span><span style="color: #BABED8">;</span></span>
+<span class="line"><span style="color: #F78C6C">SET</span><span style="color: #BABED8"> VARIABLE first_jan </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">concat</span><span style="color: #BABED8">(getvariable(</span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">start_year</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">), </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">-01-01</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">)::</span><span style="color: #C792EA">date</span><span style="color: #BABED8">;</span></span>
+<span class="line"><span style="color: #F78C6C">SET</span><span style="color: #BABED8"> VARIABLE first_march </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">concat</span><span style="color: #BABED8">(getvariable(</span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">start_year</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">), </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">-03-01</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">)::</span><span style="color: #C792EA">date</span><span style="color: #BABED8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F78C6C">WITH</span><span style="color: #BABED8"> t_january </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> (</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">SELECT</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #82AAFF">YEAR</span><span style="color: #BABED8">(generate_series) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> current_year,</span></span>
+<span class="line"><span style="color: #BABED8">        DAYOFWEEK(generate_series) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> wday</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">FROM</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">generate_series</span><span style="color: #BABED8">(</span></span>
+<span class="line"><span style="color: #BABED8">        getvariable(</span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">first_jan</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">),</span></span>
+<span class="line"><span style="color: #BABED8">        getvariable(</span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">end_year</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">),</span></span>
+<span class="line"><span style="color: #BABED8">        INTERVAL </span><span style="color: #F78C6C">1</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">year</span></span>
+<span class="line"><span style="color: #BABED8">    )</span></span>
+<span class="line"><span style="color: #BABED8">),</span></span>
+<span class="line"><span style="color: #BABED8">t_march </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> (</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">SELECT</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #82AAFF">YEAR</span><span style="color: #BABED8">(generate_series) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> current_year,</span></span>
+<span class="line"><span style="color: #BABED8">        DAYOFWEEK(generate_series) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> wday</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">FROM</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">generate_series</span><span style="color: #BABED8">(</span></span>
+<span class="line"><span style="color: #BABED8">        getvariable(</span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">first_march</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">),</span></span>
+<span class="line"><span style="color: #BABED8">        getvariable(</span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">end_year</span><span style="color: #89DDFF">&#39;</span><span style="color: #BABED8">),</span></span>
+<span class="line"><span style="color: #BABED8">        INTERVAL </span><span style="color: #F78C6C">1</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">year</span></span>
+<span class="line"><span style="color: #BABED8">    )</span></span>
+<span class="line"><span style="color: #BABED8">),</span></span>
+<span class="line"><span style="color: #BABED8">key_by_year </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> (</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">SELECT</span></span>
+<span class="line"><span style="color: #BABED8">        t_january.current_year,</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #82AAFF">concat</span><span style="color: #BABED8">(t_january.wday, t_march.wday) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> wday_key</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">FROM</span><span style="color: #BABED8"> t_january</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">JOIN</span><span style="color: #BABED8"> t_march</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #F78C6C">ON</span><span style="color: #BABED8"> t_january.current_year </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> t_march.current_year</span></span>
+<span class="line"><span style="color: #BABED8">),</span></span>
+<span class="line"><span style="color: #BABED8">calendars_joined </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> (</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">SELECT</span></span>
+<span class="line"><span style="color: #BABED8">        k1.current_year,</span></span>
+<span class="line"><span style="color: #BABED8">        k1.wday_key,</span></span>
+<span class="line"><span style="color: #BABED8">        k2.current_year </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> t_march_current_year</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">FROM</span><span style="color: #BABED8"> key_by_year </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> k1</span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">JOIN</span><span style="color: #BABED8"> key_by_year </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> k2</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #F78C6C">ON</span><span style="color: #BABED8"> k1.wday_key </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> k2.wday_key</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #F78C6C">AND</span><span style="color: #BABED8"> k1.current_year </span><span style="color: #89DDFF">!=</span><span style="color: #BABED8"> k2.current_year</span></span>
+<span class="line"><span style="color: #BABED8">)</span></span>
+<span class="line"><span style="color: #F78C6C">SELECT</span></span>
+<span class="line"><span style="color: #BABED8">    current_year,</span></span>
+<span class="line"><span style="color: #BABED8">    array_agg(t_march_current_year </span><span style="color: #F78C6C">ORDER BY</span><span style="color: #BABED8"> t_march_current_year) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> same_wday_years</span></span>
+<span class="line"><span style="color: #F78C6C">FROM</span><span style="color: #BABED8"> calendars_joined</span></span>
+<span class="line"><span style="color: #F78C6C">GROUP BY</span><span style="color: #BABED8"> current_year</span></span>
+<span class="line"><span style="color: #F78C6C">ORDER BY</span><span style="color: #BABED8"> current_year;</span></span></code></pre>
+</div><h1 id="et-voila" tabindex="-1">Et voilà ! <a class="header-anchor" href="#et-voila" aria-label="Permalink to &quot;Et voilà !&quot;">&ZeroWidthSpace;</a></h1>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Address lookup - Part 2b: Messing around]]></title>
             <link>localhost/blog/blog/posts/2024/address_lookup-part2b-messing-around.html</link>
