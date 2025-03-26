@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Wed, 26 Mar 2025 16:39:57 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 26 Mar 2025 17:08:59 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -77,6 +77,116 @@
 <span class="line"><span style="color: #F78C6C">GROUP BY</span><span style="color: #BABED8"> current_year</span></span>
 <span class="line"><span style="color: #F78C6C">ORDER BY</span><span style="color: #BABED8"> current_year;</span></span></code></pre>
 </div><h1 id="et-voila" tabindex="-1">Et voilà ! <a class="header-anchor" href="#et-voila" aria-label="Permalink to &quot;Et voilà !&quot;">&ZeroWidthSpace;</a></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">current_year</th>
+<th>same_wday_years</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">2000</td>
+<td>[2028]</td>
+</tr>
+<tr>
+<td style="text-align:right">2001</td>
+<td>[2007, 2018, 2029]</td>
+</tr>
+<tr>
+<td style="text-align:right">2002</td>
+<td>[2013, 2019, 2030]</td>
+</tr>
+<tr>
+<td style="text-align:right">2003</td>
+<td>[2014, 2025]</td>
+</tr>
+<tr>
+<td style="text-align:right">2005</td>
+<td>[2011, 2022]</td>
+</tr>
+<tr>
+<td style="text-align:right">2006</td>
+<td>[2017, 2023]</td>
+</tr>
+<tr>
+<td style="text-align:right">2007</td>
+<td>[2001, 2018, 2029]</td>
+</tr>
+<tr>
+<td style="text-align:right">2009</td>
+<td>[2015, 2026]</td>
+</tr>
+<tr>
+<td style="text-align:right">2010</td>
+<td>[2021, 2027]</td>
+</tr>
+<tr>
+<td style="text-align:right">2011</td>
+<td>[2005, 2022]</td>
+</tr>
+<tr>
+<td style="text-align:right">2013</td>
+<td>[2002, 2019, 2030]</td>
+</tr>
+<tr>
+<td style="text-align:right">2014</td>
+<td>[2003, 2025]</td>
+</tr>
+<tr>
+<td style="text-align:right">2015</td>
+<td>[2009, 2026]</td>
+</tr>
+<tr>
+<td style="text-align:right">2017</td>
+<td>[2006, 2023]</td>
+</tr>
+<tr>
+<td style="text-align:right">2018</td>
+<td>[2001, 2007, 2029]</td>
+</tr>
+<tr>
+<td style="text-align:right">2019</td>
+<td>[2002, 2013, 2030]</td>
+</tr>
+<tr>
+<td style="text-align:right">2021</td>
+<td>[2010, 2027]</td>
+</tr>
+<tr>
+<td style="text-align:right">2022</td>
+<td>[2005, 2011]</td>
+</tr>
+<tr>
+<td style="text-align:right">2023</td>
+<td>[2006, 2017]</td>
+</tr>
+<tr>
+<td style="text-align:right">2025</td>
+<td>[2003, 2014]</td>
+</tr>
+<tr>
+<td style="text-align:right">2026</td>
+<td>[2009, 2015]</td>
+</tr>
+<tr>
+<td style="text-align:right">2027</td>
+<td>[2010, 2021]</td>
+</tr>
+<tr>
+<td style="text-align:right">2028</td>
+<td>[2000]</td>
+</tr>
+<tr>
+<td style="text-align:right">2029</td>
+<td>[2001, 2007, 2018]</td>
+</tr>
+<tr>
+<td style="text-align:right">2030</td>
+<td>[2002, 2013, 2019]</td>
+</tr>
+</tbody>
+</table>
 ]]></content:encoded>
         </item>
         <item>
