@@ -67,7 +67,7 @@ calendars_joined AS (
     SELECT
         k1.current_year,
         k1.wday_key,
-        k2.current_year AS t_march_current_year
+        k2.current_year AS compatible_year,
     FROM key_by_year AS k1
     JOIN key_by_year AS k2
         ON k1.wday_key = k2.wday_key
@@ -75,7 +75,7 @@ calendars_joined AS (
 )
 SELECT
     current_year,
-    array_agg(t_march_current_year ORDER BY t_march_current_year) AS same_wday_years
+    array_agg(compatible_year ORDER BY compatible_year) AS same_wday_years
 FROM calendars_joined
 GROUP BY current_year
 ORDER BY current_year;
