@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Wed, 26 Mar 2025 17:08:59 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 03 Apr 2025 18:13:29 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -64,7 +64,7 @@
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">SELECT</span></span>
 <span class="line"><span style="color: #BABED8">        k1.current_year,</span></span>
 <span class="line"><span style="color: #BABED8">        k1.wday_key,</span></span>
-<span class="line"><span style="color: #BABED8">        k2.current_year </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> t_march_current_year</span></span>
+<span class="line"><span style="color: #BABED8">        k2.current_year </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> compatible_year,</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">FROM</span><span style="color: #BABED8"> key_by_year </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> k1</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #F78C6C">JOIN</span><span style="color: #BABED8"> key_by_year </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> k2</span></span>
 <span class="line"><span style="color: #BABED8">        </span><span style="color: #F78C6C">ON</span><span style="color: #BABED8"> k1.wday_key </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> k2.wday_key</span></span>
@@ -72,7 +72,7 @@
 <span class="line"><span style="color: #BABED8">)</span></span>
 <span class="line"><span style="color: #F78C6C">SELECT</span></span>
 <span class="line"><span style="color: #BABED8">    current_year,</span></span>
-<span class="line"><span style="color: #BABED8">    array_agg(t_march_current_year </span><span style="color: #F78C6C">ORDER BY</span><span style="color: #BABED8"> t_march_current_year) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> same_wday_years</span></span>
+<span class="line"><span style="color: #BABED8">    array_agg(compatible_year </span><span style="color: #F78C6C">ORDER BY</span><span style="color: #BABED8"> compatible_year) </span><span style="color: #F78C6C">AS</span><span style="color: #BABED8"> same_wday_years</span></span>
 <span class="line"><span style="color: #F78C6C">FROM</span><span style="color: #BABED8"> calendars_joined</span></span>
 <span class="line"><span style="color: #F78C6C">GROUP BY</span><span style="color: #BABED8"> current_year</span></span>
 <span class="line"><span style="color: #F78C6C">ORDER BY</span><span style="color: #BABED8"> current_year;</span></span></code></pre>
