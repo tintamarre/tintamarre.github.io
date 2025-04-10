@@ -121,7 +121,7 @@ FROM bestAddress;
 | BE-WAL      |                   262 |           57707 |          1983442 |
 | BE-VLG      |                   300 |           80354 |          3834363 |
 | TOTAL       |                   581 |          138457 |          4203561 |
-| SUM = TOTAL |               **ok!** |        **nope** |         **nope** |
+| SUM = TOTAL |            **ok!** ✅ |     **nope** ⛔ |      **nope** ⛔ |
 
 - The `municipality_id` is unique in the dataset, which is mean that a municipality is unique in each region and is not shared between regions. This is expected as the `municipality_id` is equal to the [NIS codes](https://en.wikipedia.org/wiki/NIS_code). The municipalities have a political and administrative meaning and are unique in each region.
 - The `street_id` shows that a street can be shared between multiple municipalities. This is not surprising as some streets can cross multiple municipalities.
