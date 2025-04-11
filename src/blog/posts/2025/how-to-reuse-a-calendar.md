@@ -15,17 +15,16 @@ tags:
 
 # Comment savoir si on peut réutiliser un calendrier pour une année donnée en SQL ?
 
-## Introduction
+Pour comparer les calendriers de plusieurs années, on peut suivre la simple logique suivante :
 
-> Comment on peut réutiliser un calendrier pour une année donnée ?
+- Si le 1er janvier et le 1er mars tombent le même jour de la semaine ;
+- Alors on peut réutiliser le calendrier de l'année précédente.
 
-Et si on essayait de la faire en **SQL** ?
-
-La logique est la suivante : si le 1er janvier et le 1er mars tombent le même jour de la semaine, alors on peut réutiliser le calendrier de l'année précédente.
-
-On peut donc générer une clé composée de 2 chiffres en base 7 (de 0 à 6) pour chaque année, en fonction du jour de la semaine du 1er janvier et du 1er mars.
+On peut donc générer une clé composée de 2 chiffres en base 7 (de `0` à `6`) en fonction du jour de la semaine du 1er janvier et du 1er mars pour chaque année.
 
 En joignant les calendriers de chaque année, on peut alors identifier les années où on peut réutiliser le calendrier de l'année précédente.
+
+Et si on essayait de la faire en **SQL** ?
 
 ## Experimentation en DuckDB
 
