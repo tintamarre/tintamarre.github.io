@@ -10,7 +10,7 @@ tags:
   - orchestrator
 ---
 
-_Executive summary_: In Belgium, a collaborative effort between regional and federal authorities has led to the creation of a unified service that aggregates all Belgian addresses into a comprehensive dataset. This article will guide you through the process of using this valuable resource to efficiently look up addresses based on postal codes, streetnames and house numbers.
+_Executive summary_: In Belgium, a collaborative effort between regional and federal authorities has led to the creation of a unified service that aggregates all Belgian addresses into a comprehensive dataset. This dataset is called [BeStAddress](https://bosa.belgium.be/fr/services/best-address-services).
 
 ---
 
@@ -25,7 +25,7 @@ The HouteSiTrue API was developed using [FastAPI](https://fastapi.tiangolo.com/)
 ### Core Components
 
 1. **Router Structure**
-The API is organized using FastAPI's router system, with the main address-related endpoints grouped under the `/addresses` prefix:
+   The API is organized using FastAPI's router system, with the main address-related endpoints grouped under the `/addresses` prefix:
 
 ```python
 router = APIRouter(prefix="/addresses", tags=["addresses"])
@@ -96,19 +96,19 @@ LIMIT 3;
 ```
 
 ```python
-return { 
+return {
         "is_perfect_match": is_perfect_match,
         'is_partial_match': is_partial_match,
         "street_id": addresses[0]["street_id"],
         "municipality_id": addresses[0]["municipality_id"],
         "address_id": addresses[0]['address_id'],
         "levenshtein_score": results[0]["best_levenshtein_score"],
-        "matches": addresses 
+        "matches": addresses
 }
 ```
 
-
 This query performs several key operations:
+
 1. Strips accents and normalizes street names in all three national languages (French, Dutch, and German)
 2. Calculates Levenshtein distance scores for each language version
 3. Computes Jaro similarity scores as a secondary matching metric
@@ -143,6 +143,7 @@ mcp = FastApiMCP(app)
 ### Performance Considerations
 
 The API includes performance monitoring features:
+
 - Execution time tracking for each request
 - Batch processing capabilities (up to 25 addresses per request)
 - Efficient distance calculations using the `geopy` library (spacial library from DuckDB could also be used)
@@ -150,6 +151,7 @@ The API includes performance monitoring features:
 ### Error Handling and Validation
 
 The API implements robust error handling and input validation:
+
 - Input validation through Pydantic models
 - Batch size limitations
 - Proper error responses for invalid requests
