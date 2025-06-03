@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Tue, 03 Jun 2025 06:18:46 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 03 Jun 2025 07:10:11 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -19,7 +19,7 @@
 <hr>
 <h2 id="api-houte-si-true" tabindex="-1">API Houte-Si-<code>True</code> <a class="header-anchor" href="#api-houte-si-true" aria-label="Permalink to &quot;API Houte-Si-`True`&quot;">&ZeroWidthSpace;</a></h2>
 <ImageCenter src="https://i.imgur.com/GJNQQJA.png" alt="Houte Si True" width="300" /><h2 id="api-development-with-fastapi" tabindex="-1">API Development with FastAPI <a class="header-anchor" href="#api-development-with-fastapi" aria-label="Permalink to &quot;API Development with FastAPI&quot;">&ZeroWidthSpace;</a></h2>
-<p>The HouteSiTrue API was developed using FastAPI, a modern, fast web framework for building APIs with Python. The API serves as a bridge between our legacy GEOG system (or any other address system) and the BestAddress reference dataset, providing efficient address lookup and matching capabilities.</p>
+<p>The HouteSiTrue API was developed using <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noreferrer">FastAPI</a>, a modern, fast web framework for building APIs with Python. The API serves as a bridge between our legacy GEOG system (or any other address system) and the <a href="https://bosa.belgium.be/fr/services/best-address-services" target="_blank" rel="noreferrer">BestAddress reference dataset</a>, providing efficient address lookup and matching capabilities.</p>
 <h3 id="core-components" tabindex="-1">Core Components <a class="header-anchor" href="#core-components" aria-label="Permalink to &quot;Core Components&quot;">&ZeroWidthSpace;</a></h3>
 <ol>
 <li><strong>Router Structure</strong>
@@ -39,7 +39,13 @@ The API is organized using FastAPI's router system, with the main address-relate
 </ul>
 <h3 id="address-matching-logic" tabindex="-1">Address Matching Logic <a class="header-anchor" href="#address-matching-logic" aria-label="Permalink to &quot;Address Matching Logic&quot;">&ZeroWidthSpace;</a></h3>
 <p>The core functionality revolves around the address matching system, which uses both strict and fuzzy matching. The implementation combines FastAPI endpoints with sophisticated SQL queries for accurate address matching:</p>
-<div class="language-python"><button title="Copy Code" class="copy"></button><span class="lang">python</span><pre v-pre class="shiki material-theme-palenight" ><code><span class="line"><span style="color: #89DDFF">@</span><span style="color: #82AAFF">router</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">post</span><span style="color: #89DDFF">(</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">/bestmatch</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">,</span><span style="color: #82AAFF"> </span><span style="color: #BABED8; font-style: italic">operation_id</span><span style="color: #89DDFF">=</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">find_bestmatch_for_address</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">)</span></span>
+<div class="language-python"><button title="Copy Code" class="copy"></button><span class="lang">python</span><pre v-pre class="shiki material-theme-palenight" ><code><span class="line"><span style="color: #C792EA">class</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">AddressRequest</span><span style="color: #89DDFF">(</span><span style="color: #FFCB6B">BaseModel</span><span style="color: #89DDFF">):</span></span>
+<span class="line"><span style="color: #BABED8">    postcode</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">str</span></span>
+<span class="line"><span style="color: #BABED8">    streetname</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">str</span></span>
+<span class="line"><span style="color: #BABED8">    house_number</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">str</span></span>
+<span class="line"><span style="color: #BABED8">    box_number</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #FFCB6B">str</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #89DDFF">@</span><span style="color: #82AAFF">router</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">post</span><span style="color: #89DDFF">(</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">/bestmatch</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">,</span><span style="color: #82AAFF"> </span><span style="color: #BABED8; font-style: italic">operation_id</span><span style="color: #89DDFF">=</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">find_bestmatch_for_address</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">)</span></span>
 <span class="line"><span style="color: #C792EA">async</span><span style="color: #BABED8"> </span><span style="color: #C792EA">def</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">find_bestmatch_for_address</span><span style="color: #89DDFF">(</span><span style="color: #BABED8; font-style: italic">body</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> AddressRequest</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span><span style="color: #BABED8; font-style: italic">request</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> Request</span><span style="color: #89DDFF">):</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF; font-style: italic">&quot;&quot;&quot;</span></span>
 <span class="line"><span style="color: #676E95; font-style: italic">    Retrieve the best match for an address.</span></span>
@@ -77,13 +83,23 @@ The API is organized using FastAPI's router system, with the main address-relate
 <span class="line"><span style="color: #F78C6C">GROUP BY</span><span style="color: #BABED8"> ALL</span></span>
 <span class="line has-focus"><span style="color: #F78C6C">ORDER BY</span><span style="color: #BABED8"> best_levenshtein_score </span><span style="color: #F78C6C">DESC</span><span style="color: #BABED8"> </span></span>
 <span class="line"><span style="color: #F78C6C">LIMIT</span><span style="color: #BABED8"> </span><span style="color: #F78C6C">3</span><span style="color: #BABED8">;</span></span></code></pre>
+</div><div class="language-python"><button title="Copy Code" class="copy"></button><span class="lang">python</span><pre v-pre class="shiki material-theme-palenight" ><code><span class="line"><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">{</span><span style="color: #BABED8"> </span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">is_perfect_match</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> is_perfect_match</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">is_partial_match</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> is_partial_match</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">street_id</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> addresses</span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">0</span><span style="color: #89DDFF">][</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">street_id</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">],</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">municipality_id</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> addresses</span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">0</span><span style="color: #89DDFF">][</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">municipality_id</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">],</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">address_id</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> addresses</span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">0</span><span style="color: #89DDFF">][</span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">address_id</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">],</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">levenshtein_score</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> results</span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">0</span><span style="color: #89DDFF">][</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">best_levenshtein_score</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">],</span></span>
+<span class="line"><span style="color: #BABED8">        </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">matches</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> addresses </span></span>
+<span class="line"><span style="color: #89DDFF">}</span></span></code></pre>
 </div><p>This query performs several key operations:</p>
 <ol>
 <li>Strips accents and normalizes street names in all three national languages (French, Dutch, and German)</li>
 <li>Calculates Levenshtein distance scores for each language version</li>
 <li>Computes Jaro similarity scores as a secondary matching metric</li>
 <li>Filters results based on a minimum similarity threshold</li>
-<li>Returns the top 3 matches ordered by Levenshtein score</li>
+<li>The SQL returns the top 3 matches ordered by Levenshtein score</li>
+<li>The Python code returns the best match and the matches found by the SQL query</li>
 </ol>
 <h3 id="application-configuration" tabindex="-1">Application Configuration <a class="header-anchor" href="#application-configuration" aria-label="Permalink to &quot;Application Configuration&quot;">&ZeroWidthSpace;</a></h3>
 <p>The API is built with scalability and maintainability in mind:</p>
