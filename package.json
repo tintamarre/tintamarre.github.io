@@ -4,7 +4,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jcamp- code/starter-vitepress-blog.git"
+    "url": "git+https://github.com/jcamp-code/starter-vitepress-blog.git"
   },
   "devDependencies": {
     "@jcamp/vitepress-blog-theme": "0.3.0",

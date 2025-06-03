@@ -153,4 +153,4 @@ CREATE OR REPLACE TABLE bestAddress AS
 
 ## Next steps
 
-In the next post, we will focus on creating an address lookup service (FastAPI) that will use the unified table we have created.
+In the [next post](/blog/posts/2025/address_lookup-part3-api), we will focus on creating an address lookup service (FastAPI) that will use the unified table we have created.

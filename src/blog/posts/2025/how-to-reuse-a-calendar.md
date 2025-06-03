@@ -80,7 +80,7 @@ GROUP BY current_year
 ORDER BY current_year;
 ```
 
-# Et voilà !
+# Et voilà ! :tada:
 
 | current_year | same_wday_years    |
 | -----------: | ------------------ |
