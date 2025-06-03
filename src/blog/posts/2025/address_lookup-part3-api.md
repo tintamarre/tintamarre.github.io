@@ -20,7 +20,7 @@ _Executive summary_: In Belgium, a collaborative effort between regional and fed
 
 ## API Development with FastAPI
 
-The HouteSiTrue API was developed using FastAPI, a modern, fast web framework for building APIs with Python. The API serves as a bridge between our legacy GEOG system (or any other address system) and the BestAddress reference dataset, providing efficient address lookup and matching capabilities.
+The HouteSiTrue API was developed using [FastAPI](https://fastapi.tiangolo.com/), a modern, fast web framework for building APIs with Python. The API serves as a bridge between our legacy GEOG system (or any other address system) and the [BestAddress reference dataset](https://bosa.belgium.be/fr/services/best-address-services), providing efficient address lookup and matching capabilities.
 
 ### Core Components
 
@@ -45,6 +45,12 @@ router = APIRouter(prefix="/addresses", tags=["addresses"])
 The core functionality revolves around the address matching system, which uses both strict and fuzzy matching. The implementation combines FastAPI endpoints with sophisticated SQL queries for accurate address matching:
 
 ```python
+class AddressRequest(BaseModel):
+    postcode: str
+    streetname: str
+    house_number: str
+    box_number: str
+
 @router.post("/bestmatch", operation_id="find_bestmatch_for_address")
 async def find_bestmatch_for_address(body: AddressRequest, request: Request):
     """
@@ -89,12 +95,26 @@ ORDER BY best_levenshtein_score DESC // [!code focus]
 LIMIT 3;
 ```
 
+```python
+return { 
+        "is_perfect_match": is_perfect_match,
+        'is_partial_match': is_partial_match,
+        "street_id": addresses[0]["street_id"],
+        "municipality_id": addresses[0]["municipality_id"],
+        "address_id": addresses[0]['address_id'],
+        "levenshtein_score": results[0]["best_levenshtein_score"],
+        "matches": addresses 
+}
+```
+
+
 This query performs several key operations:
 1. Strips accents and normalizes street names in all three national languages (French, Dutch, and German)
 2. Calculates Levenshtein distance scores for each language version
 3. Computes Jaro similarity scores as a secondary matching metric
 4. Filters results based on a minimum similarity threshold
-5. Returns the top 3 matches ordered by Levenshtein score
+5. The SQL returns the top 3 matches ordered by Levenshtein score
+6. The Python code returns the best match and the matches found by the SQL query
 
 ### Application Configuration
 
