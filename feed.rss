@@ -4,12 +4,12 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Tue, 03 Jun 2025 06:13:34 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 03 Jun 2025 06:18:46 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Address lookup - Part 2 - API]]></title>
+            <title><![CDATA[Address lookup - Part 3 - API]]></title>
             <link>localhost/blog/blog/posts/2025/address_lookup-part3-api.html</link>
             <guid>localhost/blog/blog/posts/2025/address_lookup-part3-api.html</guid>
             <pubDate>Thu, 01 May 2025 00:00:00 GMT</pubDate>
