@@ -211,13 +211,16 @@ That's it! We have successfully identified pairs of streets with similar names t
 
 ## Further exploration
 
-<ImageCenter src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTZ6NW5nbXU2Z3hudGszMDljM2lodjR3bHJyZ3Zva3VvZTF5Z3ZqYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KEXq9JVp3OyZmxZw0W/giphy.gif" alt="Further exploration" width="800" />
+<ImageCenter src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTZ6NW5nbXU2Z3hudGszMDljM3lodjR3bHJyZ3Zva3VvZTF5Z3ZqYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KEXq9JVp3OyZmxZw0W/giphy.gif" alt="Further exploration" width="800" />
 
-This dataset is rich in information and can be used to answer a wide range of questions. Here are a few examples of other queries that can be run on the BeStAddress dataset:
+The BeStAddress dataset offers numerous opportunities for interesting analyses beyond just finding similar street names. Let's explore some additional queries that can help us understand the dataset better and potentially identify areas for improvement in address management.
 
-### Finding all unique combinations of two different street_id within the same municipality_id
+### 1. Mapping Street Relationships Within Municipalities
 
-To retrieve all unique combinations of two different street IDs within the same municipality_id from a SQL database, you can use a self-join. A self-join allows you to pair rows from the same table where certain conditions are met (in this case, two differents street IDs but the same municipality ID).
+When working with addresses, it's often useful to understand how streets are distributed within municipalities. This query helps us identify all unique pairs of streets within each municipality, which can be valuable for:
+- Urban planning analysis
+- Understanding street network connectivity
+- Identifying potential naming conflicts
 
 ```sql
 WITH DistinctStreets AS (
@@ -244,7 +247,7 @@ FROM
 JOIN
     DistinctStreets AS b
     ON a.municipality_id = b.municipality_id -- Same municipality
-        AND a.street_id < b.street_id -- Ensure different street ids and avoid duplicate combinations (like (1, 2) and (2, 1))
+        AND a.street_id < b.street_id -- Ensure different street ids and avoid duplicate combinations
 ORDER BY
     a.municipality_id,
     a.street_id,
@@ -252,7 +255,11 @@ ORDER BY
 LIMIT 100;
 ```
 
-### Percentage of non-NULL streetname_fr, streetname_de, and streetname_nl per municipality
+The query uses a self-join technique to pair each street with every other street in the same municipality, while avoiding duplicate combinations. We round the coordinates to 3 decimal places (~110 meters precision) to simplify the data while maintaining meaningful geographical precision.
+
+### 2. Analyzing Multilingual Street Name Coverage
+
+Belgium's multilingual nature makes it essential to understand how well street names are documented in different languages. This query analyzes the completeness of street names across French, Dutch, and German:
 
 ```sql
 WITH DistinctStreets AS (
@@ -263,36 +270,24 @@ WITH DistinctStreets AS (
 )
 SELECT
     municipality_id,
-    COUNT(street_id) AS total_streets,  -- Total number of distinct streets per municipality
-
-    -- Percentage of non-NULL streetname_fr
-    (COUNT(
-    CASE WHEN streetname_fr IS NOT NULL THEN 1 END)
-    /
-    CAST(COUNT(street_id) AS FLOAT) * 100)
-    AS pct_streetname_fr,
-
-    -- Percentage of non-NULL streetname_de
-    (COUNT(
-    CASE WHEN streetname_de IS NOT NULL THEN 1 END)
-    /
-    CAST(COUNT(street_id) AS FLOAT) * 100)
-    AS pct_streetname_de,
-
-    -- Percentage of non-NULL streetname_nl
-    (COUNT(
-    CASE WHEN streetname_nl IS NOT NULL THEN 1 END)
-    /
-    CAST(COUNT(street_id) AS FLOAT) * 100)
-    AS pct_streetname_nl
-
+    COUNT(street_id) AS total_streets,
+    (COUNT(CASE WHEN streetname_fr IS NOT NULL THEN 1 END) / CAST(COUNT(street_id) AS FLOAT) * 100) AS pct_streetname_fr,
+    (COUNT(CASE WHEN streetname_de IS NOT NULL THEN 1 END) / CAST(COUNT(street_id) AS FLOAT) * 100) AS pct_streetname_de,
+    (COUNT(CASE WHEN streetname_nl IS NOT NULL THEN 1 END) / CAST(COUNT(street_id) AS FLOAT) * 100) AS pct_streetname_nl
 FROM
     DistinctStreets
 GROUP BY
     municipality_id;
 ```
 
-### Percentage of non-NULL streetname_fr, streetname_de, and streetname_nl per municipality, excluding municipalities where any of the streetname percentages are 0 or 100
+This query provides insights into:
+- The completeness of multilingual street naming
+- Potential gaps in language coverage
+- Areas that might need attention for complete multilingual support
+
+### 3. Identifying Language Border Municipalities
+
+Perhaps the most interesting analysis is finding municipalities that lie on language borders. These can be identified by looking for municipalities where street names aren't consistently available in all languages:
 
 ```sql
 WITH DistinctStreets AS (
@@ -304,26 +299,30 @@ WITH DistinctStreets AS (
   SELECT
       municipality_id,
       region_code,
-      COUNT(street_id) AS total_streets,  -- Total number of distinct streets per municipality
-
-      -- Percentage of non-NULL streetname_fr
+      COUNT(street_id) AS total_streets,
       (COUNT(CASE WHEN streetname_fr IS NOT NULL THEN 1 END) / CAST(COUNT(street_id) AS FLOAT) * 100) AS pct_streetname_fr,
-
-      -- Percentage of non-NULL streetname_de
       (COUNT(CASE WHEN streetname_de IS NOT NULL THEN 1 END) / CAST(COUNT(street_id) AS FLOAT) * 100) AS pct_streetname_de,
-
-      -- Percentage of non-NULL streetname_nl
       (COUNT(CASE WHEN streetname_nl IS NOT NULL THEN 1 END) / CAST(COUNT(street_id) AS FLOAT) * 100) AS pct_streetname_nl
-
   FROM
       DistinctStreets
   GROUP BY
       municipality_id, region_code
   HAVING
-      -- Filter municipalities where any of the streetname percentages are not 0 or 100
       (COUNT(CASE WHEN streetname_fr IS NOT NULL THEN 1 END) / CAST(COUNT(street_id) AS FLOAT) * 100) NOT IN (0, 100)
       OR (COUNT(CASE WHEN streetname_de IS NOT NULL THEN 1 END) / CAST(COUNT(street_id) AS FLOAT) * 100) NOT IN (0, 100)
       OR (COUNT(CASE WHEN streetname_nl IS NOT NULL THEN 1 END) / CAST(COUNT(street_id) AS FLOAT) * 100) NOT IN (0, 100)
   ORDER BY
       region_code;
 ```
+
+This advanced query helps identify:
+- Municipalities on language borders
+- Areas with mixed language usage
+- Potential inconsistencies in multilingual street naming
+
+The HAVING clause specifically looks for municipalities where the percentage of street names in any language is neither 0% nor 100%, indicating mixed language usage. This can be particularly useful for:
+- Understanding linguistic diversity in different regions
+- Planning multilingual signage requirements
+- Ensuring proper address documentation in all relevant languages
+
+
