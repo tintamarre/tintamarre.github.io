@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Wed, 02 Jul 2025 05:29:42 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 02 Jul 2025 05:32:51 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -19,7 +19,7 @@ Cet article présente une étude de cas sur l'utilisation de Dagster à la <stro
             <content:encoded><![CDATA[<p><em>Résumé</em>:
 Cet article présente une étude de cas sur l'utilisation de Dagster à la <strong>Fédération Wallonie-Bruxelles</strong>, en Belgique, pour moderniser leur plateforme de données et améliorer l'orchestration et l'observabilité des données. Il s'agit d'une traduction de l'article original disponible sur le <a href="https://dagster.io/blog/federation-wallonie-bruxelles-case-study" target="_blank" rel="noreferrer">site de Dagster</a>, écrit par <a href="https://www.linkedin.com/in/alexander-noonan" target="_blank" rel="noreferrer">Alex Noonan</a>.</p>
 <hr>
-<h1 id="de-scripts-eparpilles-a-une-plateforme-unifiee-comment-dagster-alimente-les-decisions-de-donnees-pour-4-5-millions-de-citoyens-belges" tabindex="-1">De scripts éparpillés à une plateforme unifiée -- Comment Dagster alimente les décisions de données pour 4,5 millions de citoyens belges <a class="header-anchor" href="#de-scripts-eparpilles-a-une-plateforme-unifiee-comment-dagster-alimente-les-decisions-de-donnees-pour-4-5-millions-de-citoyens-belges" aria-label="Permalink to &quot;De scripts éparpillés à une plateforme unifiée -- Comment Dagster alimente les décisions de données pour 4,5 millions de citoyens belges&quot;">&ZeroWidthSpace;</a></h1>
+<h1 id="de-scripts-eparpilles-a-une-plateforme-unifiee" tabindex="-1">De scripts éparpillés à une plateforme unifiée <a class="header-anchor" href="#de-scripts-eparpilles-a-une-plateforme-unifiee" aria-label="Permalink to &quot;De scripts éparpillés à une plateforme unifiée&quot;">&ZeroWidthSpace;</a></h1>
 <p>La Fédération Wallonie-Bruxelles de Belgique sert 4,5 millions de citoyens dans les domaines de l’éducation, de la culture et des services de jeunesse, mais ses systèmes de données hérités fragmentés créaient des cauchemars opérationnels : des processus manuels qui prenaient des mois, une visibilité de pipeline limitée et des dépendances d'outils propriétaires qui limitaient la flexibilité.</p>
 <p>L'ingénieur en données <strong>Martin Erpicum</strong> a dirigé la transformation vers une plateforme moderne et unifiée alimentée par Dagster, offrant des résultats efficaces : une livraison de pipeline deux fois plus rapide, un passage de la maintenance réactive au développement proactif de produits de données, une visibilité complète des problèmes de qualité des données auparavant indétectables et des analyses en libre-service qui ont permis aux utilisateurs finaux de provisionner leurs propres tableaux de bord.</p>
 <p>Cette étude de cas révèle comment une grande organisation gouvernementale a modernisé avec succès sa pile technologique tout en continuant à servir des millions de citoyens, prouvant que l’orchestration moderne des données peut fonctionner à grande échelle, même dans des environnements hautement réglementés.</p>
