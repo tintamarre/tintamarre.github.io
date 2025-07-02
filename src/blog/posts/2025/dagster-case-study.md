@@ -14,7 +14,7 @@ Cet article présente une étude de cas sur l'utilisation de Dagster à la **Fé
 
 ---
 
-# De scripts éparpillés à une plateforme unifiée -- Comment Dagster alimente les décisions de données pour 4,5 millions de citoyens belges
+# De scripts éparpillés à une plateforme unifiée
 
 La Fédération Wallonie-Bruxelles de Belgique sert 4,5 millions de citoyens dans les domaines de l’éducation, de la culture et des services de jeunesse, mais ses systèmes de données hérités fragmentés créaient des cauchemars opérationnels : des processus manuels qui prenaient des mois, une visibilité de pipeline limitée et des dépendances d'outils propriétaires qui limitaient la flexibilité.
 
