@@ -9,26 +9,21 @@ tags:
   - orchestrator
 ---
 
-_Executive summary_: This is a case study about the use of Dagster in the Federation Wallonie-Bruxelles, Belgium, to modernize their data platform and improve data orchestration and observability.
-
-It is a translation of the original article available on [Dagster's website](https://dagster.io/blog/federation-wallonie-bruxelles-case-study) written by [Alex Noonan](https://www.linkedin.com/in/alexander-noonan).
+_Résumé_:
+Cet article présente une étude de cas sur l'utilisation de Dagster à la **Fédération Wallonie-Bruxelles**, en Belgique, pour moderniser leur plateforme de données et améliorer l'orchestration et l'observabilité des données. Il s'agit d'une traduction de l'article original disponible sur le [site de Dagster](https://dagster.io/blog/federation-wallonie-bruxelles-case-study), écrit par [Alex Noonan](https://www.linkedin.com/in/alexander-noonan).
 
 ---
 
-# De scripts éparpillés à une plateforme unifiée
+# De scripts éparpillés à une plateforme unifiée -- Comment Dagster alimente les décisions de données pour 4,5 millions de citoyens belges
 
-## Comment Dagster alimente les décisions de données pour 4,5 millions de citoyens belges
+La Fédération Wallonie-Bruxelles de Belgique sert 4,5 millions de citoyens dans les domaines de l’éducation, de la culture et des services de jeunesse, mais ses systèmes de données hérités fragmentés créaient des cauchemars opérationnels : des processus manuels qui prenaient des mois, une visibilité de pipeline limitée et des dépendances d'outils propriétaires qui limitaient la flexibilité.
 
-La Fédération Wallonie-Bruxelles de Belgique sert 4,5 millions de citoyens dans les domaines de l’éducation, de la culture et des services de jeunesse, mais ses systèmes de données hérités fragmentés créaient des cauchemars opérationnels : des processus manuels qui prenaient des mois, une visibilité de pipeline nulle et des dépendances d'outils propriétaires qui limitaient la flexibilité.
-
-L'ingénieur en données **Martin Erpicum** a dirigé la transformation vers une plateforme moderne et unifiée alimentée par Dagster, offrant des résultats transformationnels : une livraison de pipeline deux fois plus rapide, un passage de la maintenance réactive au développement proactif de produits de données, une visibilité complète des problèmes de qualité des données auparavant indétectables et des analyses en libre-service qui ont permis aux utilisateurs finaux de provisionner leurs propres tableaux de bord.
+L'ingénieur en données **Martin Erpicum** a dirigé la transformation vers une plateforme moderne et unifiée alimentée par Dagster, offrant des résultats efficaces : une livraison de pipeline deux fois plus rapide, un passage de la maintenance réactive au développement proactif de produits de données, une visibilité complète des problèmes de qualité des données auparavant indétectables et des analyses en libre-service qui ont permis aux utilisateurs finaux de provisionner leurs propres tableaux de bord.
 
 Cette étude de cas révèle comment une grande organisation gouvernementale a modernisé avec succès sa pile technologique tout en continuant à servir des millions de citoyens, prouvant que l’orchestration moderne des données peut fonctionner à grande échelle, même dans des environnements hautement réglementés.
 
 **Table des matières**
 [[toc]]
-
-## Contexte
 
 L’une des trois communautés linguistiques de la Belgique, la **Fédération Wallonie-Bruxelles** supervise l’éducation, le sport, la culture, les services de jeunesse, etc., pour 4,5 millions de citoyens — et gère des équipes composées de plus de 7000 personnes, réparties dans 5 administrations générales différentes et des centaines d'équipes/départements au sein du ministère. Avec une telle ampleur, l'organisation génère d'énormes quantités de données provenant des citoyens qu'elle sert et des organisations qu'elle subventionne. Mais les systèmes de données fragmentés et fermés de la FWB étaient lents, inaccessibles et trop souvent désespérément manuels.
 
