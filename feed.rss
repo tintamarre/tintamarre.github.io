@@ -4,10 +4,125 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Wed, 04 Jun 2025 06:36:41 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 02 Jul 2025 05:11:39 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[De scripts éparpillés à une plateforme unifiée]]></title>
+            <link>localhost/blog/blog/posts/2025/dagster-case-study.html</link>
+            <guid>localhost/blog/blog/posts/2025/dagster-case-study.html</guid>
+            <pubDate>Tue, 01 Jul 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[<p><em>Executive summary</em>: This is a case study about the use of Dagster in the Federation Wallonie-Bruxelles, Belgium, to modernize their data platform and improve data orchestration and observability.</p>
+<p>It is a translation of the original article available on <a href="https://dagster.io/blog/federation-wallonie-bruxelles-case-study" target="_blank" rel="noreferrer">Dagster's website</a> written by <a href="https://www.linkedin.com/in/alexander-noonan" target="_blank" rel="noreferrer">Alex Noonan</a>.</p>
+]]></description>
+            <content:encoded><![CDATA[<p><em>Executive summary</em>: This is a case study about the use of Dagster in the Federation Wallonie-Bruxelles, Belgium, to modernize their data platform and improve data orchestration and observability.</p>
+<p>It is a translation of the original article available on <a href="https://dagster.io/blog/federation-wallonie-bruxelles-case-study" target="_blank" rel="noreferrer">Dagster's website</a> written by <a href="https://www.linkedin.com/in/alexander-noonan" target="_blank" rel="noreferrer">Alex Noonan</a>.</p>
+<hr>
+<h1 id="de-scripts-eparpilles-a-une-plateforme-unifiee" tabindex="-1">De scripts éparpillés à une plateforme unifiée <a class="header-anchor" href="#de-scripts-eparpilles-a-une-plateforme-unifiee" aria-label="Permalink to &quot;De scripts éparpillés à une plateforme unifiée&quot;">&ZeroWidthSpace;</a></h1>
+<h2 id="comment-dagster-alimente-les-decisions-de-donnees-pour-4-5-millions-de-citoyens-belges" tabindex="-1">Comment Dagster alimente les décisions de données pour 4,5 millions de citoyens belges <a class="header-anchor" href="#comment-dagster-alimente-les-decisions-de-donnees-pour-4-5-millions-de-citoyens-belges" aria-label="Permalink to &quot;Comment Dagster alimente les décisions de données pour 4,5 millions de citoyens belges&quot;">&ZeroWidthSpace;</a></h2>
+<p>La Fédération Wallonie-Bruxelles de Belgique sert 4,5 millions de citoyens dans les domaines de l’éducation, de la culture et des services de jeunesse, mais ses systèmes de données hérités fragmentés créaient des cauchemars opérationnels : des processus manuels qui prenaient des mois, une visibilité de pipeline nulle et des dépendances d'outils propriétaires qui limitaient la flexibilité.</p>
+<p>L'ingénieur en données <strong>Martin Erpicum</strong> a dirigé la transformation vers une plateforme moderne et unifiée alimentée par Dagster, offrant des résultats transformationnels : une livraison de pipeline deux fois plus rapide, un passage de la maintenance réactive au développement proactif de produits de données, une visibilité complète des problèmes de qualité des données auparavant indétectables et des analyses en libre-service qui ont permis aux utilisateurs finaux de provisionner leurs propres tableaux de bord.</p>
+<p>Cette étude de cas révèle comment une grande organisation gouvernementale a modernisé avec succès sa pile technologique tout en continuant à servir des millions de citoyens, prouvant que l’orchestration moderne des données peut fonctionner à grande échelle, même dans des environnements hautement réglementés.</p>
+<p><strong>Table des matières</strong></p>
+<nav class="table-of-contents"><ul><li><a href="#comment-dagster-alimente-les-decisions-de-donnees-pour-4-5-millions-de-citoyens-belges">Comment Dagster alimente les décisions de données pour 4,5 millions de citoyens belges</a></li><li><a href="#contexte">Contexte</a></li><li><a href="#resultats-cles">Résultats clés</a></li><li><a href="#se-liberer-des-contraintes-des-outils-proprietaires">Se libérer des contraintes des outils propriétaires</a></li><li><a href="#choisir-la-flexibilite-et-les-pratiques-modernes-d-ingenierie">Choisir la flexibilité et les pratiques modernes d’ingénierie</a></li><li><a href="#construire-une-plateforme-de-donnees-orientee-developpeur-avec-dagster">Construire une plateforme de données orientée développeur avec Dagster</a></li><li><a href="#ameliorations-mesurables-de-fiabilite-et-de-productivite">Améliorations mesurables de fiabilité et de productivité</a></li><li><a href="#elargir-les-capacites-et-ajouter-de-l-ia">Élargir les capacités et ajouter de l&#39;IA</a></li></ul></nav>
+<h2 id="contexte" tabindex="-1">Contexte <a class="header-anchor" href="#contexte" aria-label="Permalink to &quot;Contexte&quot;">&ZeroWidthSpace;</a></h2>
+<p>L’une des trois communautés linguistiques de la Belgique, la <strong>Fédération Wallonie-Bruxelles</strong> supervise l’éducation, le sport, la culture, les services de jeunesse, etc., pour 4,5 millions de citoyens — et gère des équipes composées de plus de 7000 personnes, réparties dans 5 administrations générales différentes et des centaines d'équipes/départements au sein du ministère. Avec une telle ampleur, l'organisation génère d'énormes quantités de données provenant des citoyens qu'elle sert et des organisations qu'elle subventionne. Mais les systèmes de données fragmentés et fermés de la FWB étaient lents, inaccessibles et trop souvent désespérément manuels.</p>
+<p><strong>Martin Erpicum</strong> est ingénieur en données à la Fédération Wallonie-Bruxelles, où il a contribué à transformer le système hérité lourd de la FWB en une plateforme de données moderne et modulaire. Comme l'explique Martin à ses dirigeants, la flexibilité de Dagster permet à son équipe de répondre aux importants besoins organisationnels de la FWB sans être contraint par la plateforme. <strong>« Pas de verrouillage fournisseur signifie que 90 % de notre code peut être réutilisé n'importe où »</strong>, dit-il. « Et, après seulement dix mois d'utilisation, j'ai déjà vu plusieurs instances où les fonctionnalités de data observability de Dagster nous ont aidés à détecter et résoudre des problèmes qui seraient autrement passés inaperçus. »</p>
+<h2 id="resultats-cles" tabindex="-1">Résultats clés <a class="header-anchor" href="#resultats-cles" aria-label="Permalink to &quot;Résultats clés&quot;">&ZeroWidthSpace;</a></h2>
+<ul>
+<li><strong>Vitesse de pipeline doublée :</strong> Le temps de livrer des résultats à partir de données brutes aux outils BI réduit de plus de 50%</li>
+<li><strong>Réactif -&gt; proactif :</strong> Les équipes de données proposent désormais de manière proactive de nouveaux produits de données aux utilisateurs, au lieu de simplement répondre à des demandes</li>
+<li><strong>Visibilité débloquée :</strong> Les problèmes de qualité des données qui étaient auparavant indétectables sont désormais rapidement découverts et résolus grâce au plan de contrôle unifié de Dagster</li>
+<li><strong>Accessibilité nulle -&gt; libre-service :</strong> Les utilisateurs finaux provisionnent maintenant leurs propres tableaux de bord de données depuis un data mart toujours à jour</li>
+</ul>
+<h2 id="se-liberer-des-contraintes-des-outils-proprietaires" tabindex="-1">Se libérer des contraintes des outils propriétaires <a class="header-anchor" href="#se-liberer-des-contraintes-des-outils-proprietaires" aria-label="Permalink to &quot;Se libérer des contraintes des outils propriétaires&quot;">&ZeroWidthSpace;</a></h2>
+<p>À son arrivée à la Fédération Wallonie-Bruxelles, Martin a trouvé un ministère coincé dans un cycle de dette technique et d'inefficacité opérationnelle que de nombreuses grandes organisations reconnaîtront.</p>
+<p>L'architecture de données existante de la FWB avait évolué de manière organique au fil des années, créant un ensemble disparate de systèmes déconnectés qui entravaient plutôt qu'aidaient leur mission de servir efficacement les citoyens belges. L'équipe de Martin a eu du mal à suivre les changements ou à garantir la qualité des données, et ils souhaitaient pouvoir permettre aux utilisateurs de construire et maintenir leurs propres workflows de données.</p>
+<p>Les problèmes critiques qui ont motivé le changement incluent :</p>
+<ul>
+<li><strong>Dépendance aux outils propriétaires</strong> limitant la flexibilité et la transparence des opérations gouvernementales</li>
+<li><strong>Absence totale de contrôle de version</strong> pour les pipelines de données, rendant les modifications risquées et difficiles à suivre</li>
+<li><strong>Observabilité des données limitée ou inexistante</strong> concernant la santé du pipeline, la performance ou les échecs</li>
+<li><strong>Obstacles significatifs à l'intégration des utilisateurs</strong> empêchant les équipes de devenir autonomes avec les données</li>
+</ul>
+<p>La pile technique du ministère reflétait cette complexité, avec des données circulant de SQLServer, MySQL, PostgreSQL, Denodo, DB2, fichiers FTP et divers API vers leur Azure Data Lake et des outils BI comme PowerBI et Metabase.</p>
+<p>« La plupart des transformations de données devaient être effectuées manuellement ou via Excel », dit Martin.</p>
+<p>« C'était un cauchemar parce que chaque année nous devions tout reprocesser, et j'ai des collègues qui devaient passer deux ou trois mois à apporter des modifications à un ensemble de données. »</p>
+<h2 id="choisir-la-flexibilite-et-les-pratiques-modernes-d-ingenierie" tabindex="-1">Choisir la flexibilité et les pratiques modernes d’ingénierie <a class="header-anchor" href="#choisir-la-flexibilite-et-les-pratiques-modernes-d-ingenierie" aria-label="Permalink to &quot;Choisir la flexibilité et les pratiques modernes d’ingénierie&quot;">&ZeroWidthSpace;</a></h2>
+<p>Après avoir lutté avec des outils propriétaires et une architecture de données fragmentée, Martin et son équipe ont systématiquement évalué leurs options d'orchestration pour trouver une plateforme capable d'unifier leur écosystème complexe tout en offrant plus d'accessibilité aux utilisateurs d'analytique.</p>
+<p>Le ministère a testé plusieurs solutions, y compris TiMi, KNIME, Apache Airflow et Prefect avant de choisir Dagster. Leur expérience pratique avec Airflow pendant plusieurs semaines, suivie de mois avec Prefect, leur a donné des aperçus clairs de ce qu'ils devaient éviter. « Airflow n'était pas intuitif pour nos utilisateurs—l'interface utilisateur manquait d'amabilité, les concepts étaient difficiles à saisir et ses capacités de journalisation étaient limitées », explique Martin.</p>
+<p>Après une évaluation approfondie, Dagster est apparu comme le choix clair pour plusieurs raisons clés :</p>
+<ul>
+<li><strong>Architecture centrée sur les actifs :</strong> La focalisation de Dagster sur les actifs de données en tant que citoyens de première classe s'alignait parfaitement avec la façon dont leurs équipes conceptualisaient les workflows de données, plutôt que de simplement penser aux tâches et aux processus.</li>
+<li><strong>Expérience moderne de développeur :</strong> La plateforme offrait des workflows de développement propres, des capacités de test local et des meilleures pratiques en ingénierie logicielle que leurs équipes techniques appréciaient.</li>
+<li><strong>Observabilité avancée :</strong> Les capacités intégrées de surveillance et de débogage étaient essentielles pour gérer leur environnement de données complexe et hétérogène à travers de multiples sources et destinations.</li>
+<li><strong>Adaptabilité organisationnelle :</strong> L'architecture flexible de Dagster pouvait accueillir les cinq « Administrations Générales » de la FWB travaillant dans des domaines très différents.</li>
+<li><strong>Fondation à l'épreuve du futur :</strong> La plateforme pourrait servir à la fois leurs besoins d'orchestration immédiats et fournir une base pour des capacités avancées d'analytique et d'IA/ML.</li>
+</ul>
+<p>L'approche différenciée de Dagster a immédiatement résonné avec leurs besoins. L'architecture centrée sur les actifs s'alignait parfaitement avec la façon dont leurs équipes pensaient réellement aux données, tandis que l'expérience de développeur moderne promettait de surmonter la friction et l'inaccessibilité qui avaient historiquement empêché l'adoption généralisée des outils de données dans tout le ministère. « Dagster était particulièrement bien adapté à la structure polycéphale de notre organisation », dit Martin, faisant référence aux nombreuses administrations internes de la FWB, et notant que Dagster était la seule solution qu'ils avaient trouvée offrant une observabilité avancée des données à travers un domaine de données aussi divergent.</p>
+<blockquote>
+<p><em>Nous apprécions énormément que Dagster traite les actifs comme des citoyens de première classe dans son architecture. Cette capacité à suivre et à gérer de manière exhaustive les actifs de données tout au long de leur cycle de vie est cruciale pour nous.</em></p>
+</blockquote>
+<h2 id="construire-une-plateforme-de-donnees-orientee-developpeur-avec-dagster" tabindex="-1">Construire une plateforme de données orientée développeur avec Dagster <a class="header-anchor" href="#construire-une-plateforme-de-donnees-orientee-developpeur-avec-dagster" aria-label="Permalink to &quot;Construire une plateforme de données orientée développeur avec Dagster&quot;">&ZeroWidthSpace;</a></h2>
+<p>Plutôt que d'essayer une migration en un grand-bang, la Fédération Wallonie-Bruxelles a adopté une approche réfléchie par phases qui priorisait l'expérience développeur et la gestion du changement organisationnel — et beaucoup d'intégrations. « C'est un ministère du domaine public, et la littératie des données dans notre organisation n'est pas encore très bonne », dit Martin. « Nous savions que le succès de l'adoption ne serait que aussi bon que notre soutien pour nos utilisateurs. »</p>
+<p>L'approche stratégique de migration de la FWB comprenait :</p>
+<ul>
+<li><strong>Stratégie de déploiement par phases</strong> pour minimiser les perturbations et assurer des transitions en douceur</li>
+<li><strong>Soutien pratique aux utilisateurs</strong> avec des sessions d'intégration sur mesure pour chaque équipe</li>
+<li><strong>Programmes de formation complets</strong> couvrant les fondamentaux comme SQL, Python, Git, et Docker</li>
+<li><strong>Développement des meilleures pratiques</strong> pour assurer la cohérence et la qualité de l'ensemble du développement de pipeline</li>
+<li><strong>Création de packages Python personnalisés</strong> pour simplifier les interactions avec leur écosystème unique</li>
+</ul>
+<p>La mise en œuvre technique a montré des pratiques d'ingénierie sophistiquées qui maximisaient les capacités de Dagster tout en répondant aux exigences spécifiques du ministère :</p>
+<ul>
+<li><strong>Ressources personnalisées de Dagster et gestionnaires IO</strong> pour SQLServer, PostgreSQL, DB2, et diverses API</li>
+<li><strong>Intégration transparente de dbt</strong> en utilisant le support intégré de Dagster pour les workflows de transformation de données</li>
+<li><strong>Intégration de DuckDB</strong> pour un traitement et une analyse efficaces des données</li>
+<li><strong>Intégration de projet automatisée</strong> utilisant les sous-modules Git et les workflows automatisés</li>
+<li><strong>Automatisation de pipeline CI/CD GitLab</strong> avec tests, validation et déploiement sur une infrastructure Docker Swarm – fournie par notre partenaire informatique (<a href="https://etnic.be" target="_blank" rel="noreferrer">ETNIC</a>) – dans les environnements de branche de fonctionnalité, de mise en scène et de production</li>
+</ul>
+<p>L'une de leurs implémentations les plus innovantes démontre la puissance de traiter l'infrastructure comme du code : « Nous avons développé un workflow pour intégrer automatiquement les projets dbt dans nos emplacements de code Dagster.</p>
+<p>Ce workflow implique la séparation des référentiels de code pour les projets dbt et les emplacements de code Dagster.</p>
+<p>À chaque publication de projet dbt, nous incluons automatiquement le projet dbt comme sous-module Git dans l'emplacement de code Dagster. »</p>
+<p>Cette approche permet à leurs utilisateurs de tirer parti des projets dbt existants sans nécessiter une connaissance approfondie de Dagster, abaissant significativement la barrière à l'entrée tout en conservant les avantages de l'orchestration unifiée.</p>
+<blockquote>
+<p><em>Je voulais vraiment que nos analystes de données se sentent confiants et non intimidés — pour eux, même utiliser une CLI pouvait être difficile. Avec Dagster, nous pouvions leur donner leur propre environnement, inclus dans l'orchestration.</em></p>
+</blockquote>
+<h2 id="ameliorations-mesurables-de-fiabilite-et-de-productivite" tabindex="-1">Améliorations mesurables de fiabilité et de productivité <a class="header-anchor" href="#ameliorations-mesurables-de-fiabilite-et-de-productivite" aria-label="Permalink to &quot;Améliorations mesurables de fiabilité et de productivité&quot;">&ZeroWidthSpace;</a></h2>
+<p>Six mois après la mise en œuvre, la Fédération Wallonie-Bruxelles a atteint des résultats transformationnels qui démontrent l'impact de Dagster tant sur les opérations techniques que sur les résultats commerciaux. La combinaison de la fiabilité améliorée, de la productivité des développeurs renforcée et de la gestion proactive des données a fondamentalement changé la façon dont le ministère aborde les données.</p>
+<p>Les améliorations opérationnelles quantifiables de la FWB incluent :</p>
+<ul>
+<li><strong>Amélioration de la fiabilité des pipelines</strong> grâce à une surveillance et à des alertes complètes via les notifications MSTeams et NTFY</li>
+<li><strong>Résolution des problèmes plus rapide</strong> grâce aux fonctionnalités d'observabilité de Dagster pour une identification rapide des problèmes</li>
+<li><strong>Détection améliorée de la qualité des données</strong> aidant les développeurs de logiciels à identifier et résoudre les problèmes de données au niveau des applications</li>
+<li><strong>Réduction des perturbations opérationnelles</strong> grâce à une exécution de pipeline plus fiable et à un suivi</li>
+<li><strong>Confiance renforcée dans la prise de décision</strong> permettant la proposition proactive de nouveaux produits de données aux utilisateurs</li>
+</ul>
+<p>La transformation s'étend au-delà des simples métriques techniques à des changements culturels et organisationnels qui montrent comment la valeur plus large de l'orchestration moderne des données apporte des bénéfices organisationnels et stratégiques :</p>
+<ul>
+<li><strong>Passage du réactif au proactif</strong> dans le développement de produits de données et le support aux utilisateurs</li>
+<li><strong>Augmentation de la littératie des données</strong> dans toute l'organisation grâce à une amélioration de la formation et de la documentation</li>
+<li><strong>Confiance accrue des parties prenantes</strong> dans la qualité des données et les délais de livraison</li>
+<li><strong>Collaboration renforcée</strong> entre équipes techniques et non techniques</li>
+<li><strong>Fondation plus solide</strong> pour les futures initiatives d'IA/ML et d'analytique avancée</li>
+</ul>
+<p>L'automatisation du suivi de la qualité données du ministère illustre comment une observabilité adéquate transforme les opérations : « Nous avons mis en place un suivi des exécutions et des contrôles de qualité des données (avec notifications) pour nous assurer que nos pipelines de données fonctionnent aussi efficacement que possible », explique Martin.</p>
+<p>C'est ainsi, dit-il, que l'équipe de données de la FWB est passée de la découverte de problèmes seulement <em>après</em> que les tableaux de bord ont cessé de fonctionner à la prévention des problèmes avant qu'ils n'aient un impact sur les utilisateurs finaux — une capacité cruciale lors de la prestation de services gouvernementaux fiables à 4,5 millions de citoyens.</p>
+<h2 id="elargir-les-capacites-et-ajouter-de-l-ia" tabindex="-1">Élargir les capacités et ajouter de l'IA <a class="header-anchor" href="#elargir-les-capacites-et-ajouter-de-l-ia" aria-label="Permalink to &quot;Élargir les capacités et ajouter de l'IA&quot;">&ZeroWidthSpace;</a></h2>
+<p>La Fédération Wallonie-Bruxelles voit Dagster comme la base pour des prochaines étapes ambitieuses qui permettront de démocratiser davantage l'accès aux données et, éventuellement, de tirer parti des technologies de pointe en IA et en apprentissage automatique pour mieux servir ses citoyens.</p>
+<p>Les priorités immédiates du plan d'action de la FWB incluent :</p>
+<ul>
+<li><strong>Assistance utilisateur alimentée par l'IA</strong> grâce à l'intégration du service MCP reliant la documentation de leur bibliothèque Dagster personnalisée à un LLM pour une aide personnalisée et contextuelle</li>
+<li><strong>Meilleure intégration des utilisateurs</strong> en explorant le nouveau dg CLI de Dagster pour simplifier davantage l'adoption par les utilisateurs</li>
+<li><strong>Capacités d'analytique avancée</strong> en s'appuyant sur leur base d'orchestration solide pour prendre en charge des charges de travail IA/ML croissantes</li>
+</ul>
+<p>La vision à long terme du ministère positionne Dagster comme le composant central dans un écosystème de données complet qui soutient des services de données unifiés et efficaces répondant aux besoins de tous les parties prenantes tout en promouvant la littératie des données et les meilleures pratiques en ingénierie dans toute l'organisation.</p>
+<blockquote>
+<p>&quot;Nous envisageons d'intégrer un service MCP qui relie notre documentation de bibliothèque Dagster personnalisée et nos capacités de découverte de données à un LLM, permettant une assistance personnalisée et contextuelle pour nos utilisateurs&quot;, explique Martin. &quot;Grâce à Dagster, dbt, DuckDB et notre data lake, nous construisons les bases d'une plateforme de données qui peut croître et s'adapter pour soutenir les besoins de notre organisation pendant très longtemps.&quot;</p>
+</blockquote>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Address lookup - Part 3 - API]]></title>
             <link>localhost/blog/blog/posts/2025/address_lookup-part3-api.html</link>
