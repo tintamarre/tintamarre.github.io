@@ -117,4 +117,4 @@ As most of our users are not trained data professionals, we've developed several
 Stay tuned for the next articles in this series:
 
 - [Part 2: Deep dive into our automation strategy with practical GitLab CI/CD examples](/blog/posts/2025/data_platform_in_fwb_01_automate)
-- [Part 3: How custom resources and training helps lower the barrier](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier)
+<!-- - [Part 3: How custom resources and training helps lower the barrier](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier) -->
