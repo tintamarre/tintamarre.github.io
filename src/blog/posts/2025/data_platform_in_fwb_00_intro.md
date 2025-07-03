@@ -34,7 +34,7 @@ The Ministry of FWB (MFWB) is a complex organization with multiple entities call
 
 > This polycephalous nature of the organization makes it challenging to govern and implement a unified data platform that meets the needs of all stakeholders.
 
-<ImageCenter src="/assets/images/data_gov_fwb.png" alt="" width="400" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/data_gov_fwb.png" alt="" width="400" />
 
 ## What is our data strategy?
 
@@ -73,7 +73,7 @@ A data stack is usually composed of several components that work together to man
 
 Our data stack currently includes several components:
 
-<ImageCenter src="/assets/diagrams/fwb_tech_stack.drawio.svg" alt="" width="600" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/fwb_tech_stack.drawio.svg" alt="" width="600" />
 
 We also tried several tools before settling on what we have today. The goal was to find a solution that would be flexible, auditable, transparent, and scalable. By "auditable", we mean a system where every action and modification can be tracked, logged, and reviewed to ensure accountability and compliance.
 

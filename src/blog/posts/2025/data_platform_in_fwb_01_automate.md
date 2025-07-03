@@ -221,11 +221,11 @@ notify-teams-markdown:
 
 The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our data pipelines, detect issues early, and ensure the quality of our data.
 
-<ImageCenter src="/assets/images/250px-Panopticon.jpg" alt="" width="200" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/250px-Panopticon.jpg" alt="" width="200" />
 
 Acting like a **centralized observability hub**, we use webhooks to send notifications (Throught MS Teams, NTFY or Email). This allows us to have a clear overview of the status of our data pipelines and the health of our data platform.
 
-<ImageCenter src="/assets/images/ms-team-panopticon.png" alt="" width="400" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ms-team-panopticon.png" alt="" width="600" />
 
 ## Conclusion
 
