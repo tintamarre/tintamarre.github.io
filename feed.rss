@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Thu, 03 Jul 2025 15:34:20 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 03 Jul 2025 15:41:23 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -276,7 +276,7 @@ The API is organized using FastAPI's router system, with the main address-relate
 <blockquote>
 <p>This polycephalous nature of the organization makes it challenging to govern and implement a unified data platform that meets the needs of all stakeholders.</p>
 </blockquote>
-<ImageCenter src="/assets/images/data_gov_fwb.png" alt="" width="400" /><h2 id="what-is-our-data-strategy" tabindex="-1">What is our data strategy? <a class="header-anchor" href="#what-is-our-data-strategy" aria-label="Permalink to &quot;What is our data strategy?&quot;">&ZeroWidthSpace;</a></h2>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/data_gov_fwb.png" alt="" width="400" /><h2 id="what-is-our-data-strategy" tabindex="-1">What is our data strategy? <a class="header-anchor" href="#what-is-our-data-strategy" aria-label="Permalink to &quot;What is our data strategy?&quot;">&ZeroWidthSpace;</a></h2>
 <p>The data strategy of the French-speaking Community of Belgium (FWB), known as &quot;Données au Centre,&quot; has been in place since 2020 and aims to enhance data management and exploitation to improve service delivery and governance.</p>
 <p>Key elements of the strategy include:</p>
 <ul>
@@ -304,7 +304,7 @@ The API is organized using FastAPI's router system, with the main address-relate
 <li><strong>Dashboard</strong>: This is where data is presented in a way that is easy to understand and analyze. It can include dashboards, reports, and other visualization tools.</li>
 </ul>
 <p>Our data stack currently includes several components:</p>
-<ImageCenter src="/assets/diagrams/fwb_tech_stack.drawio.svg" alt="" width="600" /><p>We also tried several tools before settling on what we have today. The goal was to find a solution that would be flexible, auditable, transparent, and scalable. By &quot;auditable&quot;, we mean a system where every action and modification can be tracked, logged, and reviewed to ensure accountability and compliance.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/fwb_tech_stack.drawio.svg" alt="" width="600" /><p>We also tried several tools before settling on what we have today. The goal was to find a solution that would be flexible, auditable, transparent, and scalable. By &quot;auditable&quot;, we mean a system where every action and modification can be tracked, logged, and reviewed to ensure accountability and compliance.</p>
 <p>We also wanted to avoid <em>vendor lock-in</em> and ensure that the solution could be adapted to the needs of the organization and the level of technical expertise of the users.</p>
 <p>Based on those requirements, in terms of orchestrators, we tried <strong>Airflow</strong> for a few weeks and relied on <strong>Prefect</strong> for a few months. We then decided to switch to <strong>Dagster</strong>, for a set of reasons:</p>
 <ul>
@@ -514,8 +514,8 @@ This allows each AG to manage its own data pipelines independently and have a cl
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">extends</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">.msteamsMarkdownNotification</span></span></code></pre>
 </div><h2 id="automate-observability" tabindex="-1">Automate observability <a class="header-anchor" href="#automate-observability" aria-label="Permalink to &quot;Automate observability&quot;">&ZeroWidthSpace;</a></h2>
 <p>The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our data pipelines, detect issues early, and ensure the quality of our data.</p>
-<ImageCenter src="/assets/images/250px-Panopticon.jpg" alt="" width="200" /><p>Acting like a <strong>centralized observability hub</strong>, we use webhooks to send notifications (Throught MS Teams, NTFY or Email). This allows us to have a clear overview of the status of our data pipelines and the health of our data platform.</p>
-<ImageCenter src="/assets/images/ms-team-panopticon.png" alt="" width="400" /><h2 id="conclusion" tabindex="-1">Conclusion <a class="header-anchor" href="#conclusion" aria-label="Permalink to &quot;Conclusion&quot;">&ZeroWidthSpace;</a></h2>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/250px-Panopticon.jpg" alt="" width="200" /><p>Acting like a <strong>centralized observability hub</strong>, we use webhooks to send notifications (Throught MS Teams, NTFY or Email). This allows us to have a clear overview of the status of our data pipelines and the health of our data platform.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ms-team-panopticon.png" alt="" width="600" /><h2 id="conclusion" tabindex="-1">Conclusion <a class="header-anchor" href="#conclusion" aria-label="Permalink to &quot;Conclusion&quot;">&ZeroWidthSpace;</a></h2>
 <p>In this article, we have explored how to automate the deployment of data pipelines in a polycephalous organization like the FWB. We have seen how to use Dagster as an orchestrator, dbt-core for data transformations, and GitLab CI/CD for automating the deployment process.</p>
 <p>We have also discussed the importance of modularity and reusability of components to lower the technical barrier for data analysts and data stewards. By automating the deployment process, we can ensure that every commit is tested and validated before being deployed to production, which encourages participation from data analysts and data stewards in the development of data pipelines.</p>
 <p>But as stated in the introduction, the level of participation is inversely proportional to the technical barrier. The more complex the setup, the less likely data analysts and data stewards will participate in the development of data pipelines.</p>
