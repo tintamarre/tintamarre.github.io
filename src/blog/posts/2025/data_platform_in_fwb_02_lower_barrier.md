@@ -42,7 +42,7 @@ Since our Data Platform leverage multipls code locations, and that we want to fa
 
 Our **dagster-cfwb package** contains all the Dagster resources that we need to connect to our data sources. This library is used by most of jobs and pipelines in our data platform. It includes resources for connecting to various databases (postgresql, mssql, mysql, db2, ...), APIs (denodo, custom api, oauth2, ...), and other data sources (lakehouse, ftp, nfs ...). It also includes custom components that can be used to perform common tasks, such as importing data from Denodo, storing to the data lakehouse and reporting metadata.
 
-This library is also extensively documented (directly visible in the Dagster UI) and tested with unit/integration tests during our Gitlab CI/CD pipeline.
+This library is also extensively documented (directly visible in the Dagster UI), versioned and tested with unit/integration tests during our Gitlab CI/CD pipeline.
 
 To illustrate this, let's take a look at the `AzureAdlsResource` and `PostgreSQLResource` resources that we implemented in the `dagster-cfwb` library. These resources are used to connect to an Azure Data Lake Storage (ADLS) and a PostgreSQL database, respectively.
 
@@ -80,13 +80,30 @@ As you can see, the `AzureAdlsResource` and `PostgreSQLResource` resources are u
 
 ## 📖 Level up the data literacy
 
-- Train the data engineers and stewards
-- Write documentation as much as possible
-- document everything
-- training
+As stated in the introduction, in our organisation very few people are trained in data management and programmation. To overcome this challenge, we communicate a lot about our data platform, we train our users, and we provide them with the necessary tools to understand and use the data platform.
 
-<ImageCenter src="https://i.imgur.com/GtduQZ6.png" alt="Dagster UI" width="400" />
+### Communicate about the data platform
 
-<ImageCenter src="https://i.imgur.com/bEy2kU2.png" alt="Dagster UI" width="400" />
+Like show in this image below, we try to use simple yet powerful images to explain the data platform and its components. This helps a lot our stakeholders to understand the data platform, and more importantly, the benefits it brings to the organization.
 
-<ImageCenter src="https://i.imgur.com/zwhAa9D.png" alt="Dagster UI" width="400" />
+<ImageCenter src="https://i.imgur.com/bEy2kU2.png" alt="" width="800" />
+
+### Train the users
+
+We also provide training sessions to our users to help them understand the data platform and how to use it. These training sessions are tailored to the level of technical expertise of the users, and cover topics such as: SQL, Python, Git, Docker, Lakehouse, Data modeling, Data visualisation, etc.
+
+<ImageCenter src="https://i.imgur.com/GtduQZ6.png" alt="" width="400" />
+
+<ImageCenter src="https://i.imgur.com/zwhAa9D.png" alt="" width="400" />
+
+### Build a community to share knowledge
+
+Last but not least, we try to build a [community or practices](https://en.wikipedia.org/wiki/Community_of_practice) of data analysts and data stewards to share knowledge and best practices. We call it "Communauté des intendants de données" (Community of Data Stewards). This community is open to all data analysts and data stewards in the organization, regardless of their level of technical expertise.
+
+We organise regular meetings to discuss to share experiences, and help each other with the challenges we face. This helps to create a culture of data literacy and encourages users to participate in the development of data pipelines.
+
+## Conclusion
+
+In the series of articles, we have explored the implementation of a Data Platform based on Dagster for the Fédération Wallonie-Bruxelles (FWB). We have discussed the architecture of our data platform, the automation of our data pipelines, and how we lower the technical barrier for our users and improve their data literacy. We enjoyed building this data platform and we hope that this series of articles will help you to build your own data platform with Open Source tools.
+
+We also hope that this series of articles will help you to understand the challenges of building a data platform in a polycephalous organization and how to overcome them.
