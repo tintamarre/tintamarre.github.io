@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Fri, 04 Jul 2025 13:30:25 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 04 Jul 2025 13:34:18 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -19,7 +19,7 @@
 <hr>
 <p><em>The views expressed on this website are my own and do not necessarily reflect the views of my employer.</em></p>
 <p><strong>Table of contents</strong></p>
-<nav class="table-of-contents"><ul><li><a href="#🧑‍💻-code-reusability">🧑‍💻 Code reusability</a><ul><li><a href="#implement-a-common-library">Implement a common library</a></li><li><a href="#use-llm-to-help-users">Use LLM to help users</a></li></ul></li><li><a href="#📖-level-up-the-data-literacy">📖 Level up the data literacy</a><ul><li><a href="#communicate-about-the-data-platform">Communicate about the data platform</a></li><li><a href="#train-the-users">Train the users</a></li><li><a href="#build-a-community-to-share-knowledge">Build a community to share knowledge</a></li></ul></li><li><a href="#📝-conclusion">📝 Conclusion</a></li></ul></nav>
+<nav class="table-of-contents"><ul><li><a href="#🧑‍💻-code-reusability">🧑‍💻 Code reusability</a><ul><li><a href="#implement-a-common-library">Implement a common library</a></li><li><a href="#wiki-and-documentation">Wiki and documentation</a></li><li><a href="#use-llm-to-help-users">Use LLM to help users</a></li></ul></li><li><a href="#📖-level-up-the-data-literacy">📖 Level up the data literacy</a><ul><li><a href="#communicate-about-the-data-platform">Communicate about the data platform</a></li><li><a href="#train-the-users">Train the users</a></li><li><a href="#build-a-community-to-share-knowledge">Build a community to share knowledge</a></li></ul></li><li><a href="#📝-conclusion">📝 Conclusion</a></li></ul></nav>
 <p>After the first two articles in this series, which focused on the <a href="/blog/posts/2025/data_platform_in_fwb_00_intro.html">architecture of our data platform</a> and the <a href="/blog/posts/2025/data_platform_in_fwb_01_automate.html">automation of our data pipelines</a>, this article will discuss how we lower the technical barrier for our users and improve their data literacy.</p>
 <p>There are two main aspects to this:</p>
 <ul>
@@ -65,6 +65,8 @@
 <span class="line"><span style="color: #82AAFF">                </span><span style="color: #89DDFF">},</span></span>
 <span class="line"><span style="color: #82AAFF">        </span><span style="color: #89DDFF">)</span></span></code></pre>
 </div><p>As you can see, the <code>AzureAdlsResource</code> and <code>PostgreSQLResource</code> resources are used to connect to the Azure Data Lake Storage and PostgreSQL database, respectively. The <code>gld_example</code> asset uses these resources to query data from the Azure Data Lake Storage and copy it to the PostgreSQL database. All the logic is encapsulated in the <code>dagster-cfwb</code> library, which makes it very easy to reuse this code.</p>
+<h3 id="wiki-and-documentation" tabindex="-1">Wiki and documentation <a class="header-anchor" href="#wiki-and-documentation" aria-label="Permalink to &quot;Wiki and documentation&quot;">&ZeroWidthSpace;</a></h3>
+<p>To further lower the technical barrier, we maintain a Wiki that provides documentation on how to use the <code>dagster-cfwb</code> library, how to write Dagster jobs and pipelines, and how to use the data platform. We also document some best practices, coding standards, deployment processes and provide examples of how to use the resources and components in the <code>dagster-cfwb</code> library.</p>
 <h3 id="use-llm-to-help-users" tabindex="-1">Use LLM to help users <a class="header-anchor" href="#use-llm-to-help-users" aria-label="Permalink to &quot;Use LLM to help users&quot;">&ZeroWidthSpace;</a></h3>
 <p>To further lower the technical barrier, we are currenlty exploring the use of Large Language Models (LLMs) through a dedicated MCP server to help users write their own Dagster jobs and pipelines. This will allow our data professionals to focus on the business logic of their data pipelines, rather than the technical details of how to connect to the data sources.</p>
 <h2 id="📖-level-up-the-data-literacy" tabindex="-1">📖 Level up the data literacy <a class="header-anchor" href="#📖-level-up-the-data-literacy" aria-label="Permalink to &quot;📖 Level up the data literacy&quot;">&ZeroWidthSpace;</a></h2>
