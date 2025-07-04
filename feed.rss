@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Fri, 04 Jul 2025 09:39:29 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 04 Jul 2025 10:03:01 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -506,10 +506,11 @@ The API is organized using FastAPI's router system, with the main address-relate
 <li><strong>Components</strong> (still kind of new) are used to define reusable pieces of code with <code>YAML</code> that can be used in multiple jobs or pipelines.</li>
 </ul>
 <p>The two concepts are closely related, as resources are often used in components to connect to external systems.</p>
-<p>Since our Data Platform leverage multipls code locations, and that we want to facilitate the onboarding of new data engineers, we need to build a common python library that contains all the resources, components and customs libs that we need to connect to our data sources. We called this library <code>dagster-cfwb</code>.</p>
+<p>Since our Data Platform leverage multipls code locations, and that we want to facilitate the onboarding of new data engineers, we need to build a common python library that contains all the resources, components and customs libs (utils) that we need to connect to our data sources. We called this library <code>dagster-cfwb</code>.</p>
 <h3 id="implement-common-library-dagster-cfwb-corresponding-to-our-specific-need" tabindex="-1">Implement common library <code>dagster-cfwb</code> corresponding to our specific need <a class="header-anchor" href="#implement-common-library-dagster-cfwb-corresponding-to-our-specific-need" aria-label="Permalink to &quot;Implement common library `dagster-cfwb` corresponding to our specific need&quot;">&ZeroWidthSpace;</a></h3>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_cfwb.drawio.png" alt="" width="400" /><p>Our dagster-cfwb package contains all the Dagster resources that we need to connect to our data sources. This library is used by most of jobs and pipelines in our data platform. It includes resources for connecting to various databases (postgresql, mssql, mysql, db2, ...), APIs (denodo, custom api, oauth2, ...), and other data sources (lakehouse, ftp, nfs ...). It also includes custom components that can be used to perform common tasks, such as importing data from Denodo, storing to the data lakehouse and reporting metadata.</p>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_cfwb.drawio.svg" alt="" width="600" /><p>To illustrate this, let's take a look at the <code>AzureAdlsResource</code> and <code>PostgreSQLResource</code> resources that we implemented in the <code>dagster-cfwb</code> library. These resources are used to connect to an Azure Data Lake Storage (ADLS) and a PostgreSQL database, respectively.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_cfwb.drawio.png" alt="" width="400" /><p>Our <strong>dagster-cfwb package</strong> contains all the Dagster resources that we need to connect to our data sources. This library is used by most of jobs and pipelines in our data platform. It includes resources for connecting to various databases (postgresql, mssql, mysql, db2, ...), APIs (denodo, custom api, oauth2, ...), and other data sources (lakehouse, ftp, nfs ...). It also includes custom components that can be used to perform common tasks, such as importing data from Denodo, storing to the data lakehouse and reporting metadata.</p>
+<p>This library is also extensively documented (directly visible in the Dagster UI) and tested with unit/integration tests during our Gitlab CI/CD pipeline.</p>
+<p>To illustrate this, let's take a look at the <code>AzureAdlsResource</code> and <code>PostgreSQLResource</code> resources that we implemented in the <code>dagster-cfwb</code> library. These resources are used to connect to an Azure Data Lake Storage (ADLS) and a PostgreSQL database, respectively.</p>
 <div class="language-python"><button title="Copy Code" class="copy"></button><span class="lang">python</span><pre v-pre class="shiki material-theme-palenight has-focused-lines" ><code><span class="line has-focus"><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #BABED8"> dagster_cfwb</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">resources</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">lakehouse</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">azure_adls_resource </span><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #BABED8"> AzureAdlsResource </span></span>
 <span class="line has-focus"><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #BABED8"> dagster_cfwb</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">resources</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">db</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">postgresql_resource </span><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #BABED8"> PostgreSQLResource </span></span>
 <span class="line"></span>
@@ -544,7 +545,7 @@ The API is organized using FastAPI's router system, with the main address-relate
 <li>document everything</li>
 <li>training</li>
 </ul>
-]]></content:encoded>
+<ImageCenter src="https://i.imgur.com/GtduQZ6.png" alt="Dagster UI" width="400" /><ImageCenter src="https://i.imgur.com/bEy2kU2.png" alt="Dagster UI" width="400" /><ImageCenter src="https://i.imgur.com/zwhAa9D.png" alt="Dagster UI" width="400" />]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[Comment savoir si on peut réutiliser un calendrier pour une année donnée en SQL ?]]></title>
