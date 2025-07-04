@@ -149,27 +149,18 @@ When a new release is created, the DBT project is automatically versioned using 
 
 ```yaml
 # .gitlab-ci.yml
-sqlfluff:
-  stage: test
+sqlfluff: [!code focus]
   allow_failure: true
-  image: gitlab.**.com/**:stable
   script:
-    - echo "Running SQLFluff linting..."
     - sqlfluff lint models
 
 [...]
-dbt_parse:
-  stage: test
-  image: gitlab.**.com/**:stable
+dbt_parse: [!code focus]
   script:
     [...]
-    - dbt deps
     - dbt parse
 
-release:
-  variables:
-    FILETOCHANGE: "${CI_PROJECT_DIR}/${DBT_PATH}/dbt_project.yml"
-    GSG_BUMP_PATCH: true
+release: [!code focus]
   script:
     - VERSION=$(release next-version)
     - |
@@ -177,15 +168,12 @@ release:
     - release changelog
     - release commit-and-tag --create-tag-pipeline CHANGELOG.md ${DBT_PATH}/dbt_project.yml // [!code focus]
 
-dagster_submodule:
-  stage: build
+dagster_submodule: [!code focus]
   rules:
     - if: "$CI_COMMIT_TAG"
-  image: gitlab.**.com/**:stable
   script:
     [...]
     # Initialize the dbt project
-    - dbt deps
     - dbt parse
     - mv logs/dbt.log logs/dbt_init_parse.log
     # Add and commit the changes if there are any
@@ -195,26 +183,13 @@ dagster_submodule:
     - git push origin dagster_submodule // [!code focus]
 
 # This step publishes an artifact for DBT docs.
-pages:
+pages: [!code focus]
   stage: dbt_docs
   only:
     - main
-  image: gitlab.**.com/**:stable
-
   script:
     [...]
-    - dbt deps
     - dbt docs generate // [!code focus]
-    [...]
-artifacts:
-    paths:
-      - public
-
-notify-teams-markdown:
-  stage: notify
-  rules:
-    - if: "$CI_COMMIT_TAG"
-  extends: .msteamsMarkdownNotification
 ```
 
 ## Automate observability
