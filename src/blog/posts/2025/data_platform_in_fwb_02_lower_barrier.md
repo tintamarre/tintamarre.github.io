@@ -78,6 +78,10 @@ def gld_example( // [!code focus]
 
 As you can see, the `AzureAdlsResource` and `PostgreSQLResource` resources are used to connect to the Azure Data Lake Storage and PostgreSQL database, respectively. The `gld_example` asset uses these resources to query data from the Azure Data Lake Storage and copy it to the PostgreSQL database. All the logic is encapsulated in the `dagster-cfwb` library, which makes it very easy to reuse this code.
 
+### Wiki and documentation
+
+To further lower the technical barrier, we maintain a Wiki that provides documentation on how to use the `dagster-cfwb` library, how to write Dagster jobs and pipelines, and how to use the data platform. We also document some best practices, coding standards, deployment processes and provide examples of how to use the resources and components in the `dagster-cfwb` library.
+
 ### Use LLM to help users
 
 To further lower the technical barrier, we are currenlty exploring the use of Large Language Models (LLMs) through a dedicated MCP server to help users write their own Dagster jobs and pipelines. This will allow our data professionals to focus on the business logic of their data pipelines, rather than the technical details of how to connect to the data sources.
