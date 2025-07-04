@@ -4,12 +4,12 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Fri, 04 Jul 2025 08:05:50 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 04 Jul 2025 09:39:29 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Data Platform - Part 2: Automate everything]]></title>
+            <title><![CDATA[Data Platform - Part 2: Automate everything 🤖]]></title>
             <link>localhost/blog/blog/posts/2025/data_platform_in_fwb_01_automate.html</link>
             <guid>localhost/blog/blog/posts/2025/data_platform_in_fwb_01_automate.html</guid>
             <pubDate>Fri, 04 Jul 2025 00:00:00 GMT</pubDate>
@@ -19,10 +19,10 @@
 <hr>
 <p><em>The views expressed on this website are my own and do not necessarily reflect the views of my employer.</em></p>
 <p><strong>Table of contents</strong></p>
-<nav class="table-of-contents"><ul><li><a href="#architecture-of-our-data-platform">Architecture of our Data Platform</a><ul><li><a href="#code-locations-structure">Code locations structure</a></li></ul></li><li><a href="#automate-ci-cd">Automate CI/CD</a><ul><li><a href="#ci-cd-flow">CI/CD flow</a></li><li><a href="#our-deployment-setup">Our deployment setup</a></li><li><a href="#automate-integration-of-dbt">Automate integration of DBT</a></li></ul></li><li><a href="#automate-observability">Automate observability</a></li><li><a href="#conclusion">Conclusion</a></li></ul></nav>
+<nav class="table-of-contents"><ul><li><a href="#🏗️-technical-architecture-of-our-data-platform">🏗️ Technical Architecture of our Data Platform</a><ul><li><a href="#code-locations-structure">Code locations structure</a></li></ul></li><li><a href="#🤖-automate-ci-cd">🤖 Automate CI/CD</a><ul><li><a href="#ci-cd-flow">CI/CD flow</a></li><li><a href="#our-deployment-setup">Our deployment setup</a></li><li><a href="#automate-integration-of-dbt">Automate integration of DBT</a></li></ul></li><li><a href="#👀-automate-observability">👀 Automate observability</a></li><li><a href="#📝-conclusion">📝 Conclusion</a></li></ul></nav>
 <p>If you want to encourage data analysts and data stewards to participate in the development of data pipelines, you need to ensure every commit is tested and validated before being deployed to production. You also want to automate repetitive tasks to reduce the technical barrier as much as possible. In addition, you want to setup a solid observability system to monitor the health of your systems and data pipelines and detect issues early.</p>
 <p>To explain how we automate the deployment of data pipelines, I will first describe the architecture of our data platform.</p>
-<h2 id="architecture-of-our-data-platform" tabindex="-1">Architecture of our Data Platform <a class="header-anchor" href="#architecture-of-our-data-platform" aria-label="Permalink to &quot;Architecture of our Data Platform&quot;">&ZeroWidthSpace;</a></h2>
+<h2 id="🏗️-technical-architecture-of-our-data-platform" tabindex="-1">🏗️ Technical Architecture of our Data Platform <a class="header-anchor" href="#🏗️-technical-architecture-of-our-data-platform" aria-label="Permalink to &quot;🏗️ Technical Architecture of our Data Platform&quot;">&ZeroWidthSpace;</a></h2>
 <p>Our stack is currently based on the following components:</p>
 <ul>
 <li><strong>Dagster</strong>: The orchestrator of our data pipelines. It allows us to define, schedule, and monitor our data workflows.</li>
@@ -37,7 +37,7 @@
 <h3 id="code-locations-structure" tabindex="-1">Code locations structure <a class="header-anchor" href="#code-locations-structure" aria-label="Permalink to &quot;Code locations structure&quot;">&ZeroWidthSpace;</a></h3>
 <p>To allow each administration générale (AG) to own its repository (a <strong>code location</strong> in Dagster vocabulary)—which contains the Dagster code location for the data pipelines of that AG—we decided to <strong>mirror the organizational structure of the FWB into the architecture of our data platform</strong>. We also use distinct code locations for specific projects that are not tied to a specific AG.
 This allows each AG to manage its own data pipelines independently and have clear ownership of the code. The code locations are then aggregated into a single Dagster instance, which is the data platform.</p>
-<h4 id="structure-of-our-code-locations-folder" tabindex="-1">Structure of our code locations folder <a class="header-anchor" href="#structure-of-our-code-locations-folder" aria-label="Permalink to &quot;Structure of our code locations folder&quot;">&ZeroWidthSpace;</a></h4>
+<h4 id="🗂️-structure-of-our-code-locations-folder" tabindex="-1">🗂️ Structure of our code locations folder <a class="header-anchor" href="#🗂️-structure-of-our-code-locations-folder" aria-label="Permalink to &quot;🗂️ Structure of our code locations folder&quot;">&ZeroWidthSpace;</a></h4>
 <div class="language-bash"><button title="Copy Code" class="copy"></button><span class="lang">bash</span><pre v-pre class="shiki material-theme-palenight" ><code><span class="line"><span style="color: #FFCB6B">dagster_home</span><span style="color: #BABED8"> (main) $ tree -L 1</span></span>
 <span class="line"><span style="color: #82AAFF">.</span></span>
 <span class="line"><span style="color: #FFCB6B">├──</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">ags_project</span></span>
@@ -46,25 +46,25 @@ This allows each AG to manage its own data pipelines independently and have clea
 <span class="line"><span style="color: #FFCB6B">├──</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">data_platform</span><span style="color: #BABED8"> </span><span style="color: #676E95; font-style: italic"># our generic code location</span></span>
 <span class="line"><span style="color: #FFCB6B">├──</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dagster.yaml</span></span>
 <span class="line"><span style="color: #FFCB6B">└──</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">workspace.yaml</span></span></code></pre>
-</div><h2 id="automate-ci-cd" tabindex="-1">Automate CI/CD <a class="header-anchor" href="#automate-ci-cd" aria-label="Permalink to &quot;Automate CI/CD&quot;">&ZeroWidthSpace;</a></h2>
+</div><h2 id="🤖-automate-ci-cd" tabindex="-1">🤖 Automate CI/CD <a class="header-anchor" href="#🤖-automate-ci-cd" aria-label="Permalink to &quot;🤖 Automate CI/CD&quot;">&ZeroWidthSpace;</a></h2>
 <h3 id="ci-cd-flow" tabindex="-1">CI/CD flow <a class="header-anchor" href="#ci-cd-flow" aria-label="Permalink to &quot;CI/CD flow&quot;">&ZeroWidthSpace;</a></h3>
 <p>Our deployment setup is based on GitLab CI/CD pipelines. The flow is as follows:</p>
 <ol start="0">
 <li><strong>Submodules integration</strong>: DBT projects are integrated as a Git submodule in the main repository. This allows us to include the work of data stewards and analysts in the data platform without having to duplicate code or maintain separate repositories.</li>
 <li><strong>Build</strong>: The code is built and packaged into a Docker image; the same image is used for Webserver, Daemon, and Code locations.</li>
 <li><strong>Validate definitions</strong>: The Dagster definitions are validated to ensure they are correct and do not contain any errors.</li>
-<li><strong>Ruff</strong>: The code is checked for style and formatting issues using Ruff.</li>
+<li><strong>Ruff</strong>: The code is checked for style and formatting issues using <a href="https://docs.astral.sh/ruff/" target="_blank" rel="noreferrer">Ruff</a>.</li>
 <li><strong>Sonar</strong>: The code is analyzed for quality and security issues using <a href="https://www.sonarqube.org/" target="_blank" rel="noreferrer">SonarQube</a>.</li>
 <li><strong>Test</strong>: The code is tested using <a href="https://docs.pytest.org/en/stable/" target="_blank" rel="noreferrer">pytest</a> for unit tests, integration tests, and coverage analysis.</li>
-<li><strong>Deploy to dev</strong>: The code is deployed to the development environment for each commit in the main branch or feature branch.</li>
+<li><strong>Deploy to DEV</strong>: The code is deployed to the development environment for each commit in the main branch or feature branch.</li>
 <li><strong>Release</strong>: A new release is created in GitLab, a tag and a changelog are generated.</li>
-<li><strong>Deploy to prod</strong>: The code is deployed to the production environment.</li>
+<li><strong>Deploy to PROD</strong>: The code is deployed to the production environment.</li>
 </ol>
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_flow_stack.drawio.png" alt="" width="800" /><p>Below is an example of how we implement this flow in our <code>.gitlab-ci.yml</code> file.</p>
 <h4 id="validate-definitions" tabindex="-1">Validate definitions <a class="header-anchor" href="#validate-definitions" aria-label="Permalink to &quot;Validate definitions&quot;">&ZeroWidthSpace;</a></h4>
 <div class="language-yaml"><button title="Copy Code" class="copy"></button><span class="lang">yaml</span><pre v-pre class="shiki material-theme-palenight has-focused-lines" ><code><span class="line"><span style="color: #676E95; font-style: italic"># .gitlab-ci.yml</span></span>
 <span class="line"><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #F07178">validate_definitions</span><span style="color: #89DDFF">:</span></span>
+<span class="line has-focus"><span style="color: #F07178">validate_definitions</span><span style="color: #89DDFF">:</span><span style="color: #BABED8">  </span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">stage</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">analyse</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">allow_failure</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #FF9CAC">false</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">needs</span><span style="color: #89DDFF">:</span></span>
@@ -79,7 +79,7 @@ This allows each AG to manage its own data pipelines independently and have clea
 </div><h4 id="sonar" tabindex="-1">Sonar <a class="header-anchor" href="#sonar" aria-label="Permalink to &quot;Sonar&quot;">&ZeroWidthSpace;</a></h4>
 <div class="language-yaml"><button title="Copy Code" class="copy"></button><span class="lang">yaml</span><pre v-pre class="shiki material-theme-palenight has-focused-lines" ><code><span class="line"><span style="color: #676E95; font-style: italic"># .gitlab-ci.yml</span></span>
 <span class="line"><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #F07178">sonarqube</span><span style="color: #89DDFF">:</span></span>
+<span class="line has-focus"><span style="color: #F07178">sonarqube</span><span style="color: #89DDFF">:</span><span style="color: #BABED8">  </span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">SONAR_SCANNER_OPTS=&quot;${SONAR_SCANNER_OPTS} -Dsonar.exclusions=**/dbt_packages/**,**/dbt-*/**/*.sql,**/dbt-*/**/*.py&quot;</span></span>
 <span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">sonar-scanner</span><span style="color: #BABED8"> </span></span>
@@ -87,7 +87,7 @@ This allows each AG to manage its own data pipelines independently and have clea
 </div><h4 id="pytest-and-coverage-analysis" tabindex="-1">Pytest and coverage analysis <a class="header-anchor" href="#pytest-and-coverage-analysis" aria-label="Permalink to &quot;Pytest and coverage analysis&quot;">&ZeroWidthSpace;</a></h4>
 <div class="language-yaml"><button title="Copy Code" class="copy"></button><span class="lang">yaml</span><pre v-pre class="shiki material-theme-palenight has-focused-lines" ><code><span class="line"><span style="color: #676E95; font-style: italic"># .gitlab-ci.yml</span></span>
 <span class="line"><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #F07178">test</span><span style="color: #89DDFF">:</span></span>
+<span class="line has-focus"><span style="color: #F07178">test</span><span style="color: #89DDFF">:</span><span style="color: #BABED8">  </span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">stage</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">test</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">uv run coverage run -m pytest --tb=no</span><span style="color: #BABED8"> </span></span>
@@ -109,18 +109,12 @@ This allows each AG to manage its own data pipelines independently and have clea
 <p>When a new release is created, the DBT project is automatically versioned using the <code>release</code> tool. The version is bumped and a changelog is generated. The DBT project is then parsed using <code>dbt parse</code> to produce the <code>manifest.json</code> file, which contains the metadata of the DBT project. This file is used by Dagster to discover the DBT models and their dependencies.</p>
 <h4 id="the-release-cycle-of-our-dbt-projects-consists-of-the-following-steps" tabindex="-1">The release cycle of our DBT projects consists of the following steps: <a class="header-anchor" href="#the-release-cycle-of-our-dbt-projects-consists-of-the-following-steps" aria-label="Permalink to &quot;The release cycle of our DBT projects consists of the following steps:&quot;">&ZeroWidthSpace;</a></h4>
 <div class="language-yaml"><button title="Copy Code" class="copy"></button><span class="lang">yaml</span><pre v-pre class="shiki material-theme-palenight has-focused-lines has-diff" ><code><span class="line"><span style="color: #676E95; font-style: italic"># .gitlab-ci.yml</span></span>
-<span class="line"><span style="color: #F07178">sqlfluff</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
+<span class="line has-focus"><span style="color: #F07178">sqlfluff</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">allow_failure</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #FF9CAC">true</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">sqlfluff lint models</span></span>
 <span class="line"></span>
-<span class="line"><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #F07178">dbt_parse</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt parse</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #F07178">release</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
+<span class="line has-focus"><span style="color: #F07178">release</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">VERSION=$(release next-version)</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #89DDFF; font-style: italic">|</span></span>
@@ -128,70 +122,58 @@ This allows each AG to manage its own data pipelines independently and have clea
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">release changelog</span></span>
 <span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">release commit-and-tag --create-tag-pipeline CHANGELOG.md ${DBT_PATH}/dbt_project.yml</span><span style="color: #BABED8"> </span></span>
 <span class="line"></span>
-<span class="line"><span style="color: #F07178">dagster_submodule</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
+<span class="line has-focus"><span style="color: #F07178">dagster_submodule</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">rules</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #F07178">if</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">$CI_COMMIT_TAG</span><span style="color: #89DDFF">&quot;</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #89DDFF">    </span><span style="color: #676E95; font-style: italic"># Initialize the dbt project</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt parse</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">mv logs/dbt.log logs/dbt_init_parse.log</span></span>
-<span class="line"><span style="color: #89DDFF">    </span><span style="color: #676E95; font-style: italic"># Add and commit the changes if there are any</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">git add .</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">git diff --cached --quiet || git commit -m &quot;Update dbt submodule&quot;</span></span>
+<span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">git diff --cached --quiet || git commit -m &quot;Update dbt submodule&quot;</span><span style="color: #BABED8">  </span></span>
 <span class="line"><span style="color: #89DDFF">    </span><span style="color: #676E95; font-style: italic"># Push changes without forcing deletion</span></span>
 <span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">git push origin dagster_submodule</span><span style="color: #BABED8"> </span></span>
 <span class="line"></span>
 <span class="line"><span style="color: #676E95; font-style: italic"># This step publishes an artifact for DBT docs.</span></span>
-<span class="line"><span style="color: #F07178">pages</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
+<span class="line has-focus"><span style="color: #F07178">pages</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">stage</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt_docs</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">only</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">main</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
 <span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt docs generate</span><span style="color: #BABED8"> </span></span></code></pre>
-</div><h2 id="automate-observability" tabindex="-1">Automate observability <a class="header-anchor" href="#automate-observability" aria-label="Permalink to &quot;Automate observability&quot;">&ZeroWidthSpace;</a></h2>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/250px-Panopticon.jpg" alt="" width="200" /><p>The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our systems and data pipelines, to detect issues early, and ensure the quality of our data.</p>
-<p>Like a <a href="https://en.wikipedia.org/wiki/Panopticon" target="_blank" rel="noreferrer">panopticon</a> or a <strong>centralized observability hub</strong>, we use mainly MS Teams channel (accessible by all stakeholders) to centralize the observability of our data platform in a single place. Some custom notifications are also sent through NTFY and Email for specific events or alerts.</p>
-<p>For the observability of our systems, we use Kibana and Dozzle to monitor the logs and metrics of our data platform.</p>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ms-team-panopticon.png" alt="" width="600" /><h2 id="conclusion" tabindex="-1">Conclusion <a class="header-anchor" href="#conclusion" aria-label="Permalink to &quot;Conclusion&quot;">&ZeroWidthSpace;</a></h2>
+</div><h2 id="👀-automate-observability" tabindex="-1">👀 Automate observability <a class="header-anchor" href="#👀-automate-observability" aria-label="Permalink to &quot;👀 Automate observability&quot;">&ZeroWidthSpace;</a></h2>
+<p>The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our systems and data pipelines, to detect issues early, and ensure the quality of our data.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ms-team-panopticon.png" alt="" width="600" /><p>Like a <a href="https://en.wikipedia.org/wiki/Panopticon" target="_blank" rel="noreferrer">panopticon</a> or a <strong>centralized observability hub</strong>, we use mainly MS Teams channel (accessible by all stakeholders) to centralize the observability of our data platform in a single place. Some custom notifications are also sent through NTFY and Email for specific events or alerts.</p>
+<p>For the observability of our systems, we use <a href="https://www.elastic.co/kibana" target="_blank" rel="noreferrer">Kibana</a> and <a href="https://dozzle.dev/" target="_blank" rel="noreferrer">Dozzle</a> to monitor the logs and metrics of our data platform.</p>
+<h2 id="📝-conclusion" tabindex="-1">📝 Conclusion <a class="header-anchor" href="#📝-conclusion" aria-label="Permalink to &quot;📝 Conclusion&quot;">&ZeroWidthSpace;</a></h2>
 <p>In this article, we have explored how to automate the deployment of data pipelines in a polycephalous organization like the FWB. We have seen how to use Dagster as an orchestrator, dbt-core for data transformations, and GitLab CI/CD for automating the deployment process.</p>
 <p>We have also discussed the importance of modularity and reusability of components to lower the technical barrier for data analysts and data stewards. By automating the deployment process, we can ensure that every commit is tested and validated before being deployed to production, which encourages participation from data analysts and data stewards in the development of data pipelines.</p>
 <p>But as stated in the introduction, the <strong>level of participation is inversely proportional to the technical barrier</strong>. The more complex the setup, the less likely data analysts and data stewards will participate in the development of data pipelines.</p>
 <p>In the next article, we will explore how to lower the technical barrier even further by providing a user-friendly interface for data analysts and data stewards to interact with the data platform. We will also discuss how to improve data literacy among data analysts and data stewards to encourage them to participate in the development of data pipelines.</p>
-<!-- - [Part 3: How custom resources and training help lower the barrier](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier) -->
+<ul>
+<li><a href="/blog/posts/2025/data_platform_in_fwb_02_lower_barrier.html">Part 3: How custom resources and training help lower the barrier</a></li>
+</ul>
 ]]></content:encoded>
         </item>
         <item>
-            <title><![CDATA[Data Platform in a polycephalous organization - Part 1: Overview]]></title>
+            <title><![CDATA[Data Platform in a polycephalous organization - Part 1: Overview 🎯]]></title>
             <link>localhost/blog/blog/posts/2025/data_platform_in_fwb_00_intro.html</link>
             <guid>localhost/blog/blog/posts/2025/data_platform_in_fwb_00_intro.html</guid>
             <pubDate>Wed, 02 Jul 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[<p><em>Executive summary</em>: In a polycephalous organization, Data Governance is a complex challenge. This article is the first in a three-part series exploring the implementation of a Data Platform based on <a href="https://dagster.io/" target="_blank" rel="noreferrer">Dagster</a> for the <a href="https://www.federation-wallonie-bruxelles.be" target="_blank" rel="noreferrer">Fédération Wallonie-Bruxelles (FWB)</a>. This series will cover:</p>
-<ol>
-<li>Overview and Architecture (this article)</li>
-<li>Automation and CI/CD Implementation</li>
-<li>Lowering Technical Barriers through Custom Resources</li>
-</ol>
+            <description><![CDATA[<p><em>Executive summary</em>: In a polycephalous organization, Data Governance is a complex challenge. This article explores the implementation of a Data Platform based on <a href="https://dagster.io/" target="_blank" rel="noreferrer">Dagster</a> for the <a href="https://www.federation-wallonie-bruxelles.be" target="_blank" rel="noreferrer">Fédération Wallonie-Bruxelles (FWB)</a>. It highlights the importance of automation, modularity, and component reusability to lower the technical barrier and improve data literacy among data analysts and data stewards.</p>
 ]]></description>
-            <content:encoded><![CDATA[<p><em>Executive summary</em>: In a polycephalous organization, Data Governance is a complex challenge. This article is the first in a three-part series exploring the implementation of a Data Platform based on <a href="https://dagster.io/" target="_blank" rel="noreferrer">Dagster</a> for the <a href="https://www.federation-wallonie-bruxelles.be" target="_blank" rel="noreferrer">Fédération Wallonie-Bruxelles (FWB)</a>. This series will cover:</p>
-<ol>
-<li>Overview and Architecture (this article)</li>
-<li>Automation and CI/CD Implementation</li>
-<li>Lowering Technical Barriers through Custom Resources</li>
-</ol>
+            <content:encoded><![CDATA[<p><em>Executive summary</em>: In a polycephalous organization, Data Governance is a complex challenge. This article explores the implementation of a Data Platform based on <a href="https://dagster.io/" target="_blank" rel="noreferrer">Dagster</a> for the <a href="https://www.federation-wallonie-bruxelles.be" target="_blank" rel="noreferrer">Fédération Wallonie-Bruxelles (FWB)</a>. It highlights the importance of automation, modularity, and component reusability to lower the technical barrier and improve data literacy among data analysts and data stewards.</p>
 <hr>
 <p><em>The views expressed on this website are my own and do not necessarily reflect the views of my employer.</em></p>
 <p><strong>Table of contents</strong></p>
-<nav class="table-of-contents"><ul><li><a href="#background">Background</a></li><li><a href="#what-is-our-data-strategy">What is our data strategy?</a></li><li><a href="#where-are-the-data">Where are the data?</a></li><li><a href="#conceptual-architecture-of-a-data-stack">Conceptual architecture of a data stack</a></li><li><a href="#automate-everything-or-almost-facilitate-the-onboarding">Automate everything (or almost) : facilitate the onboarding</a></li><li><a href="#data-literacy-lower-the-barrier-and-give-power-to-the-users">Data Literacy : Lower the barrier and give power to the users</a></li><li><a href="#next-articles">Next articles</a></li></ul></nav>
-<h2 id="background" tabindex="-1">Background <a class="header-anchor" href="#background" aria-label="Permalink to &quot;Background&quot;">&ZeroWidthSpace;</a></h2>
+<nav class="table-of-contents"><ul><li><a href="#🏛️-background">🏛️ Background</a></li><li><a href="#🎯-what-is-our-data-strategy">🎯 What is our data strategy?</a></li><li><a href="#📦-where-are-the-data">📦 Where are the data?</a></li><li><a href="#🏗️-conceptual-architecture-of-a-data-stack">🏗️ Conceptual architecture of a data stack</a></li><li><a href="#🤖-automate-everything-or-almost-facilitate-the-onboarding">🤖 Automate everything (or almost) : facilitate the onboarding</a></li><li><a href="#📚-data-literacy-lower-the-barrier-and-give-power-to-the-users">📚 Data Literacy : Lower the barrier and give power to the users</a></li><li><a href="#📝-next-articles">📝 Next articles</a></li></ul></nav>
+<h2 id="🏛️-background" tabindex="-1">🏛️ Background <a class="header-anchor" href="#🏛️-background" aria-label="Permalink to &quot;🏛️ Background&quot;">&ZeroWidthSpace;</a></h2>
 <p>The French Community of Belgium (or Fédération Wallonie-Bruxelles, FWB) refers to one of the three constituent constitutional linguistic communities in Belgium.</p>
 <p>The French Community of Belgium includes <em>~4.5 million</em> people and its administration is responsible for the management of education, culture, sports, youth care, international relation, etc. for the French-speaking population of the country. The administration itself employs more than <em>7 000</em> people but the number of employees in the public sector that directly depend on the FWB is much much larger mainly due to the education and child care sectors.</p>
 <ImageCenter src="https://raw.githubusercontent.com/data-cfwb/charte-graphique/refs/heads/main/logo_FWB_PNG_et_SVG/FWBCOUL_FWB_HORI.png" alt="" width="400" /><p>The Ministry of FWB (MFWB) is a complex organization with multiple entities called <strong>&quot;Administrations générales&quot;</strong> (or <strong>AG</strong>). Each of these entitie manages its own data — often in silos — and has its own governance structures composed of various layers of Services and Directions with Project Managers, Product Owners, Business Analysts, ...etc. Under this organisational complexity, the <strong>technical landscape</strong> is of course also complex. Each AG has its own products, Applications, DBMS, DWH, BI tools, etc. This leads to a lack of consistency and quality in the data. The employees mostly use Microsoft products (<em>Excel</em>) for their data management and analytics needs. Very few people are trained in data management and programmation, which leads sometimes to a lack of data literacy and understanding of the importance of data governance.</p>
 <blockquote>
 <p>This polycephalous nature of the organization makes it challenging to govern and implement a unified data platform that meets the needs of all stakeholders.</p>
 </blockquote>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/data_gov_fwb.png" alt="" width="400" /><h2 id="what-is-our-data-strategy" tabindex="-1">What is our data strategy? <a class="header-anchor" href="#what-is-our-data-strategy" aria-label="Permalink to &quot;What is our data strategy?&quot;">&ZeroWidthSpace;</a></h2>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/data_gov_fwb.png" alt="" width="400" /><h2 id="🎯-what-is-our-data-strategy" tabindex="-1">🎯 What is our data strategy? <a class="header-anchor" href="#🎯-what-is-our-data-strategy" aria-label="Permalink to &quot;🎯 What is our data strategy?&quot;">&ZeroWidthSpace;</a></h2>
 <p>The data strategy of the French-speaking Community of Belgium (FWB), known as &quot;Données au Centre,&quot; has been in place since 2020 and aims to enhance data management and exploitation to improve service delivery and governance.</p>
 <p>Key elements of the strategy include:</p>
 <ul>
@@ -201,14 +183,14 @@ This allows each AG to manage its own data pipelines independently and have clea
 <li>Cultivating a <strong>data-centric culture</strong> (Données au centre) through comprehensive <strong>documentation</strong>, training, and <strong>regular community meetings</strong> to encourage effective use of data resources.</li>
 </ul>
 <p>The strategy outlines objectives focusing on improving data quality, availability, and security, and fostering collaboration across organizational boundaries. It seeks to identify strategic data assets crucial for ministry operations, develop strategic and operational dashboards for informed decision-making, and promote data sharing and reuse beyond organizational barriers.</p>
-<p>Additionally, the strategy prioritizes GDPR compliance for personal data, integration of reference data into business solutions, and publication of data through the <a href="http://odwb.be" target="_blank" rel="noreferrer">Open Data platform</a> to enhance transparency and accessibility.</p>
-<h2 id="where-are-the-data" tabindex="-1">Where are the data? <a class="header-anchor" href="#where-are-the-data" aria-label="Permalink to &quot;Where are the data?&quot;">&ZeroWidthSpace;</a></h2>
+<p>Additionally, the strategy prioritizes GDPR compliance for personal data, integration of reference data into business solutions, and publication of data through the <a href="https://www.odwb.be" target="_blank" rel="noreferrer">Open Data platform</a> to enhance transparency and accessibility.</p>
+<h2 id="📦-where-are-the-data" tabindex="-1">📦 Where are the data? <a class="header-anchor" href="#📦-where-are-the-data" aria-label="Permalink to &quot;📦 Where are the data?&quot;">&ZeroWidthSpace;</a></h2>
 <p>In the context of this type of organization, <strong>raw data</strong> are collected from various sources, including databases, APIs, and flat files. The heterogeneous nature of these sources makes it challenging to ensure data access, quality, consistency — and hence exploitation. To address this challenge, a decision made years ago, was to implement a virtualisation layer (based on <a href="https://www.denodo.com/" target="_blank" rel="noreferrer">Denodo</a>) on top of DBMS.</p>
 <p>Denodo is a powerful tool for data virtualization, but it requires a certain level of expertise to configure and maintain. This can be a barrier for some teams, especially those with limited technical resources. It is also not 100% compliant with most SQL standards (Denodo VQL), which can lead to confusion and errors when working with the data (accross upstream and downstream systems).</p>
 <blockquote>
 <p>While data virtualisation helps to unify the data access, it also adds complexity to the architecture by providing a new layer. Moreover, it does not solve complex transformations, load processes, and data quality monitoring issues. This is where the <strong>data platform</strong> comes into play.</p>
 </blockquote>
-<h2 id="conceptual-architecture-of-a-data-stack" tabindex="-1">Conceptual architecture of a data stack <a class="header-anchor" href="#conceptual-architecture-of-a-data-stack" aria-label="Permalink to &quot;Conceptual architecture of a data stack&quot;">&ZeroWidthSpace;</a></h2>
+<h2 id="🏗️-conceptual-architecture-of-a-data-stack" tabindex="-1">🏗️ Conceptual architecture of a data stack <a class="header-anchor" href="#🏗️-conceptual-architecture-of-a-data-stack" aria-label="Permalink to &quot;🏗️ Conceptual architecture of a data stack&quot;">&ZeroWidthSpace;</a></h2>
 <p>Starting from <em>raw data</em> (or sometimes <em>virtualised data</em>), the Ministry need to analyse, transform and move data into a format that is suitable for exploration, analysis and/or exploitation.</p>
 <p>A data stack is usually composed of several components that work together to manage and process data. The specific components of a data stack can vary depending on the needs of the organization, but they typically include:</p>
 <ul>
@@ -219,8 +201,8 @@ This allows each AG to manage its own data pipelines independently and have clea
 <li><strong>Dashboard</strong>: This is where data is presented in a way that is easy to understand and analyze. It can include dashboards, reports, and other visualization tools.</li>
 </ul>
 <p>Our data stack currently includes several components:</p>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/fwb_tech_stack.drawio.svg" alt="" width="600" /><p>We also tried several tools before settling on what we have today. The goal was to find a solution that would be flexible, auditable, transparent, and scalable. By &quot;auditable&quot;, we mean a system where every action and modification can be tracked, logged, and reviewed to ensure accountability and compliance.</p>
-<p>We also wanted to avoid <em>vendor lock-in</em> and ensure that the solution could be adapted to the needs of the organization and the level of technical expertise of the users.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/fwb_tech_stack.drawio.png" alt="" width="600" /><p>We also tried several tools before settling on what we have today. The goal was to find a solution that would be flexible, auditable, transparent, and scalable. By &quot;auditable&quot;, we mean a system where every action and modification can be tracked, logged, and reviewed to ensure accountability and compliance.</p>
+<p>We also wanted to avoid <em>vendor lock-in</em> 🔒 and ensure that the solution could be adapted to the needs of the organization and the level of technical expertise of the users.</p>
 <p>Based on those requirements, in terms of orchestrators, we tried <strong>Airflow</strong> for a few weeks and relied on <strong>Prefect</strong> for a few months. We then decided to switch to <strong>Dagster</strong>, for a set of reasons:</p>
 <ul>
 <li>Data observability features at the core of the architecture -- this is a key requirement for us ;</li>
@@ -229,7 +211,7 @@ This allows each AG to manage its own data pipelines independently and have clea
 </ul>
 <p>The new architecture includes a data platform that integrates with existing data sources and tools, providing a more streamlined and efficient approach to data management.</p>
 <p>Based on our context and choices, implementing a successful data orchestrator for the FWB hinges on two key challenges: <strong>easy onboarding</strong> and <strong>data literacy</strong> of our users. To achieve this, we need to focus on the following aspects:</p>
-<h2 id="automate-everything-or-almost-facilitate-the-onboarding" tabindex="-1">Automate everything (or almost) : facilitate the onboarding <a class="header-anchor" href="#automate-everything-or-almost-facilitate-the-onboarding" aria-label="Permalink to &quot;Automate everything (or almost) : facilitate the onboarding&quot;">&ZeroWidthSpace;</a></h2>
+<h2 id="🤖-automate-everything-or-almost-facilitate-the-onboarding" tabindex="-1">🤖 Automate everything (or almost) : facilitate the onboarding <a class="header-anchor" href="#🤖-automate-everything-or-almost-facilitate-the-onboarding" aria-label="Permalink to &quot;🤖 Automate everything (or almost) : facilitate the onboarding&quot;">&ZeroWidthSpace;</a></h2>
 <p>Developing a piece of software like a data platform is a complex task that requires a lot of time and effort. To make it easier for users to onboard and use the platform, we need to focus on automating as much of the process as possible. Here's an overview of our automation strategy:</p>
 <ul>
 <li><strong>Automating testing</strong>: Implementing comprehensive testing from unit tests to integration tests</li>
@@ -240,7 +222,7 @@ This allows each AG to manage its own data pipelines independently and have clea
 <blockquote>
 <p>💡 For a detailed dive into our automation implementation, including GitLab CI/CD configurations and Dagster asset examples, check out Part 2 of this series.</p>
 </blockquote>
-<h2 id="data-literacy-lower-the-barrier-and-give-power-to-the-users" tabindex="-1">Data Literacy : Lower the barrier and give power to the users <a class="header-anchor" href="#data-literacy-lower-the-barrier-and-give-power-to-the-users" aria-label="Permalink to &quot;Data Literacy : Lower the barrier and give power to the users&quot;">&ZeroWidthSpace;</a></h2>
+<h2 id="📚-data-literacy-lower-the-barrier-and-give-power-to-the-users" tabindex="-1">📚 Data Literacy : Lower the barrier and give power to the users <a class="header-anchor" href="#📚-data-literacy-lower-the-barrier-and-give-power-to-the-users" aria-label="Permalink to &quot;📚 Data Literacy : Lower the barrier and give power to the users&quot;">&ZeroWidthSpace;</a></h2>
 <p>As most of our users are not trained data professionals, we've developed several strategies to make the platform more accessible:</p>
 <ul>
 <li><strong>Technical barrier reduction</strong>: User-friendly interfaces and workflows</li>
@@ -252,12 +234,12 @@ This allows each AG to manage its own data pipelines independently and have clea
 <blockquote>
 <p>💡 In Part 3 of this series, we'll explore how our custom resources have enhanced data governance and made the platform more accessible to users of all technical levels.</p>
 </blockquote>
-<h2 id="next-articles" tabindex="-1">Next articles <a class="header-anchor" href="#next-articles" aria-label="Permalink to &quot;Next articles&quot;">&ZeroWidthSpace;</a></h2>
+<h2 id="📝-next-articles" tabindex="-1">📝 Next articles <a class="header-anchor" href="#📝-next-articles" aria-label="Permalink to &quot;📝 Next articles&quot;">&ZeroWidthSpace;</a></h2>
 <p>Stay tuned for the next articles in this series:</p>
 <ul>
 <li><a href="/blog/posts/2025/data_platform_in_fwb_01_automate.html">Part 2: Deep dive into our automation strategy with practical GitLab CI/CD examples</a></li>
+<li><a href="/blog/posts/2025/data_platform_in_fwb_02_lower_barrier.html">Part 3: How custom resources and training helps lower the barrier</a></li>
 </ul>
-<!-- - [Part 3: How custom resources and training helps lower the barrier](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier) -->
 ]]></content:encoded>
         </item>
         <item>
@@ -497,6 +479,71 @@ The API is organized using FastAPI's router system, with the main address-relate
 <h2 id="conclusion" tabindex="-1">Conclusion <a class="header-anchor" href="#conclusion" aria-label="Permalink to &quot;Conclusion&quot;">&ZeroWidthSpace;</a></h2>
 <p>The HouteSiTrue API provides a robust and efficient solution for address matching and validation in Belgium. By combining strict and fuzzy matching techniques with a well-structured API design, we've created a reliable service that bridges the gap between legacy systems and modern address data requirements.</p>
 <p>This API was used to match addresses from our legacy GEOG system with the BestAddress reference dataset. For that we used the <code>bestmatch</code> endpoint in combination with an orchestrator (Dagster).</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Data Platform - Part 3: Lower the barrier 🚧]]></title>
+            <link>localhost/blog/blog/posts/2025/data_platform_in_fwb_02_lower_barrier.html</link>
+            <guid>localhost/blog/blog/posts/2025/data_platform_in_fwb_02_lower_barrier.html</guid>
+            <pubDate>Thu, 03 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[<p><em>Executive summary</em>: In a polycephalous organization, Data Governance is a complex challenge. This article explores the implementation of a Data Platform based on <a href="https://dagster.io/" target="_blank" rel="noreferrer">Dagster</a> for the <a href="https://www.federation-wallonie-bruxelles.be" target="_blank" rel="noreferrer">Fédération Wallonie-Bruxelles (FWB)</a>. It highlights the importance of automation, modularity, and component reusability to lower the technical barrier and improve data literacy among data analysts and data stewards.</p>
+]]></description>
+            <content:encoded><![CDATA[<p><em>Executive summary</em>: In a polycephalous organization, Data Governance is a complex challenge. This article explores the implementation of a Data Platform based on <a href="https://dagster.io/" target="_blank" rel="noreferrer">Dagster</a> for the <a href="https://www.federation-wallonie-bruxelles.be" target="_blank" rel="noreferrer">Fédération Wallonie-Bruxelles (FWB)</a>. It highlights the importance of automation, modularity, and component reusability to lower the technical barrier and improve data literacy among data analysts and data stewards.</p>
+<hr>
+<p><em>The views expressed on this website are my own and do not necessarily reflect the views of my employer.</em></p>
+<p><strong>Table of contents</strong></p>
+<nav class="table-of-contents"><ul><li><a href="#🧑‍💻-code-reusability">🧑‍💻 Code reusability</a><ul><li><a href="#implement-common-library-dagster-cfwb-corresponding-to-our-specific-need">Implement common library dagster-cfwb corresponding to our specific need</a></li></ul></li><li><a href="#📖-level-up-the-data-literacy">📖 Level up the data literacy</a></li></ul></nav>
+<p>After the first two articles in this series, which focused on the <a href="/blog/posts/2025/data_platform_in_fwb_00_intro.html">architecture of our data platform</a> and the <a href="/blog/posts/2025/data_platform_in_fwb_01_automate.html">automation of our data pipelines</a>, this article will discuss how we lower the technical barrier for our users and improve their data literacy.</p>
+<p>There are two main aspects to this:</p>
+<ul>
+<li><strong>Reduce the complexity</strong> of our data platform by providing common resources and components that can be reused by all data analysts and data stewards.</li>
+<li><strong>Level up the data literacy</strong> of our users by training them, writing documentation, accompanying them in their first steps, and providing them with the necessary tools to understand and use the data platform.</li>
+</ul>
+<h2 id="🧑‍💻-code-reusability" tabindex="-1">🧑‍💻 Code reusability <a class="header-anchor" href="#🧑‍💻-code-reusability" aria-label="Permalink to &quot;🧑‍💻 Code reusability&quot;">&ZeroWidthSpace;</a></h2>
+<p>Without any surprise, <strong>Dagster</strong> provide two main concepts to help code reusability: <strong>resources</strong> and <strong>components</strong>.</p>
+<ul>
+<li><strong>Resources</strong> are used to connect to external systems (databases, APIs, etc.)</li>
+<li><strong>Components</strong> (still kind of new) are used to define reusable pieces of code with <code>YAML</code> that can be used in multiple jobs or pipelines.</li>
+</ul>
+<p>The two concepts are closely related, as resources are often used in components to connect to external systems.</p>
+<p>Since our Data Platform leverage multipls code locations, and that we want to facilitate the onboarding of new data engineers, we need to build a common python library that contains all the resources, components and customs libs that we need to connect to our data sources. We called this library <code>dagster-cfwb</code>.</p>
+<h3 id="implement-common-library-dagster-cfwb-corresponding-to-our-specific-need" tabindex="-1">Implement common library <code>dagster-cfwb</code> corresponding to our specific need <a class="header-anchor" href="#implement-common-library-dagster-cfwb-corresponding-to-our-specific-need" aria-label="Permalink to &quot;Implement common library `dagster-cfwb` corresponding to our specific need&quot;">&ZeroWidthSpace;</a></h3>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_cfwb.drawio.png" alt="" width="400" /><p>Our dagster-cfwb package contains all the Dagster resources that we need to connect to our data sources. This library is used by most of jobs and pipelines in our data platform. It includes resources for connecting to various databases (postgresql, mssql, mysql, db2, ...), APIs (denodo, custom api, oauth2, ...), and other data sources (lakehouse, ftp, nfs ...). It also includes custom components that can be used to perform common tasks, such as importing data from Denodo, storing to the data lakehouse and reporting metadata.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_cfwb.drawio.svg" alt="" width="600" /><p>To illustrate this, let's take a look at the <code>AzureAdlsResource</code> and <code>PostgreSQLResource</code> resources that we implemented in the <code>dagster-cfwb</code> library. These resources are used to connect to an Azure Data Lake Storage (ADLS) and a PostgreSQL database, respectively.</p>
+<div class="language-python"><button title="Copy Code" class="copy"></button><span class="lang">python</span><pre v-pre class="shiki material-theme-palenight has-focused-lines" ><code><span class="line has-focus"><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #BABED8"> dagster_cfwb</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">resources</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">lakehouse</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">azure_adls_resource </span><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #BABED8"> AzureAdlsResource </span></span>
+<span class="line has-focus"><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #BABED8"> dagster_cfwb</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">resources</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">db</span><span style="color: #89DDFF">.</span><span style="color: #BABED8">postgresql_resource </span><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #BABED8"> PostgreSQLResource </span></span>
+<span class="line"></span>
+<span class="line has-focus"><span style="color: #89DDFF">@</span><span style="color: #82AAFF">asset</span><span style="color: #89DDFF">()</span><span style="color: #BABED8"> </span></span>
+<span class="line has-focus"><span style="color: #C792EA">def</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">gld_example</span><span style="color: #89DDFF">(</span><span style="color: #BABED8"> </span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #BABED8; font-style: italic">context</span><span style="color: #89DDFF">,</span></span>
+<span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #BABED8; font-style: italic">azure_adls</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> AzureAdlsResource</span><span style="color: #89DDFF">,</span><span style="color: #BABED8"> </span></span>
+<span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #BABED8; font-style: italic">postgresql</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> PostgreSQLResource </span></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">):</span></span>
+<span class="line"></span>
+<span class="line has-focus"><span style="color: #BABED8">    df </span><span style="color: #89DDFF">=</span><span style="color: #BABED8"> azure_adls</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">query_blob_storage</span><span style="color: #89DDFF">(</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">FROM &#39;azure://code_location/stg/example.parquet&#39;</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">)</span><span style="color: #BABED8"> </span></span>
+<span class="line"></span>
+<span class="line has-focus"><span style="color: #BABED8">    postgresql</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">copy_from_df</span><span style="color: #89DDFF">(</span><span style="color: #82AAFF">df</span><span style="color: #89DDFF">,</span><span style="color: #82AAFF"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">example</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">)</span><span style="color: #BABED8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #BABED8"> </span><span style="color: #82AAFF">MaterializeResult</span><span style="color: #89DDFF">(</span></span>
+<span class="line"><span style="color: #82AAFF">        </span><span style="color: #BABED8; font-style: italic">metadata</span><span style="color: #89DDFF">={</span></span>
+<span class="line"><span style="color: #82AAFF">            </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">dagster/row_count</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #82AAFF"> df</span><span style="color: #89DDFF">.</span><span style="color: #F07178">shape</span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">0</span><span style="color: #89DDFF">],</span></span>
+<span class="line"><span style="color: #82AAFF">            </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">num_columns</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #82AAFF"> df</span><span style="color: #89DDFF">.</span><span style="color: #F07178">shape</span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">1</span><span style="color: #89DDFF">],</span></span>
+<span class="line"><span style="color: #82AAFF">            </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">dashboard_url</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #82AAFF"> MetadataValue</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">url</span><span style="color: #89DDFF">(</span></span>
+<span class="line"><span style="color: #82AAFF">                </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">https://vizu.intranet.fwb.be/example_dashboard</span><span style="color: #89DDFF">&quot;</span></span>
+<span class="line"><span style="color: #82AAFF">            </span><span style="color: #89DDFF">),</span></span>
+<span class="line"><span style="color: #82AAFF">            </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">documentation_url</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">:</span><span style="color: #82AAFF"> MetadataValue</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">url</span><span style="color: #89DDFF">(</span></span>
+<span class="line"><span style="color: #82AAFF">                </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">https://docs.intranet.fwb.be/example_documentation</span><span style="color: #89DDFF">&quot;</span></span>
+<span class="line"><span style="color: #82AAFF">            </span><span style="color: #89DDFF">),</span></span>
+<span class="line"><span style="color: #82AAFF">        </span><span style="color: #89DDFF">},</span></span>
+<span class="line"><span style="color: #82AAFF">    </span><span style="color: #89DDFF">)</span></span></code></pre>
+</div><p>As you can see, the <code>AzureAdlsResource</code> and <code>PostgreSQLResource</code> resources are used to connect to the Azure Data Lake Storage and PostgreSQL database, respectively. The <code>gld_example</code> asset uses these resources to query data from the Azure Data Lake Storage and copy it to the PostgreSQL database. All the logic is encapsulated in the <code>dagster-cfwb</code> library, which makes it very easy to reuse this code.</p>
+<h2 id="📖-level-up-the-data-literacy" tabindex="-1">📖 Level up the data literacy <a class="header-anchor" href="#📖-level-up-the-data-literacy" aria-label="Permalink to &quot;📖 Level up the data literacy&quot;">&ZeroWidthSpace;</a></h2>
+<ul>
+<li>Train the data engineers and stewards</li>
+<li>Write documentation as much as possible</li>
+<li>document everything</li>
+<li>training</li>
+</ul>
 ]]></content:encoded>
         </item>
         <item>
