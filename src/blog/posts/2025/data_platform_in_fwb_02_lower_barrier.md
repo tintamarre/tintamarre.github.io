@@ -1,5 +1,5 @@
 ---
-date: 2025-04-03
+date: 2025-07-04
 title: "Data Platform - Part 3: Lower the barrier 🚧"
 sidebar: auto
 author: Martin Erpicum

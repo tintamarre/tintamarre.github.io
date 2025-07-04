@@ -1,5 +1,5 @@
 ---
-date: 2025-07-04
+date: 2025-07-03
 title: "Data Platform - Part 2: Automate everything 🤖"
 sidebar: auto
 author: Martin Erpicum
