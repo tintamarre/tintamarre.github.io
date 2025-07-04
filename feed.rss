@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Fri, 04 Jul 2025 10:41:24 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 04 Jul 2025 13:30:25 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -19,7 +19,7 @@
 <hr>
 <p><em>The views expressed on this website are my own and do not necessarily reflect the views of my employer.</em></p>
 <p><strong>Table of contents</strong></p>
-<nav class="table-of-contents"><ul><li><a href="#🧑‍💻-code-reusability">🧑‍💻 Code reusability</a><ul><li><a href="#implement-a-common-library">Implement a common library</a></li></ul></li><li><a href="#📖-level-up-the-data-literacy">📖 Level up the data literacy</a><ul><li><a href="#communicate-about-the-data-platform">Communicate about the data platform</a></li><li><a href="#train-the-users">Train the users</a></li><li><a href="#build-a-community-to-share-knowledge">Build a community to share knowledge</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li></ul></nav>
+<nav class="table-of-contents"><ul><li><a href="#🧑‍💻-code-reusability">🧑‍💻 Code reusability</a><ul><li><a href="#implement-a-common-library">Implement a common library</a></li><li><a href="#use-llm-to-help-users">Use LLM to help users</a></li></ul></li><li><a href="#📖-level-up-the-data-literacy">📖 Level up the data literacy</a><ul><li><a href="#communicate-about-the-data-platform">Communicate about the data platform</a></li><li><a href="#train-the-users">Train the users</a></li><li><a href="#build-a-community-to-share-knowledge">Build a community to share knowledge</a></li></ul></li><li><a href="#📝-conclusion">📝 Conclusion</a></li></ul></nav>
 <p>After the first two articles in this series, which focused on the <a href="/blog/posts/2025/data_platform_in_fwb_00_intro.html">architecture of our data platform</a> and the <a href="/blog/posts/2025/data_platform_in_fwb_01_automate.html">automation of our data pipelines</a>, this article will discuss how we lower the technical barrier for our users and improve their data literacy.</p>
 <p>There are two main aspects to this:</p>
 <ul>
@@ -65,6 +65,8 @@
 <span class="line"><span style="color: #82AAFF">                </span><span style="color: #89DDFF">},</span></span>
 <span class="line"><span style="color: #82AAFF">        </span><span style="color: #89DDFF">)</span></span></code></pre>
 </div><p>As you can see, the <code>AzureAdlsResource</code> and <code>PostgreSQLResource</code> resources are used to connect to the Azure Data Lake Storage and PostgreSQL database, respectively. The <code>gld_example</code> asset uses these resources to query data from the Azure Data Lake Storage and copy it to the PostgreSQL database. All the logic is encapsulated in the <code>dagster-cfwb</code> library, which makes it very easy to reuse this code.</p>
+<h3 id="use-llm-to-help-users" tabindex="-1">Use LLM to help users <a class="header-anchor" href="#use-llm-to-help-users" aria-label="Permalink to &quot;Use LLM to help users&quot;">&ZeroWidthSpace;</a></h3>
+<p>To further lower the technical barrier, we are currenlty exploring the use of Large Language Models (LLMs) through a dedicated MCP server to help users write their own Dagster jobs and pipelines. This will allow our data professionals to focus on the business logic of their data pipelines, rather than the technical details of how to connect to the data sources.</p>
 <h2 id="📖-level-up-the-data-literacy" tabindex="-1">📖 Level up the data literacy <a class="header-anchor" href="#📖-level-up-the-data-literacy" aria-label="Permalink to &quot;📖 Level up the data literacy&quot;">&ZeroWidthSpace;</a></h2>
 <p>As stated in the introduction, in our organisation very few people are trained in data management and programming. To overcome this challenge, we communicate a lot about our data platform, we train our users, and we provide them with the necessary tools to understand and use the data platform.</p>
 <h3 id="communicate-about-the-data-platform" tabindex="-1">Communicate about the data platform <a class="header-anchor" href="#communicate-about-the-data-platform" aria-label="Permalink to &quot;Communicate about the data platform&quot;">&ZeroWidthSpace;</a></h3>
@@ -72,10 +74,10 @@
 <ImageCenter src="https://i.imgur.com/bEy2kU2.png" alt="" width="800" /><h3 id="train-the-users" tabindex="-1">Train the users <a class="header-anchor" href="#train-the-users" aria-label="Permalink to &quot;Train the users&quot;">&ZeroWidthSpace;</a></h3>
 <p>We also provide training sessions to our users to help them understand the data platform and how to use it. These training sessions are tailored to the level of technical expertise of the users and cover topics such as SQL, Python, Git, Docker, Lakehouse, Data modeling, Data visualization, etc.</p>
 <ImageCenter src="https://i.imgur.com/GtduQZ6.png" alt="" width="400" /><ImageCenter src="https://i.imgur.com/zwhAa9D.png" alt="" width="400" /><h3 id="build-a-community-to-share-knowledge" tabindex="-1">Build a community to share knowledge <a class="header-anchor" href="#build-a-community-to-share-knowledge" aria-label="Permalink to &quot;Build a community to share knowledge&quot;">&ZeroWidthSpace;</a></h3>
-<p>Last but not least, we try to build a <a href="https://en.wikipedia.org/wiki/Community_of_practice" target="_blank" rel="noreferrer">community of practice</a> of data analysts and data stewards to share knowledge and best practices. We call it &quot;Communauté des intendants de données&quot; (Community of Data Stewards). This community is open to all data analysts and data stewards in the organization, regardless of their level of technical expertise.</p>
-<p>We organise regular meetings to share experiences and help each other with the challenges we face. This helps to create a culture of data literacy and encourages users to participate in the development of data pipelines.</p>
-<h2 id="conclusion" tabindex="-1">Conclusion <a class="header-anchor" href="#conclusion" aria-label="Permalink to &quot;Conclusion&quot;">&ZeroWidthSpace;</a></h2>
-<p>In this series of articles, we have explored the implementation of a Data Platform based on Dagster for the Fédération Wallonie-Bruxelles (FWB). We have discussed the architecture of our data platform, the automation of our data pipelines, and how we lower the technical barrier for our users and improve their data literacy. We enjoyed building this data platform and we hope that this series of articles will help you to build your own data platform with Open Source tools.</p>
+<p>Last but not least, we try to build a <a href="https://en.wikipedia.org/wiki/Community_of_practice" target="_blank" rel="noreferrer">community of practice</a> to share knowledge and best practices. We call it &quot;Communauté des intendants de données&quot; (Community of Data Stewards). This community is open to all data professionals in the organization, regardless of their level of technical expertise.</p>
+<p>We organise regular meetings to share experiences and help each other with the challenges we face. This helps to create a culture of data literacy and enventually encourages users to participate in the development of data pipelines.</p>
+<h2 id="📝-conclusion" tabindex="-1">📝 Conclusion <a class="header-anchor" href="#📝-conclusion" aria-label="Permalink to &quot;📝 Conclusion&quot;">&ZeroWidthSpace;</a></h2>
+<p>In this series of articles, we have explored the implementation of a Data Platform based on Dagster for the <a href="https://www.federation-wallonie-bruxelles.be/" target="_blank" rel="noreferrer">Fédération Wallonie-Bruxelles (FWB)</a>. We have discussed the architecture of our data platform, the automation of our data pipelines, and how we lower the technical barrier for our users and improve their data literacy. We enjoyed building this data platform and we hope that this series of articles will help you to build your own data platform with Open Source tools.</p>
 <p>We also hope that this series of articles will help you to understand the challenges of building a data platform in a polycephalous organization and how to overcome them.</p>
 ]]></content:encoded>
         </item>
@@ -219,7 +221,7 @@ This allows each AG to manage its own data pipelines independently and have clea
 <p>In this article, we have explored how to automate the deployment of data pipelines in a polycephalous organization like the FWB. We have seen how to use Dagster as an orchestrator, dbt-core for data transformations, and GitLab CI/CD for automating the deployment process.</p>
 <p>We have also discussed the importance of modularity and reusability of components to lower the technical barrier for data analysts and data stewards. By automating the deployment process, we can ensure that every commit is tested and validated before being deployed to production, which encourages participation from data analysts and data stewards in the development of data pipelines.</p>
 <p>But as stated in the introduction, the <strong>level of participation is inversely proportional to the technical barrier</strong>. The more complex the setup, the less likely data analysts and data stewards will participate in the development of data pipelines.</p>
-<p>In the next article, we will explore how to lower the technical barrier even further by providing a user-friendly interface for data analysts and data stewards to interact with the data platform. We will also discuss how to improve data literacy among data analysts and data stewards to encourage them to participate in the development of data pipelines.</p>
+<p>In the next article, we will explore how to lower the technical barrier even further by providing a user-friendly resources for data professionals to interact with the data platform. We will also discuss how to improve data literacy among data analysts and data stewards to encourage them to participate in the development of data pipelines.</p>
 <ul>
 <li><a href="/blog/posts/2025/data_platform_in_fwb_02_lower_barrier.html">Part 3: How custom resources and training help lower the barrier</a></li>
 </ul>
@@ -236,7 +238,7 @@ This allows each AG to manage its own data pipelines independently and have clea
 <hr>
 <p><em>The views expressed on this website are my own and do not necessarily reflect the views of my employer.</em></p>
 <p><strong>Table of contents</strong></p>
-<nav class="table-of-contents"><ul><li><a href="#🏛️-background">🏛️ Background</a></li><li><a href="#🎯-what-is-our-data-strategy">🎯 What is our data strategy?</a></li><li><a href="#📦-where-are-the-data">📦 Where are the data?</a></li><li><a href="#🏗️-conceptual-architecture-of-a-data-stack">🏗️ Conceptual architecture of a data stack</a></li><li><a href="#🤖-automate-everything-or-almost-facilitate-the-onboarding">🤖 Automate everything (or almost) : facilitate the onboarding</a></li><li><a href="#📚-data-literacy-lower-the-barrier-and-give-power-to-the-users">📚 Data Literacy : Lower the barrier and give power to the users</a></li><li><a href="#📝-next-articles">📝 Next articles</a></li></ul></nav>
+<nav class="table-of-contents"><ul><li><a href="#🏛️-background">🏛️ Background</a></li><li><a href="#🎯-what-is-our-data-strategy">🎯 What is our data strategy?</a></li><li><a href="#📦-where-are-the-data">📦 Where are the data?</a></li><li><a href="#🏗️-conceptual-architecture-of-a-data-stack">🏗️ Conceptual architecture of a data stack</a></li><li><a href="#🤖-automate-everything-or-almost-facilitate-the-onboarding">🤖 Automate everything (or almost) : facilitate the onboarding</a></li><li><a href="#📚-data-literacy-lower-the-barrier-and-give-power-to-the-users">📚 Data Literacy : Lower the barrier and give power to the users</a></li></ul></nav>
 <h2 id="🏛️-background" tabindex="-1">🏛️ Background <a class="header-anchor" href="#🏛️-background" aria-label="Permalink to &quot;🏛️ Background&quot;">&ZeroWidthSpace;</a></h2>
 <p>The French Community of Belgium (or Fédération Wallonie-Bruxelles, FWB) refers to one of the three constituent constitutional linguistic communities in Belgium.</p>
 <p>The French Community of Belgium includes <em>~4.5 million</em> people and its administration is responsible for the management of education, culture, sports, youth care, international relation, etc. for the French-speaking population of the country. The administration itself employs more than <em>7 000</em> people but the number of employees in the public sector that directly depend on the FWB is much much larger mainly due to the education and child care sectors.</p>
@@ -293,6 +295,9 @@ This allows each AG to manage its own data pipelines independently and have clea
 <blockquote>
 <p>💡 For a detailed dive into our automation implementation, including GitLab CI/CD configurations and Dagster asset examples, check out Part 2 of this series.</p>
 </blockquote>
+<ul>
+<li><a href="/blog/posts/2025/data_platform_in_fwb_01_automate.html">Part 2: Deep dive into our automation strategy with practical GitLab CI/CD examples</a></li>
+</ul>
 <h2 id="📚-data-literacy-lower-the-barrier-and-give-power-to-the-users" tabindex="-1">📚 Data Literacy : Lower the barrier and give power to the users <a class="header-anchor" href="#📚-data-literacy-lower-the-barrier-and-give-power-to-the-users" aria-label="Permalink to &quot;📚 Data Literacy : Lower the barrier and give power to the users&quot;">&ZeroWidthSpace;</a></h2>
 <p>As most of our users are not trained data professionals, we've developed several strategies to make the platform more accessible:</p>
 <ul>
@@ -305,10 +310,7 @@ This allows each AG to manage its own data pipelines independently and have clea
 <blockquote>
 <p>💡 In Part 3 of this series, we'll explore how our custom resources have enhanced data governance and made the platform more accessible to users of all technical levels.</p>
 </blockquote>
-<h2 id="📝-next-articles" tabindex="-1">📝 Next articles <a class="header-anchor" href="#📝-next-articles" aria-label="Permalink to &quot;📝 Next articles&quot;">&ZeroWidthSpace;</a></h2>
-<p>Stay tuned for the next articles in this series:</p>
 <ul>
-<li><a href="/blog/posts/2025/data_platform_in_fwb_01_automate.html">Part 2: Deep dive into our automation strategy with practical GitLab CI/CD examples</a></li>
 <li><a href="/blog/posts/2025/data_platform_in_fwb_02_lower_barrier.html">Part 3: How custom resources and training helps lower the barrier</a></li>
 </ul>
 ]]></content:encoded>
