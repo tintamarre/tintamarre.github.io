@@ -173,12 +173,8 @@ dagster_submodule: [!code focus]
     - if: "$CI_COMMIT_TAG"
   script:
     [...]
-    # Initialize the dbt project
-    - dbt parse
-    - mv logs/dbt.log logs/dbt_init_parse.log
-    # Add and commit the changes if there are any
     - git add .
-    - git diff --cached --quiet || git commit -m "Update dbt submodule"
+    - git diff --cached --quiet || git commit -m "Update dbt submodule" [!code focus]
     # Push changes without forcing deletion
     - git push origin dagster_submodule // [!code focus]
 
