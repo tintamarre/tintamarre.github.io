@@ -27,22 +27,22 @@ There are two main aspects to this:
 
 ## 🧑‍💻 Code reusability
 
-Without any surprise, **Dagster** provide two main concepts to help code reusability: **resources** and **components**.
+Without any surprise, **Dagster** provides two main concepts to help code reusability: **resources** and **components**.
 
-- **Resources** are used to connect to external systems (databases, APIs, etc.)
+- **Resources** are used to connect to external systems (databases, APIs, etc.).
 - **Components** (still kind of new) are used to define reusable pieces of code with `YAML` that can be used in multiple jobs or pipelines.
 
 The two concepts are closely related, as resources are often used in components to connect to external systems.
 
-Since our Data Platform leverage multipls code locations, and that we want to facilitate the onboarding of new data engineers, we need to build a common python library that contains all the resources, components and customs libs (utils) that we need to connect to our data sources. We called this library `dagster-cfwb`.
+Since our Data Platform leverages multiple code locations, and because we want to facilitate the onboarding of new data engineers, we needed to build a common Python library that contains all the resources, components, and custom libraries (utils) required to connect to our data sources. We called this library `dagster-cfwb`.
 
-### Implement common library `dagster-cfwb` corresponding to our specific need
+### Implement a common library `dagster-cfwb` corresponding to our specific needs
 
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_cfwb.drawio.png" alt="" width="400" />
 
-Our **dagster-cfwb package** contains all the Dagster resources that we need to connect to our data sources. This library is used by most of jobs and pipelines in our data platform. It includes resources for connecting to various databases (postgresql, mssql, mysql, db2, ...), APIs (denodo, custom api, oauth2, ...), and other data sources (lakehouse, ftp, nfs ...). It also includes custom components that can be used to perform common tasks, such as importing data from Denodo, storing to the data lakehouse and reporting metadata.
+Our **dagster-cfwb package** contains all the Dagster resources needed to connect to our data sources. This library is used by most jobs and pipelines in our data platform. It includes resources for connecting to various databases (PostgreSQL, MSSQL, MySQL, DB2, ...), APIs (Denodo, custom APIs, OAuth2, ...), and other data sources (lakehouse, FTP, NFS, ...). It also includes custom components that can be used to perform common tasks, such as importing data from Denodo, storing to the data lakehouse, and reporting metadata.
 
-This library is also extensively documented (directly visible in the Dagster UI), versioned and tested with unit/integration tests during our Gitlab CI/CD pipeline.
+This library is also extensively documented (directly visible in the Dagster UI), versioned, and tested with unit/integration tests during our GitLab CI/CD pipeline.
 
 To illustrate this, let's take a look at the `AzureAdlsResource` and `PostgreSQLResource` resources that we implemented in the `dagster-cfwb` library. These resources are used to connect to an Azure Data Lake Storage (ADLS) and a PostgreSQL database, respectively.
 
@@ -52,27 +52,27 @@ from dagster_cfwb.resources.db.postgresql_resource import PostgreSQLResource // 
 
 @asset() // [!code focus]
 def gld_example( // [!code focus]
-    context,
-    azure_adls: AzureAdlsResource, // [!code focus]
-    postgresql: PostgreSQLResource // [!code focus]
-    ):
+        context,
+        azure_adls: AzureAdlsResource, // [!code focus]
+        postgresql: PostgreSQLResource // [!code focus]
+        ):
 
-    df = azure_adls.query_blob_storage("FROM 'azure://code_location/stg/example.parquet'") // [!code focus]
+        df = azure_adls.query_blob_storage("FROM 'azure://code_location/stg/example.parquet'") // [!code focus]
 
-    postgresql.copy_from_df(df, "example") // [!code focus]
+        postgresql.copy_from_df(df, "example") // [!code focus]
 
-    return MaterializeResult(
-        metadata={
-            "dagster/row_count": df.shape[0],
-            "num_columns": df.shape[1],
-            "dashboard_url": MetadataValue.url(
-                "https://vizu.intranet.fwb.be/example_dashboard"
-            ),
-            "documentation_url": MetadataValue.url(
-                "https://docs.intranet.fwb.be/example_documentation"
-            ),
-        },
-    )
+        return MaterializeResult(
+                metadata={
+                        "dagster/row_count": df.shape[0],
+                        "num_columns": df.shape[1],
+                        "dashboard_url": MetadataValue.url(
+                                "https://vizu.intranet.fwb.be/example_dashboard"
+                        ),
+                        "documentation_url": MetadataValue.url(
+                                "https://docs.intranet.fwb.be/example_documentation"
+                        ),
+                },
+        )
 
 ```
 
@@ -80,17 +80,17 @@ As you can see, the `AzureAdlsResource` and `PostgreSQLResource` resources are u
 
 ## 📖 Level up the data literacy
 
-As stated in the introduction, in our organisation very few people are trained in data management and programmation. To overcome this challenge, we communicate a lot about our data platform, we train our users, and we provide them with the necessary tools to understand and use the data platform.
+As stated in the introduction, in our organisation very few people are trained in data management and programming. To overcome this challenge, we communicate a lot about our data platform, we train our users, and we provide them with the necessary tools to understand and use the data platform.
 
 ### Communicate about the data platform
 
-Like show in this image below, we try to use simple yet powerful images to explain the data platform and its components. This helps a lot our stakeholders to understand the data platform, and more importantly, the benefits it brings to the organization.
+As shown in the image below, we try to use simple yet powerful images to explain the data platform and its components. This helps our stakeholders understand the data platform, and more importantly, the benefits it brings to the organization.
 
 <ImageCenter src="https://i.imgur.com/bEy2kU2.png" alt="" width="800" />
 
 ### Train the users
 
-We also provide training sessions to our users to help them understand the data platform and how to use it. These training sessions are tailored to the level of technical expertise of the users, and cover topics such as: SQL, Python, Git, Docker, Lakehouse, Data modeling, Data visualisation, etc.
+We also provide training sessions to our users to help them understand the data platform and how to use it. These training sessions are tailored to the level of technical expertise of the users and cover topics such as SQL, Python, Git, Docker, Lakehouse, Data modeling, Data visualization, etc.
 
 <ImageCenter src="https://i.imgur.com/GtduQZ6.png" alt="" width="400" />
 
@@ -98,12 +98,12 @@ We also provide training sessions to our users to help them understand the data 
 
 ### Build a community to share knowledge
 
-Last but not least, we try to build a [community or practices](https://en.wikipedia.org/wiki/Community_of_practice) of data analysts and data stewards to share knowledge and best practices. We call it "Communauté des intendants de données" (Community of Data Stewards). This community is open to all data analysts and data stewards in the organization, regardless of their level of technical expertise.
+Last but not least, we try to build a [community of practice](https://en.wikipedia.org/wiki/Community_of_practice) of data analysts and data stewards to share knowledge and best practices. We call it "Communauté des intendants de données" (Community of Data Stewards). This community is open to all data analysts and data stewards in the organization, regardless of their level of technical expertise.
 
-We organise regular meetings to discuss to share experiences, and help each other with the challenges we face. This helps to create a culture of data literacy and encourages users to participate in the development of data pipelines.
+We organise regular meetings to share experiences and help each other with the challenges we face. This helps to create a culture of data literacy and encourages users to participate in the development of data pipelines.
 
 ## Conclusion
 
-In the series of articles, we have explored the implementation of a Data Platform based on Dagster for the Fédération Wallonie-Bruxelles (FWB). We have discussed the architecture of our data platform, the automation of our data pipelines, and how we lower the technical barrier for our users and improve their data literacy. We enjoyed building this data platform and we hope that this series of articles will help you to build your own data platform with Open Source tools.
+In this series of articles, we have explored the implementation of a Data Platform based on Dagster for the Fédération Wallonie-Bruxelles (FWB). We have discussed the architecture of our data platform, the automation of our data pipelines, and how we lower the technical barrier for our users and improve their data literacy. We enjoyed building this data platform and we hope that this series of articles will help you to build your own data platform with Open Source tools.
 
 We also hope that this series of articles will help you to understand the challenges of building a data platform in a polycephalous organization and how to overcome them.
