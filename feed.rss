@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Fri, 04 Jul 2025 07:38:33 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 04 Jul 2025 08:05:50 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -109,27 +109,18 @@ This allows each AG to manage its own data pipelines independently and have clea
 <p>When a new release is created, the DBT project is automatically versioned using the <code>release</code> tool. The version is bumped and a changelog is generated. The DBT project is then parsed using <code>dbt parse</code> to produce the <code>manifest.json</code> file, which contains the metadata of the DBT project. This file is used by Dagster to discover the DBT models and their dependencies.</p>
 <h4 id="the-release-cycle-of-our-dbt-projects-consists-of-the-following-steps" tabindex="-1">The release cycle of our DBT projects consists of the following steps: <a class="header-anchor" href="#the-release-cycle-of-our-dbt-projects-consists-of-the-following-steps" aria-label="Permalink to &quot;The release cycle of our DBT projects consists of the following steps:&quot;">&ZeroWidthSpace;</a></h4>
 <div class="language-yaml"><button title="Copy Code" class="copy"></button><span class="lang">yaml</span><pre v-pre class="shiki material-theme-palenight has-focused-lines has-diff" ><code><span class="line"><span style="color: #676E95; font-style: italic"># .gitlab-ci.yml</span></span>
-<span class="line"><span style="color: #F07178">sqlfluff</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">stage</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">test</span></span>
+<span class="line"><span style="color: #F07178">sqlfluff</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">allow_failure</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #FF9CAC">true</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">image</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">gitlab.**.com/**:stable</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">echo &quot;Running SQLFluff linting...&quot;</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">sqlfluff lint models</span></span>
 <span class="line"></span>
 <span class="line"><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #F07178">dbt_parse</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">stage</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">test</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">image</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">gitlab.**.com/**:stable</span></span>
+<span class="line"><span style="color: #F07178">dbt_parse</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt deps</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt parse</span></span>
 <span class="line"></span>
-<span class="line"><span style="color: #F07178">release</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">variables</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #F07178">FILETOCHANGE</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">${CI_PROJECT_DIR}/${DBT_PATH}/dbt_project.yml</span><span style="color: #89DDFF">&quot;</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #F07178">GSG_BUMP_PATCH</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #FF9CAC">true</span></span>
+<span class="line"><span style="color: #F07178">release</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">VERSION=$(release next-version)</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #89DDFF; font-style: italic">|</span></span>
@@ -137,15 +128,12 @@ This allows each AG to manage its own data pipelines independently and have clea
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">release changelog</span></span>
 <span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">release commit-and-tag --create-tag-pipeline CHANGELOG.md ${DBT_PATH}/dbt_project.yml</span><span style="color: #BABED8"> </span></span>
 <span class="line"></span>
-<span class="line"><span style="color: #F07178">dagster_submodule</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">stage</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">build</span></span>
+<span class="line"><span style="color: #F07178">dagster_submodule</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">rules</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #F07178">if</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">$CI_COMMIT_TAG</span><span style="color: #89DDFF">&quot;</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">image</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">gitlab.**.com/**:stable</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
 <span class="line"><span style="color: #89DDFF">    </span><span style="color: #676E95; font-style: italic"># Initialize the dbt project</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt deps</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt parse</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">mv logs/dbt.log logs/dbt_init_parse.log</span></span>
 <span class="line"><span style="color: #89DDFF">    </span><span style="color: #676E95; font-style: italic"># Add and commit the changes if there are any</span></span>
@@ -155,26 +143,13 @@ This allows each AG to manage its own data pipelines independently and have clea
 <span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">git push origin dagster_submodule</span><span style="color: #BABED8"> </span></span>
 <span class="line"></span>
 <span class="line"><span style="color: #676E95; font-style: italic"># This step publishes an artifact for DBT docs.</span></span>
-<span class="line"><span style="color: #F07178">pages</span><span style="color: #89DDFF">:</span></span>
+<span class="line"><span style="color: #F07178">pages</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">[</span><span style="color: #C792EA">!code</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">focus</span><span style="color: #89DDFF">]</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">stage</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt_docs</span></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">only</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">main</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">image</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">gitlab.**.com/**:stable</span></span>
-<span class="line"></span>
 <span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">script</span><span style="color: #89DDFF">:</span></span>
 <span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt deps</span></span>
-<span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt docs generate</span><span style="color: #BABED8"> </span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">[</span><span style="color: #F78C6C">...</span><span style="color: #89DDFF">]</span></span>
-<span class="line"><span style="color: #F07178">artifacts</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #F07178">paths</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">      </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">public</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #F07178">notify-teams-markdown</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">stage</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">notify</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">rules</span><span style="color: #89DDFF">:</span></span>
-<span class="line"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #F07178">if</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">$CI_COMMIT_TAG</span><span style="color: #89DDFF">&quot;</span></span>
-<span class="line"><span style="color: #BABED8">  </span><span style="color: #F07178">extends</span><span style="color: #89DDFF">:</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">.msteamsMarkdownNotification</span></span></code></pre>
+<span class="line has-focus"><span style="color: #BABED8">    </span><span style="color: #89DDFF">-</span><span style="color: #BABED8"> </span><span style="color: #C3E88D">dbt docs generate</span><span style="color: #BABED8"> </span></span></code></pre>
 </div><h2 id="automate-observability" tabindex="-1">Automate observability <a class="header-anchor" href="#automate-observability" aria-label="Permalink to &quot;Automate observability&quot;">&ZeroWidthSpace;</a></h2>
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/250px-Panopticon.jpg" alt="" width="200" /><p>The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our systems and data pipelines, to detect issues early, and ensure the quality of our data.</p>
 <p>Like a <a href="https://en.wikipedia.org/wiki/Panopticon" target="_blank" rel="noreferrer">panopticon</a> or a <strong>centralized observability hub</strong>, we use mainly MS Teams channel (accessible by all stakeholders) to centralize the observability of our data platform in a single place. Some custom notifications are also sent through NTFY and Email for specific events or alerts.</p>
