@@ -1,6 +1,6 @@
 ---
 date: 2025-07-04
-title: "Data Platform - Part 2: Automate everything"
+title: "Data Platform - Part 2: Automate everything 🤖"
 sidebar: auto
 author: Martin Erpicum
 category: Article
@@ -22,7 +22,7 @@ If you want to encourage data analysts and data stewards to participate in the d
 
 To explain how we automate the deployment of data pipelines, I will first describe the architecture of our data platform.
 
-## Architecture of our Data Platform
+## 🏗️ Technical Architecture of our Data Platform
 
 Our stack is currently based on the following components:
 
@@ -45,7 +45,7 @@ For excellent recommendations on how to build a solid data platform, I recommend
 To allow each administration générale (AG) to own its repository (a **code location** in Dagster vocabulary)—which contains the Dagster code location for the data pipelines of that AG—we decided to **mirror the organizational structure of the FWB into the architecture of our data platform**. We also use distinct code locations for specific projects that are not tied to a specific AG.
 This allows each AG to manage its own data pipelines independently and have clear ownership of the code. The code locations are then aggregated into a single Dagster instance, which is the data platform.
 
-#### Structure of our code locations folder
+#### 🗂️ Structure of our code locations folder
 
 ```bash
 dagster_home (main) $ tree -L 1
@@ -58,7 +58,7 @@ dagster_home (main) $ tree -L 1
 └── workspace.yaml
 ```
 
-## Automate CI/CD
+## 🤖 Automate CI/CD
 
 ### CI/CD flow
 
@@ -67,12 +67,12 @@ Our deployment setup is based on GitLab CI/CD pipelines. The flow is as follows:
 0. **Submodules integration**: DBT projects are integrated as a Git submodule in the main repository. This allows us to include the work of data stewards and analysts in the data platform without having to duplicate code or maintain separate repositories.
 1. **Build**: The code is built and packaged into a Docker image; the same image is used for Webserver, Daemon, and Code locations.
 2. **Validate definitions**: The Dagster definitions are validated to ensure they are correct and do not contain any errors.
-3. **Ruff**: The code is checked for style and formatting issues using Ruff.
+3. **Ruff**: The code is checked for style and formatting issues using [Ruff](https://docs.astral.sh/ruff/).
 4. **Sonar**: The code is analyzed for quality and security issues using [SonarQube](https://www.sonarqube.org/).
 5. **Test**: The code is tested using [pytest](https://docs.pytest.org/en/stable/) for unit tests, integration tests, and coverage analysis.
-6. **Deploy to dev**: The code is deployed to the development environment for each commit in the main branch or feature branch.
+6. **Deploy to DEV**: The code is deployed to the development environment for each commit in the main branch or feature branch.
 7. **Release**: A new release is created in GitLab, a tag and a changelog are generated.
-8. **Deploy to prod**: The code is deployed to the production environment.
+8. **Deploy to PROD**: The code is deployed to the production environment.
 
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_flow_stack.drawio.png" alt="" width="800" />
 
@@ -83,7 +83,7 @@ Below is an example of how we implement this flow in our `.gitlab-ci.yml` file.
 ```yaml
 # .gitlab-ci.yml
 [...]
-validate_definitions:
+validate_definitions:  // [!code focus]
   stage: analyse
   allow_failure: false
   needs:
@@ -102,7 +102,7 @@ validate_definitions:
 ```yaml
 # .gitlab-ci.yml
 [...]
-sonarqube:
+sonarqube:  // [!code focus]
   script:
     - SONAR_SCANNER_OPTS="${SONAR_SCANNER_OPTS} -Dsonar.exclusions=**/dbt_packages/**,**/dbt-*/**/*.sql,**/dbt-*/**/*.py"
     - sonar-scanner // [!code focus]
@@ -114,7 +114,7 @@ sonarqube:
 ```yaml
 # .gitlab-ci.yml
 [...]
-test:
+test:  // [!code focus]
   stage: test
   script:
     - uv run coverage run -m pytest --tb=no // [!code focus]
@@ -149,18 +149,12 @@ When a new release is created, the DBT project is automatically versioned using 
 
 ```yaml
 # .gitlab-ci.yml
-sqlfluff: [!code focus]
+sqlfluff: // [!code focus]
   allow_failure: true
   script:
     - sqlfluff lint models
 
-[...]
-dbt_parse: [!code focus]
-  script:
-    [...]
-    - dbt parse
-
-release: [!code focus]
+release: // [!code focus]
   script:
     - VERSION=$(release next-version)
     - |
@@ -168,18 +162,18 @@ release: [!code focus]
     - release changelog
     - release commit-and-tag --create-tag-pipeline CHANGELOG.md ${DBT_PATH}/dbt_project.yml // [!code focus]
 
-dagster_submodule: [!code focus]
+dagster_submodule: // [!code focus]
   rules:
     - if: "$CI_COMMIT_TAG"
   script:
     [...]
     - git add .
-    - git diff --cached --quiet || git commit -m "Update dbt submodule" [!code focus]
+    - git diff --cached --quiet || git commit -m "Update dbt submodule"  // [!code focus]
     # Push changes without forcing deletion
     - git push origin dagster_submodule // [!code focus]
 
 # This step publishes an artifact for DBT docs.
-pages: [!code focus]
+pages: // [!code focus]
   stage: dbt_docs
   only:
     - main
@@ -188,19 +182,17 @@ pages: [!code focus]
     - dbt docs generate // [!code focus]
 ```
 
-## Automate observability
-
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/250px-Panopticon.jpg" alt="" width="200" />
+## 👀 Automate observability
 
 The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our systems and data pipelines, to detect issues early, and ensure the quality of our data.
 
-Like a [panopticon](https://en.wikipedia.org/wiki/Panopticon) or a **centralized observability hub**, we use mainly MS Teams channel (accessible by all stakeholders) to centralize the observability of our data platform in a single place. Some custom notifications are also sent through NTFY and Email for specific events or alerts.
-
-For the observability of our systems, we use Kibana and Dozzle to monitor the logs and metrics of our data platform.
-
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ms-team-panopticon.png" alt="" width="600" />
 
-## Conclusion
+Like a [panopticon](https://en.wikipedia.org/wiki/Panopticon) or a **centralized observability hub**, we use mainly MS Teams channel (accessible by all stakeholders) to centralize the observability of our data platform in a single place. Some custom notifications are also sent through NTFY and Email for specific events or alerts.
+
+For the observability of our systems, we use [Kibana](https://www.elastic.co/kibana) and [Dozzle](https://dozzle.dev/) to monitor the logs and metrics of our data platform.
+
+## 📝 Conclusion
 
 In this article, we have explored how to automate the deployment of data pipelines in a polycephalous organization like the FWB. We have seen how to use Dagster as an orchestrator, dbt-core for data transformations, and GitLab CI/CD for automating the deployment process.
 
@@ -210,4 +202,4 @@ But as stated in the introduction, the **level of participation is inversely pro
 
 In the next article, we will explore how to lower the technical barrier even further by providing a user-friendly interface for data analysts and data stewards to interact with the data platform. We will also discuss how to improve data literacy among data analysts and data stewards to encourage them to participate in the development of data pipelines.
 
-<!-- - [Part 3: How custom resources and training help lower the barrier](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier) -->
+- [Part 3: How custom resources and training help lower the barrier](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier)
