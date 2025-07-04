@@ -34,15 +34,15 @@ Without any surprise, **Dagster** provide two main concepts to help code reusabi
 
 The two concepts are closely related, as resources are often used in components to connect to external systems.
 
-Since our Data Platform leverage multipls code locations, and that we want to facilitate the onboarding of new data engineers, we need to build a common python library that contains all the resources, components and customs libs that we need to connect to our data sources. We called this library `dagster-cfwb`.
+Since our Data Platform leverage multipls code locations, and that we want to facilitate the onboarding of new data engineers, we need to build a common python library that contains all the resources, components and customs libs (utils) that we need to connect to our data sources. We called this library `dagster-cfwb`.
 
 ### Implement common library `dagster-cfwb` corresponding to our specific need
 
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_cfwb.drawio.png" alt="" width="400" />
 
-Our dagster-cfwb package contains all the Dagster resources that we need to connect to our data sources. This library is used by most of jobs and pipelines in our data platform. It includes resources for connecting to various databases (postgresql, mssql, mysql, db2, ...), APIs (denodo, custom api, oauth2, ...), and other data sources (lakehouse, ftp, nfs ...). It also includes custom components that can be used to perform common tasks, such as importing data from Denodo, storing to the data lakehouse and reporting metadata.
+Our **dagster-cfwb package** contains all the Dagster resources that we need to connect to our data sources. This library is used by most of jobs and pipelines in our data platform. It includes resources for connecting to various databases (postgresql, mssql, mysql, db2, ...), APIs (denodo, custom api, oauth2, ...), and other data sources (lakehouse, ftp, nfs ...). It also includes custom components that can be used to perform common tasks, such as importing data from Denodo, storing to the data lakehouse and reporting metadata.
 
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_cfwb.drawio.svg" alt="" width="600" />
+This library is also extensively documented (directly visible in the Dagster UI) and tested with unit/integration tests during our Gitlab CI/CD pipeline.
 
 To illustrate this, let's take a look at the `AzureAdlsResource` and `PostgreSQLResource` resources that we implemented in the `dagster-cfwb` library. These resources are used to connect to an Azure Data Lake Storage (ADLS) and a PostgreSQL database, respectively.
 
@@ -84,3 +84,9 @@ As you can see, the `AzureAdlsResource` and `PostgreSQLResource` resources are u
 - Write documentation as much as possible
 - document everything
 - training
+
+<ImageCenter src="https://i.imgur.com/GtduQZ6.png" alt="Dagster UI" width="400" />
+
+<ImageCenter src="https://i.imgur.com/bEy2kU2.png" alt="Dagster UI" width="400" />
+
+<ImageCenter src="https://i.imgur.com/zwhAa9D.png" alt="Dagster UI" width="400" />
