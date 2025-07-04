@@ -33,8 +33,8 @@ Our stack is currently based on the following components:
 - **Docker**: The containerization technology that allows us to package our data pipelines and their dependencies in a portable way.
 - **GitLab**: The version control system that allows us to manage our code repositories and automate our CI/CD pipelines.
 
-<ImageCenter src="/assets/diagrams/fwb_tech_stack.drawio.svg" alt="" width="600" />
-<ImageCenter src="/assets/diagrams/data_platform.drawio.svg" alt="" width="600" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/fwb_tech_stack.drawio.png" alt="" width="600" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/data_platform.drawio.png" alt="" width="600" />
 
 One important side note here: our technical choices are not set in stone. We are constantly evaluating new technologies and approaches to improve our data platform. The goal is to provide a flexible and scalable architecture that can adapt to the changing needs of the organization. If `dbt-core`, `Dagster`, or any other tool/provider does not fit our needs anymore, we will not hesitate to change it. What we are really binding ourselves to is the (1) **architecture**, and the (2) **languages** we use to implement it (Python, SQL). The tools and providers are just means to an end.
 
@@ -74,7 +74,7 @@ Our deployment setup is based on GitLab CI/CD pipelines. The flow is as follows:
 7. **Release**: A new release is created in GitLab, a tag and a changelog are generated.
 8. **Deploy to prod**: The code is deployed to the production environment.
 
-<ImageCenter src="/assets/diagrams/dagster_flow_stack.drawio.svg" alt="" width="800" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_flow_stack.drawio.png" alt="" width="800" />
 
 Below is an example of how we implement this flow in our `.gitlab-ci.yml` file.
 
@@ -133,7 +133,7 @@ Once deployed, the data platform is composed of the following containerized comp
 - A **daemon** to monitor the code and communicate with the code locations and the webserver.
 - And a **code location** for each AG or specific project.
 
-<ImageCenter src="/assets/diagrams/dagster_stack.drawio.svg" alt="" width="800" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_stack.drawio.png" alt="" width="800" />
 
 ### Automate integration of DBT
 
