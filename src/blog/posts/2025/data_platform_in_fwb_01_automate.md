@@ -200,6 +200,6 @@ We have also discussed the importance of modularity and reusability of component
 
 But as stated in the introduction, the **level of participation is inversely proportional to the technical barrier**. The more complex the setup, the less likely data analysts and data stewards will participate in the development of data pipelines.
 
-In the next article, we will explore how to lower the technical barrier even further by providing a user-friendly interface for data analysts and data stewards to interact with the data platform. We will also discuss how to improve data literacy among data analysts and data stewards to encourage them to participate in the development of data pipelines.
+In the next article, we will explore how to lower the technical barrier even further by providing a user-friendly resources for data professionals to interact with the data platform. We will also discuss how to improve data literacy among data analysts and data stewards to encourage them to participate in the development of data pipelines.
 
 - [Part 3: How custom resources and training help lower the barrier](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier)

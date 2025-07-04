@@ -78,6 +78,10 @@ def gld_example( // [!code focus]
 
 As you can see, the `AzureAdlsResource` and `PostgreSQLResource` resources are used to connect to the Azure Data Lake Storage and PostgreSQL database, respectively. The `gld_example` asset uses these resources to query data from the Azure Data Lake Storage and copy it to the PostgreSQL database. All the logic is encapsulated in the `dagster-cfwb` library, which makes it very easy to reuse this code.
 
+### Use LLM to help users
+
+To further lower the technical barrier, we are currenlty exploring the use of Large Language Models (LLMs) through a dedicated MCP server to help users write their own Dagster jobs and pipelines. This will allow our data professionals to focus on the business logic of their data pipelines, rather than the technical details of how to connect to the data sources.
+
 ## 📖 Level up the data literacy
 
 As stated in the introduction, in our organisation very few people are trained in data management and programming. To overcome this challenge, we communicate a lot about our data platform, we train our users, and we provide them with the necessary tools to understand and use the data platform.
@@ -98,12 +102,12 @@ We also provide training sessions to our users to help them understand the data 
 
 ### Build a community to share knowledge
 
-Last but not least, we try to build a [community of practice](https://en.wikipedia.org/wiki/Community_of_practice) of data analysts and data stewards to share knowledge and best practices. We call it "Communauté des intendants de données" (Community of Data Stewards). This community is open to all data analysts and data stewards in the organization, regardless of their level of technical expertise.
+Last but not least, we try to build a [community of practice](https://en.wikipedia.org/wiki/Community_of_practice) to share knowledge and best practices. We call it "Communauté des intendants de données" (Community of Data Stewards). This community is open to all data professionals in the organization, regardless of their level of technical expertise.
 
-We organise regular meetings to share experiences and help each other with the challenges we face. This helps to create a culture of data literacy and encourages users to participate in the development of data pipelines.
+We organise regular meetings to share experiences and help each other with the challenges we face. This helps to create a culture of data literacy and enventually encourages users to participate in the development of data pipelines.
 
-## Conclusion
+## 📝 Conclusion
 
-In this series of articles, we have explored the implementation of a Data Platform based on Dagster for the Fédération Wallonie-Bruxelles (FWB). We have discussed the architecture of our data platform, the automation of our data pipelines, and how we lower the technical barrier for our users and improve their data literacy. We enjoyed building this data platform and we hope that this series of articles will help you to build your own data platform with Open Source tools.
+In this series of articles, we have explored the implementation of a Data Platform based on Dagster for the [Fédération Wallonie-Bruxelles (FWB)](https://www.federation-wallonie-bruxelles.be/). We have discussed the architecture of our data platform, the automation of our data pipelines, and how we lower the technical barrier for our users and improve their data literacy. We enjoyed building this data platform and we hope that this series of articles will help you to build your own data platform with Open Source tools.
 
 We also hope that this series of articles will help you to understand the challenges of building a data platform in a polycephalous organization and how to overcome them.

@@ -96,6 +96,8 @@ Developing a piece of software like a data platform is a complex task that requi
 
 > 💡 For a detailed dive into our automation implementation, including GitLab CI/CD configurations and Dagster asset examples, check out Part 2 of this series.
 
+- [Part 2: Deep dive into our automation strategy with practical GitLab CI/CD examples](/blog/posts/2025/data_platform_in_fwb_01_automate)
+
 ## 📚 Data Literacy : Lower the barrier and give power to the users
 
 As most of our users are not trained data professionals, we've developed several strategies to make the platform more accessible:
@@ -108,9 +110,4 @@ As most of our users are not trained data professionals, we've developed several
 
 > 💡 In Part 3 of this series, we'll explore how our custom resources have enhanced data governance and made the platform more accessible to users of all technical levels.
 
-## 📝 Next articles
-
-Stay tuned for the next articles in this series:
-
-- [Part 2: Deep dive into our automation strategy with practical GitLab CI/CD examples](/blog/posts/2025/data_platform_in_fwb_01_automate)
 - [Part 3: How custom resources and training helps lower the barrier](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier)
