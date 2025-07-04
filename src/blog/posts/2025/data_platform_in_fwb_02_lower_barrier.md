@@ -36,7 +36,7 @@ The two concepts are closely related, as resources are often used in components 
 
 Since our Data Platform leverages multiple code locations, and because we want to facilitate the onboarding of new data engineers, we needed to build a common Python library that contains all the resources, components, and custom libraries (utils) required to connect to our data sources. We called this library `dagster-cfwb`.
 
-### Implement a common library `dagster-cfwb` corresponding to our specific needs
+### Implement a common library
 
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_cfwb.drawio.png" alt="" width="400" />
 
