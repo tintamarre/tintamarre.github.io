@@ -1,5 +1,5 @@
 ---
-date: 2025-04-03
+date: 2025-07-04
 title: "Data Platform - Part 2: Automate everything"
 sidebar: auto
 author: Martin Erpicum
@@ -18,7 +18,7 @@ _The views expressed on this website are my own and do not necessarily reflect t
 **Table of contents**
 [[toc]]
 
-If you want to encourage data analysts and data stewards to participate in the development of data pipelines, you need to ensure every commit is tested and validated before being deployed to production. You also want to automate repetitive tasks to reduce the technical barrier as much as possible.
+If you want to encourage data analysts and data stewards to participate in the development of data pipelines, you need to ensure every commit is tested and validated before being deployed to production. You also want to automate repetitive tasks to reduce the technical barrier as much as possible. In addition, you want to setup a solid observability system to monitor the health of your systems and data pipelines and detect issues early.
 
 To explain how we automate the deployment of data pipelines, I will first describe the architecture of our data platform.
 
@@ -219,11 +219,13 @@ notify-teams-markdown:
 
 ## Automate observability
 
-The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our data pipelines, detect issues early, and ensure the quality of our data.
-
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/250px-Panopticon.jpg" alt="" width="200" />
 
-Acting as a **centralized observability hub**, we use webhooks to send notifications (through MS Teams, NTFY, or Email). This allows us to have a clear overview of the status of our data pipelines and the health of our data platform.
+The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our systems and data pipelines, to detect issues early, and ensure the quality of our data.
+
+Like a [panopticon](https://en.wikipedia.org/wiki/Panopticon) or a **centralized observability hub**, we use mainly MS Teams channel (accessible by all stakeholders) to centralize the observability of our data platform in a single place. Some custom notifications are also sent through NTFY and Email for specific events or alerts.
+
+For the observability of our systems, we use Kibana and Dozzle to monitor the logs and metrics of our data platform.
 
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ms-team-panopticon.png" alt="" width="600" />
 
@@ -233,7 +235,7 @@ In this article, we have explored how to automate the deployment of data pipelin
 
 We have also discussed the importance of modularity and reusability of components to lower the technical barrier for data analysts and data stewards. By automating the deployment process, we can ensure that every commit is tested and validated before being deployed to production, which encourages participation from data analysts and data stewards in the development of data pipelines.
 
-But as stated in the introduction, the level of participation is inversely proportional to the technical barrier. The more complex the setup, the less likely data analysts and data stewards will participate in the development of data pipelines.
+But as stated in the introduction, the **level of participation is inversely proportional to the technical barrier**. The more complex the setup, the less likely data analysts and data stewards will participate in the development of data pipelines.
 
 In the next article, we will explore how to lower the technical barrier even further by providing a user-friendly interface for data analysts and data stewards to interact with the data platform. We will also discuss how to improve data literacy among data analysts and data stewards to encourage them to participate in the development of data pipelines.
 

@@ -1,5 +1,5 @@
 ---
-date: 2025-04-03
+date: 2025-07-02
 title: "Data Platform in a polycephalous organization - Part 1: Overview"
 sidebar: auto
 author: Martin Erpicum

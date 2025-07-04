@@ -22,6 +22,8 @@ L'ingénieur en données **Martin Erpicum** a dirigé la transformation vers une
 
 Cette étude de cas révèle comment une grande organisation gouvernementale a modernisé avec succès sa pile technologique tout en continuant à servir des millions de citoyens, prouvant que l’orchestration moderne des données peut fonctionner à grande échelle, même dans des environnements hautement réglementés.
 
+<ImageCenter src="https://i.imgur.com/KmCj3Om.png" alt="" width="600" />
+
 **Table des matières**
 [[toc]]
 
