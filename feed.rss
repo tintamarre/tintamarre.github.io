@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Fri, 04 Jul 2025 13:34:18 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 06 Jul 2025 10:17:02 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -29,8 +29,8 @@
 <h2 id="🧑‍💻-code-reusability" tabindex="-1">🧑‍💻 Code reusability <a class="header-anchor" href="#🧑‍💻-code-reusability" aria-label="Permalink to &quot;🧑‍💻 Code reusability&quot;">&ZeroWidthSpace;</a></h2>
 <p>Without any surprise, <strong>Dagster</strong> provides two main concepts to help code reusability: <strong>resources</strong> and <strong>components</strong>.</p>
 <ul>
-<li><strong>Resources</strong> are used to connect to external systems (databases, APIs, etc.).</li>
-<li><strong>Components</strong> (still kind of new) are used to define reusable pieces of code with <code>YAML</code> that can be used in multiple jobs or pipelines.</li>
+<li><strong>Resources</strong> are used to connect to external systems (databases, APIs, etc.), to provide shared functionality (like logging, monitoring, etc.), or to encapsulate common logic that can be reused across multiple jobs or pipelines.</li>
+<li><strong>Components</strong> (still kind of new) are used to define reusable pieces of code that can be invoke with a simple <code>YAML</code> config file configuration. Components can be used to encapsulate common tasks, such as data transformations, data loading, sheduling, etc.</li>
 </ul>
 <p>The two concepts are closely related, as resources are often used in components to connect to external systems.</p>
 <p>Since our Data Platform leverages multiple code locations, and because we want to facilitate the onboarding of new data engineers, we needed to build a common Python library that contains all the resources, components, and custom libraries (utils) required to connect to our data sources. We called this library <code>dagster-cfwb</code>.</p>
