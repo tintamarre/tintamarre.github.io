@@ -29,8 +29,8 @@ There are two main aspects to this:
 
 Without any surprise, **Dagster** provides two main concepts to help code reusability: **resources** and **components**.
 
-- **Resources** are used to connect to external systems (databases, APIs, etc.).
-- **Components** (still kind of new) are used to define reusable pieces of code with `YAML` that can be used in multiple jobs or pipelines.
+- **Resources** are used to connect to external systems (databases, APIs, etc.), to provide shared functionality (like logging, monitoring, etc.), or to encapsulate common logic that can be reused across multiple jobs or pipelines.
+- **Components** (still kind of new) are used to define reusable pieces of code that can be invoke with a simple `YAML` config file configuration. Components can be used to encapsulate common tasks, such as data transformations, data loading, sheduling, etc.
 
 The two concepts are closely related, as resources are often used in components to connect to external systems.
 
