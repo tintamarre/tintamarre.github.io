@@ -192,11 +192,11 @@ Like a [panopticon](https://en.wikipedia.org/wiki/Panopticon) or a **centralized
 
 For the observability of our systems, we use [Kibana](https://www.elastic.co/kibana) and [Dozzle](https://dozzle.dev/) to monitor the logs and metrics of our data platform.
 
-## 📝 Conclusion
+---
 
 In this article, we have explored how to automate the deployment of data pipelines in a polycephalous organization like the FWB. We have seen how to use Dagster as an orchestrator, dbt-core for data transformations, and GitLab CI/CD for automating the deployment process.
 
-We have also discussed the importance of modularity and reusability of components to lower the technical barrier for data analysts and data stewards. By automating the deployment process, we can ensure that every commit is tested and validated before being deployed to production, which encourages participation from data analysts and data stewards in the development of data pipelines.
+We have also discussed the importance of **modularity** and **reusability** of components to lower the technical barrier for data analysts and data stewards. By automating the deployment process, we can ensure that every commit is tested and validated before being deployed to production, which encourages participation from data analysts and data stewards in the development of data pipelines.
 
 But as stated in the introduction, the **level of participation is inversely proportional to the technical barrier**. The more complex the setup, the less likely data analysts and data stewards will participate in the development of data pipelines.
 

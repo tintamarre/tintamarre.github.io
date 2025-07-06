@@ -112,6 +112,8 @@ We organise regular meetings to share experiences and help each other with the c
 
 ## 📝 Conclusion
 
-In this series of articles, we have explored the implementation of a Data Platform based on Dagster for the [Fédération Wallonie-Bruxelles (FWB)](https://www.federation-wallonie-bruxelles.be/). We have discussed the architecture of our data platform, the automation of our data pipelines, and how we lower the technical barrier for our users and improve their data literacy. We enjoyed building this data platform and we hope that this series of articles will help you to build your own data platform with Open Source tools.
+In this series of articles, we have explored the implementation of a Data Platform based on Dagster for the [Fédération Wallonie-Bruxelles (FWB)](https://www.federation-wallonie-bruxelles.be/).
+
+We have discussed the architecture of our data platform, the automation of our data pipelines, and how we lower the technical barrier for our users and improve their data literacy. We enjoyed building this data platform and we hope that this series of articles will help you to build your own data platform with Open Source tools.
 
 We also hope that this series of articles will help you to understand the challenges of building a data platform in a polycephalous organization and how to overcome them.
