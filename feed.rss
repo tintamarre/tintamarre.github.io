@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Mon, 07 Jul 2025 07:36:54 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 07 Jul 2025 07:40:56 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -559,7 +559,8 @@ The API is organized using FastAPI's router system, with the main address-relate
 </ul>
 <h2 id="conclusion" tabindex="-1">Conclusion <a class="header-anchor" href="#conclusion" aria-label="Permalink to &quot;Conclusion&quot;">&ZeroWidthSpace;</a></h2>
 <p>The HouteSiTrue API provides a robust and efficient solution for address matching and validation in Belgium. By combining strict and fuzzy matching techniques with a well-structured API design, we've created a reliable service that bridges the gap between legacy systems and modern address data requirements.</p>
-<p>This API was used to match addresses from our legacy GEOG system with the BestAddress reference dataset. For that we used the <code>bestmatch</code> endpoint in combination with an orchestrator (Dagster).</p>
+<p>If anyone from public administration is interested in using this API, please reach out to us. We are happy to share the code and help you set it up.</p>
+<p>This API was used to match addresses from our legacy GEOG system with the BestAddress reference dataset. For that we used the <code>bestmatch</code> endpoint in combination with <a href="https://www.tintamarre.be/blog/posts/2025/data_platform_in_fwb_00_intro.html" target="_blank" rel="noreferrer">an orchestrator</a>.</p>
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/run_pipeline_bestaddress.png" alt="Dagster bestmatch" width="600" />]]></content:encoded>
         </item>
         <item>
