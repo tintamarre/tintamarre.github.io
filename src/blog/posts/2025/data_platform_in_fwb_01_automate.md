@@ -33,8 +33,7 @@ Our stack is currently based on the following components:
 - **Docker**: The containerization technology that allows us to package our data pipelines and their dependencies in a portable way.
 - **GitLab**: The version control system that allows us to manage our code repositories and automate our CI/CD pipelines.
 
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/fwb_tech_stack.drawio.png" alt="" width="600" />
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/data_platform.drawio.png" alt="" width="600" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/data_platform.drawio.png" alt="Data flow in our stack" width="600" />
 
 One important side note here: our technical choices are not set in stone. We are constantly evaluating new technologies and approaches to improve our data platform. The goal is to provide a flexible and scalable architecture that can adapt to the changing needs of the organization. If `dbt-core`, `Dagster`, or any other tool/provider does not fit our needs anymore, we will not hesitate to change it. What we are really binding ourselves to is the (1) **architecture**, and the (2) **languages** we use to implement it (Python, SQL). The tools and providers are just means to an end.
 
@@ -74,7 +73,7 @@ Our deployment setup is based on GitLab CI/CD pipelines. The flow is as follows:
 7. **Release**: A new release is created in GitLab, a tag and a changelog are generated.
 8. **Deploy to PROD**: The code is deployed to the production environment.
 
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_flow_stack.drawio.png" alt="" width="800" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_flow_stack.drawio.png" alt="Stack flow on Gitlab" width="800" />
 
 Below is an example of how we implement this flow in our `.gitlab-ci.yml` file.
 
@@ -133,13 +132,13 @@ Once deployed, the data platform is composed of the following containerized comp
 - A **daemon** to monitor the code and communicate with the code locations and the webserver.
 - And a **code location** for each AG or specific project.
 
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_stack.drawio.png" alt="" width="800" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/diagrams/dagster_stack.drawio.png" alt="Container deployement" width="800" />
 
 ### Automate integration of DBT
 
 We created a **specific release cycle** for our DBT projects. This allows us to include the work of data stewards and analysts in the data platform while giving them full autonomy to develop their data models, transformations, and quality monitoring. The DBT projects are integrated as **Git submodules** in the main repository of the data platform.
 
-<ImageCenter src="https://raw.githubusercontent.com/data-cfwb/charte-graphique/refs/heads/main/custom_css/data_dbt.png" alt="" width="300" />
+<ImageCenter src="https://raw.githubusercontent.com/data-cfwb/charte-graphique/refs/heads/main/custom_css/data_dbt.png" alt="dbt-core at FWB" width="300" />
 
 For each commit in the main branch of the DBT project, models are analyzed by sqlfluff, and a GitLab page is published with the documentation of the DBT project that includes the data models, the tests, and the documentation of the data models. This allows us to have a clear overview of the data models and their dependencies and allows analysts to share this documentation with their colleagues.
 
@@ -184,13 +183,25 @@ pages: // [!code focus]
 
 ## 👀 Automate observability
 
-The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our systems and data pipelines, to detect issues early, and ensure the quality of our data.
+The observability of our data platform is a key aspect of the implementation of a Data Platform. It allows us to monitor the health of our systems (1) and data pipelines (2), to detect issues early, and ensure the quality of our data (3).
 
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ms-team-panopticon.png" alt="" width="600" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ms-team-panopticon.png" alt="Panopicon" width="600" />
+
+### Observability of our stack (containers)
+
+For the observability of our systems, we use [Kibana](https://www.elastic.co/kibana) and [Dozzle](https://dozzle.dev/) to monitor the logs and metrics of our data platform.
+
+### Observability of our data pipelines
 
 Like a [panopticon](https://en.wikipedia.org/wiki/Panopticon) or a **centralized observability hub**, we use mainly MS Teams channel (accessible by all stakeholders) to centralize the observability of our data platform in a single place. Some custom notifications are also sent through NTFY and Email for specific events or alerts.
 
-For the observability of our systems, we use [Kibana](https://www.elastic.co/kibana) and [Dozzle](https://dozzle.dev/) to monitor the logs and metrics of our data platform.
+### Observability of our data
+
+For the observability of our data, we use the built-in features of Dagster to check the quality of our data. Dagster provides a set of observability features (custom or integrated) that allow us to monitor the health of our data pipelines and detect issues early.
+
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/dagster_asset_quality.png" alt="How observability feature helped us to detect quality issues" width="600" />
+
+Event without writing custom checks, the observability features of Dagster allow us to monitor the quality of our data, detect issues early.
 
 ---
 

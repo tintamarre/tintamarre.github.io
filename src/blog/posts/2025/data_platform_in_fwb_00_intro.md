@@ -77,8 +77,8 @@ We also wanted to avoid _vendor lock-in_ 🔒 and ensure that the solution could
 
 Based on those requirements, in terms of orchestrators, we tried **Airflow** for a few weeks and relied on **Prefect** for a few months. We then decided to switch to **Dagster**, for a set of reasons:
 
-- Data observability features at the core of the architecture -- this is a key requirement for us ;
-- Separation of code location to match the strong decentralized nature of the FWB ;
+- **Data observability** features at the core of the architecture -- this is a key requirement for us ;
+- Separation of **code location to match the strong decentralized** nature of the FWB ;
 - Great community and **unified qualitative documentation** ;
 
 The new architecture includes a data platform that integrates with existing data sources and tools, providing a more streamlined and efficient approach to data management.
