@@ -146,7 +146,7 @@ The API includes performance monitoring features:
 
 - Execution time tracking for each request
 - Batch processing capabilities (up to 25 addresses per request)
-- Efficient distance calculations using the `geopy` library (spacial library from DuckDB could also be used)
+- Efficient distance calculations using the `geopy` library ([spatial extension](https://duckdb.org/docs/stable/core_extensions/spatial/overview.html) from DuckDB could also be used)
 
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/bestMatch.gif" alt="Performance checks" width="600" />
 
