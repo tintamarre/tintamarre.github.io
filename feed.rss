@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Mon, 07 Jul 2025 07:14:56 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 07 Jul 2025 07:36:54 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -548,7 +548,7 @@ The API is organized using FastAPI's router system, with the main address-relate
 <ul>
 <li>Execution time tracking for each request</li>
 <li>Batch processing capabilities (up to 25 addresses per request)</li>
-<li>Efficient distance calculations using the <code>geopy</code> library (spacial library from DuckDB could also be used)</li>
+<li>Efficient distance calculations using the <code>geopy</code> library (<a href="https://duckdb.org/docs/stable/core_extensions/spatial/overview.html" target="_blank" rel="noreferrer">spatial extension</a> from DuckDB could also be used)</li>
 </ul>
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/bestMatch.gif" alt="Performance checks" width="600" /><h3 id="error-handling-and-validation" tabindex="-1">Error Handling and Validation <a class="header-anchor" href="#error-handling-and-validation" aria-label="Permalink to &quot;Error Handling and Validation&quot;">&ZeroWidthSpace;</a></h3>
 <p>The API implements robust error handling and input validation:</p>
