@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Mon, 07 Jul 2025 07:40:56 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 07 Jul 2025 09:16:45 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -224,8 +224,8 @@ This allows each AG to manage its own data pipelines independently and have clea
 <p>Like a <a href="https://en.wikipedia.org/wiki/Panopticon" target="_blank" rel="noreferrer">panopticon</a> or a <strong>centralized observability hub</strong>, we use mainly MS Teams channel (accessible by all stakeholders) to centralize the observability of our data platform in a single place. Some custom notifications are also sent through NTFY and Email for specific events or alerts.</p>
 <h3 id="observability-of-our-data" tabindex="-1">Observability of our data <a class="header-anchor" href="#observability-of-our-data" aria-label="Permalink to &quot;Observability of our data&quot;">&ZeroWidthSpace;</a></h3>
 <p>For the observability of our data, we use the built-in features of Dagster to check the quality of our data. Dagster provides a set of observability features (custom or integrated) that allow us to monitor the health of our data pipelines and detect issues early.</p>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/dagster_asset_quality.png" alt="How observability feature helped us to detect quality issues" width="600" /><p>Event without writing custom checks, the observability features of Dagster allow us to monitor the quality of our data, detect issues early.</p>
-<hr>
+<p>Event without writing custom checks, Dagster UI allow us to monitor the quality of our data. Here is how we found a quality issue in one of our data pipelines:</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/dagster_asset_quality.png" alt="How observability feature helped us to detect quality issues" width="600" /><hr>
 <p>In this article, we have explored how to automate the deployment of data pipelines in a polycephalous organization like the FWB. We have seen how to use Dagster as an orchestrator, dbt-core for data transformations, and GitLab CI/CD for automating the deployment process.</p>
 <p>We have also discussed the importance of <strong>modularity</strong> and <strong>reusability</strong> of components to lower the technical barrier for data analysts and data stewards. By automating the deployment process, we can ensure that every commit is tested and validated before being deployed to production, which encourages participation from data analysts and data stewards in the development of data pipelines.</p>
 <p>But as stated in the introduction, the <strong>level of participation is inversely proportional to the technical barrier</strong>. The more complex the setup, the less likely data analysts and data stewards will participate in the development of data pipelines.</p>
