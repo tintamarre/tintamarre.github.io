@@ -199,9 +199,9 @@ Like a [panopticon](https://en.wikipedia.org/wiki/Panopticon) or a **centralized
 
 For the observability of our data, we use the built-in features of Dagster to check the quality of our data. Dagster provides a set of observability features (custom or integrated) that allow us to monitor the health of our data pipelines and detect issues early.
 
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/dagster_asset_quality.png" alt="How observability feature helped us to detect quality issues" width="600" />
+Event without writing custom checks, Dagster UI allow us to monitor the quality of our data. Here is how we found a quality issue in one of our data pipelines:
 
-Event without writing custom checks, the observability features of Dagster allow us to monitor the quality of our data, detect issues early.
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/dagster_asset_quality.png" alt="How observability feature helped us to detect quality issues" width="600" />
 
 ---
 
