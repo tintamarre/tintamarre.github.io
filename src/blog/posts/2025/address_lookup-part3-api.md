@@ -162,6 +162,8 @@ The API implements robust error handling and input validation:
 
 The HouteSiTrue API provides a robust and efficient solution for address matching and validation in Belgium. By combining strict and fuzzy matching techniques with a well-structured API design, we've created a reliable service that bridges the gap between legacy systems and modern address data requirements.
 
-This API was used to match addresses from our legacy GEOG system with the BestAddress reference dataset. For that we used the `bestmatch` endpoint in combination with an orchestrator (Dagster).
+If anyone from public administration is interested in using this API, please reach out to us. We are happy to share the code and help you set it up.
+
+This API was used to match addresses from our legacy GEOG system with the BestAddress reference dataset. For that we used the `bestmatch` endpoint in combination with [an orchestrator](https://www.tintamarre.be/blog/posts/2025/data_platform_in_fwb_00_intro.html).
 
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/run_pipeline_bestaddress.png" alt="Dagster bestmatch" width="600" />
