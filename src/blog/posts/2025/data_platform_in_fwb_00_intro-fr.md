@@ -94,7 +94,7 @@ Développer un logiciel comme une plateforme de données est une tâche complexe
 
 > 💡 Pour une plongée détaillée dans notre implémentation de l'automatisation, y compris les configurations GitLab CI/CD et des exemples d'assets Dagster, consultez la partie 2 de cette série.
 
-- [Partie 2 : Plongée approfondie dans notre stratégie d'automatisation avec des exemples pratiques GitLab CI/CD](/blog/posts/2025/data_platform_in_fwb_01_automate)
+- [Partie 2 : Plongée approfondie dans notre stratégie d'automatisation avec des exemples pratiques GitLab CI/CD](/blog/posts/2025/data_platform_in_fwb_01_automate-fr)
 
 ## 📚 Littératie des données : Abaisser la barrière et donner du pouvoir aux utilisateurs
 
@@ -108,4 +108,4 @@ Comme la plupart de nos utilisateurs ne sont pas des professionnels de la donné
 
 > 💡 Dans la partie 3 de cette série, nous explorerons comment nos ressources personnalisées ont amélioré la gouvernance des données et rendu la plateforme plus accessible aux utilisateurs de tous les niveaux techniques.
 
-- [Partie 3 : Comment les ressources personnalisées et la formation aident à abaisser la barrière](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier)
+- [Partie 3 : Comment les ressources personnalisées et la formation aident à abaisser la barrière](/blog/posts/2025/data_platform_in_fwb_02_lower_barrier-fr)
