@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Wed, 15 Oct 2025 17:55:18 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 20 Oct 2025 18:19:34 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -161,7 +161,7 @@
 ]]></content:encoded>
         </item>
         <item>
-            <title><![CDATA[Plateforme de données - Partie 2 : Automatiser tout 🤖]]></title>
+            <title><![CDATA[Plateforme de données - Partie 2 : Tout automatiser 🤖]]></title>
             <link>localhost/blog/blog/posts/2025/data_platform_in_fwb_01_automate-fr.html</link>
             <guid>localhost/blog/blog/posts/2025/data_platform_in_fwb_01_automate-fr.html</guid>
             <pubDate>Thu, 03 Jul 2025 00:00:00 GMT</pubDate>
@@ -499,7 +499,7 @@ This allows each AG to manage its own data pipelines independently and have clea
 ]]></content:encoded>
         </item>
         <item>
-            <title><![CDATA[Plateforme de données dans une organisation polycéphale - Partie 1 : Vue d'ensemble 🎯]]></title>
+            <title><![CDATA[Plateforme de données dans une organisation polycéphale - Partie 1 🎯]]></title>
             <link>localhost/blog/blog/posts/2025/data_platform_in_fwb_00_intro-fr.html</link>
             <guid>localhost/blog/blog/posts/2025/data_platform_in_fwb_00_intro-fr.html</guid>
             <pubDate>Wed, 02 Jul 2025 00:00:00 GMT</pubDate>
