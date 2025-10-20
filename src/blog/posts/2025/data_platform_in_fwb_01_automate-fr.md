@@ -1,6 +1,6 @@
 ---
 date: 2025-07-03
-title: "Plateforme de données - Partie 2 : Automatiser tout 🤖"
+title: "Plateforme de données - Partie 2 : Tout automatiser 🤖"
 sidebar: auto
 author: Martin Erpicum
 category: Article

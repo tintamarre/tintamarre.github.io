@@ -1,6 +1,6 @@
 ---
 date: 2025-07-02
-title: "Plateforme de données dans une organisation polycéphale - Partie 1 : Vue d'ensemble 🎯"
+title: "Plateforme de données dans une organisation polycéphale - Partie 1 🎯"
 sidebar: auto
 author: Martin Erpicum
 category: Article
