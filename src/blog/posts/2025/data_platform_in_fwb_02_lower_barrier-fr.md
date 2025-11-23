@@ -1,6 +1,6 @@
 ---
 date: 2025-07-04
-title: "Plateforme de données - Partie 3 : Abaisser la barrière 🚧"
+title: "Plateforme de données - Partie 3 : Baisser la barrière 🚧"
 sidebar: auto
 author: Martin Erpicum
 category: Article
@@ -18,7 +18,7 @@ _Les opinions exprimées sur ce site web sont les miennes et ne reflètent pas n
 **Table des matières**
 [[toc]]
 
-Après les deux premiers articles de cette série, qui se concentraient sur l'[architecture de notre plateforme de données](/blog/posts/2025/data_platform_in_fwb_00_intro-fr.html) et l'[automatisation de nos pipelines de données](/blog/posts/2025/data_platform_in_fwb_01_automate-fr.html), cet article discutera de la façon dont nous abaissons la barrière technique pour nos utilisateurs et améliorons leur littératie des données.
+Après les deux premiers articles de cette série, qui se concentraient sur l'[architecture de notre plateforme de données](/blog/posts/2025/data_platform_in_fwb_00_intro-fr.html) et l'[automatisation de nos pipelines de données](/blog/posts/2025/data_platform_in_fwb_01_automate-fr.html), cet article discutera de la façon dont nous pouvons baisser la barrière technique pour nos utilisateurs et améliorer leur littératie des données.
 
 Il y a deux aspects principaux à cela :
 
