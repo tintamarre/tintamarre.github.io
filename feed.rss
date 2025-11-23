@@ -4,12 +4,12 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Wed, 22 Oct 2025 03:46:12 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 23 Nov 2025 20:16:54 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Plateforme de données - Partie 3 : Abaisser la barrière 🚧]]></title>
+            <title><![CDATA[Plateforme de données - Partie 3 : Baisser la barrière 🚧]]></title>
             <link>localhost/blog/blog/posts/2025/data_platform_in_fwb_02_lower_barrier-fr.html</link>
             <guid>localhost/blog/blog/posts/2025/data_platform_in_fwb_02_lower_barrier-fr.html</guid>
             <pubDate>Fri, 04 Jul 2025 00:00:00 GMT</pubDate>
@@ -20,7 +20,7 @@
 <p><em>Les opinions exprimées sur ce site web sont les miennes et ne reflètent pas nécessairement celles de mon employeur.</em></p>
 <p><strong>Table des matières</strong></p>
 <nav class="table-of-contents"><ul><li><a href="#🧑‍💻-reutilisabilite-du-code">🧑‍💻 Réutilisabilité du code</a><ul><li><a href="#implementer-une-bibliotheque-commune">Implémenter une bibliothèque commune</a></li><li><a href="#wiki-et-documentation">Wiki et documentation</a></li><li><a href="#utiliser-les-llm-pour-aider-les-utilisateurs">Utiliser les LLM pour aider les utilisateurs</a></li></ul></li><li><a href="#📖-ameliorer-la-litteratie-des-donnees">📖 Améliorer la littératie des données</a><ul><li><a href="#communiquer-sur-la-plateforme-de-donnees">Communiquer sur la plateforme de données</a></li><li><a href="#former-les-utilisateurs">Former les utilisateurs</a></li><li><a href="#construire-une-communaute-pour-partager-les-connaissances">Construire une communauté pour partager les connaissances</a></li></ul></li><li><a href="#📝-conclusion">📝 Conclusion</a></li></ul></nav>
-<p>Après les deux premiers articles de cette série, qui se concentraient sur l'<a href="/blog/posts/2025/data_platform_in_fwb_00_intro-fr.html">architecture de notre plateforme de données</a> et l'<a href="/blog/posts/2025/data_platform_in_fwb_01_automate-fr.html">automatisation de nos pipelines de données</a>, cet article discutera de la façon dont nous abaissons la barrière technique pour nos utilisateurs et améliorons leur littératie des données.</p>
+<p>Après les deux premiers articles de cette série, qui se concentraient sur l'<a href="/blog/posts/2025/data_platform_in_fwb_00_intro-fr.html">architecture de notre plateforme de données</a> et l'<a href="/blog/posts/2025/data_platform_in_fwb_01_automate-fr.html">automatisation de nos pipelines de données</a>, cet article discutera de la façon dont nous pouvons baisser la barrière technique pour nos utilisateurs et améliorer leur littératie des données.</p>
 <p>Il y a deux aspects principaux à cela :</p>
 <ul>
 <li><strong>Réduire la complexité</strong> de notre plateforme de données en fournissant des ressources et des composants communs qui peuvent être réutilisés par tous les analystes de données et les gestionnaires de données.</li>
