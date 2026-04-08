@@ -59,7 +59,7 @@ We also tuned s3proxy in two iterations:
 
 Before diving into individual charts, here is the whole story in a single heatmap. Each cell shows how much faster s3proxy is than direct Azure for one operation at one data size. **Blue cells mean s3proxy wins, red cells mean direct Azure wins.**
 
-<ImageCenter src="/assets/ducklake-azure-vs-s3proxy/00_summary_heatmap.png" alt="Summary heatmap: s3proxy speedup over direct az://" width="900" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/00_summary_heatmap.png" alt="Summary heatmap: s3proxy speedup over direct az://" width="900" />
 
 Blue dominates. The one consistently red row is "Selective read" — a genuine strength of the azure extension's range-request path. Everything else goes to s3proxy, sometimes by two orders of magnitude.
 
@@ -71,37 +71,37 @@ All numbers below are from a slow **home connection** with the tuned `azureblob-
 
 ### Single-file parquet writes
 
-<ImageCenter src="/assets/ducklake-azure-vs-s3proxy/01_write_single.png" alt="Single-file write benchmark" width="900" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/01_write_single.png" alt="Single-file write benchmark" width="900" />
 
 s3proxy wins at every size by 1.5–3×. At 2M rows (80 MB parquet), direct Azure takes **26.7 s** versus **17.5 s** for s3proxy.
 
 ### Partitioned writes (10 files)
 
-<ImageCenter src="/assets/ducklake-azure-vs-s3proxy/02_write_partitioned.png" alt="Partitioned write benchmark" width="900" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/02_write_partitioned.png" alt="Partitioned write benchmark" width="900" />
 
 The most dramatic result. At 5k rows, s3proxy is **5× faster**. Even at 2M rows it stays **1.6× faster**. The gap on the Azure side is almost pure in-process CPU burn — see the "CPU problem" observation below.
 
 ### Cold full scan
 
-<ImageCenter src="/assets/ducklake-azure-vs-s3proxy/03_read_cold.png" alt="Cold full scan benchmark" width="900" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/03_read_cold.png" alt="Cold full scan benchmark" width="900" />
 
 Near-tie up to 500k rows. Then, at 2M rows, **direct Azure collapses to 23.9 s** — 5× slower than s3proxy for reading the exact same parquet file. This was the most surprising finding of the whole benchmark, and it's reproducible.
 
 ### Warm read (log scale)
 
-<ImageCenter src="/assets/ducklake-azure-vs-s3proxy/04_read_warm.png" alt="Warm read benchmark (log scale)" width="900" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/04_read_warm.png" alt="Warm read benchmark (log scale)" width="900" />
 
 **30–200× faster warm reads on s3proxy.** On httpfs, DuckDB caches parquet footers and row-group metadata in memory and reuses them on subsequent queries. The azure extension does not engage that cache — every open re-fetches metadata over the wire. For DuckLake workloads, which re-open the same files constantly, this is the single most important finding.
 
 ### Selective read with predicate pushdown
 
-<ImageCenter src="/assets/ducklake-azure-vs-s3proxy/05_read_selective.png" alt="Selective read benchmark" width="900" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/05_read_selective.png" alt="Selective read benchmark" width="900" />
 
 The one chart where direct Azure wins consistently (by ~2× at realistic sizes). The azure extension batches range requests more aggressively than httpfs-through-s3proxy. If your workload is dominated by big parquet files with predicate pushdown — the classic OLAP fact-table pattern — this matters.
 
 ### Glob over a partitioned dataset
 
-<ImageCenter src="/assets/ducklake-azure-vs-s3proxy/06_read_glob.png" alt="Glob benchmark" width="900" />
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/06_read_glob.png" alt="Glob benchmark" width="900" />
 
 Tie at small sizes; s3proxy wins by ~2× on larger data. **DuckLake never globs** (the catalog already has the file list), so this column is informational only, but it's worth noting that the tuned s3proxy is no longer at a disadvantage for LIST-heavy operations.
 
@@ -226,7 +226,7 @@ The architectural cost is one extra container in your stack. The performance win
 
 ## Reproduce it yourself
 
-The full benchmark is a single SQL file you can run directly: [`benchmark_s3_vs_azure.sql`](/assets/ducklake-azure-vs-s3proxy/benchmark_s3_vs_azure.sql).
+The full benchmark is a single SQL file you can run directly: [`benchmark_s3_vs_azure.sql`](https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/benchmark_s3_vs_azure.sql).
 
 ```bash
 # Start a tuned s3proxy in front of your Azure account (see compose snippet above)
