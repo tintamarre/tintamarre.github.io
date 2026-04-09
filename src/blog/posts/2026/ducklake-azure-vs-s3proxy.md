@@ -221,6 +221,8 @@ This is the **classic OLAP fact-table** pattern: scan a few large parquet files,
 **For DuckLake's actual access pattern — catalog-driven, lots of medium-sized parquet files, frequent re-opens, no globs — s3proxy + `azureblob-sdk` is the better path.** The one weakness (selective range reads) only matters for a workload pattern DuckLake doesn't generate by default.
 
 The architectural cost is one extra container in your stack but even with that, the performance benefits are large enough to justify it for any non-trivial workload. If you're running DuckDB on Azure Blob Storage, you owe it to yourself to try the s3proxy path or better yet, to [invest in the upstream fixes that would make it even faster](https://github.com/duckdb/duckdb-azure/issues).
+
+
 ---
 
 ## Reproduce it yourself

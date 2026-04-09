@@ -6,3 +6,4 @@ drafts
 *.bkp
 .DS_Store
 src/.vitepress/dist/*
+*.local.*
