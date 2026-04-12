@@ -1,4 +1,4 @@
-import { defineConfig } from '@jcamp/vitepress-blog-theme/config'
+import { defineConfig } from './tintamarre-blog/config'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

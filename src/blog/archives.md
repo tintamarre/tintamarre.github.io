@@ -2,4 +2,4 @@
 layout: home
 ---
 
-<VPBArchives />
+<TintamarreBlogArchives />

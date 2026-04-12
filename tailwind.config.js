@@ -1,3 +1,11 @@
-import { defineTailwindConfig } from '@jcamp/vitepress-blog-theme/config'
+import icons from '@jcamp/tailwindcss-plugin-icons'
 
-module.exports = defineTailwindConfig()
+module.exports = {
+  darkMode: 'class',
+  plugins: [icons()],
+  content: [
+    './src/**/*.md',
+    './src/.vitepress/**/*.{js,ts,vue}',
+    './src/.vitepress/tintamarre-blog/theme/**/*.{js,ts,vue}',
+  ],
+}
