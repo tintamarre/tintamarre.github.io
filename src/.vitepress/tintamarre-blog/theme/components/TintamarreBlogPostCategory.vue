@@ -9,17 +9,17 @@ const { theme } = useData<TintamarreBlogThemeConfig>()
 </script>
 
 <template>
-  <div>
+  <span class="inline-flex items-center">
     <div
       v-if="
         theme.blog?.categoryIcons &&
         theme.blog.categoryIcons[category.toLowerCase()]
       "
       :class="theme.blog.categoryIcons[category.toLowerCase()]"
-      class="mr-2"
+      class="mr-1.5"
     />
     <span>{{ category }}</span>
-  </div>
+  </span>
 </template>
 
 <style scoped>
