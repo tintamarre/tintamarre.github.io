@@ -4,7 +4,7 @@
         <title></title>
         <link>localhost/blog</link>
         <description>Some thoughts</description>
-        <lastBuildDate>Sun, 12 Apr 2026 07:43:08 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 13 Apr 2026 06:58:47 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -14,17 +14,17 @@
             <guid>localhost/blog/blog/posts/2026/ducklake-azure-vs-s3proxy.html</guid>
             <pubDate>Wed, 08 Apr 2026 00:00:00 GMT</pubDate>
             <description><![CDATA[<p><em>Summary</em>:
-A reproducible benchmark comparing two ways of running DuckDB against Azure Blob Storage: the native <code>azure</code> extension (<code>az://</code>) versus fronting the same storage account with a properly tuned <strong>s3proxy</strong> and using <code>httpfs</code> (<code>s3://</code>). Results across four data sizes (5k → 2M rows) show that the s3proxy path wins decisively for every operation that matters in a lakehouse workload — writes, warm reads, large cold scans, globs. The only exception is selective reads with predicate pushdown, where direct Azure wins by ~2×.</p>
+A reproducible benchmark comparing two ways of running DuckDB against Azure Blob Storage: the native <code>azure</code> extension (<code>az://</code>) versus fronting the same storage account with a properly tuned <strong>s3proxy</strong> and using <code>httpfs</code> (<code>s3://</code>). Results across four data sizes (5k → 2M rows) show that the s3proxy path wins clearly for the DuckLake-relevant patterns we care about most: partitioned writes, warm reopens, and larger cold scans. The main exception is selective reads with predicate pushdown, where direct Azure wins. A later rerun at 4M rows also showed a crossover where direct Azure became faster for one very large single-file write.</p>
 ]]></description>
             <content:encoded><![CDATA[<p><em>Summary</em>:
-A reproducible benchmark comparing two ways of running DuckDB against Azure Blob Storage: the native <code>azure</code> extension (<code>az://</code>) versus fronting the same storage account with a properly tuned <strong>s3proxy</strong> and using <code>httpfs</code> (<code>s3://</code>). Results across four data sizes (5k → 2M rows) show that the s3proxy path wins decisively for every operation that matters in a lakehouse workload — writes, warm reads, large cold scans, globs. The only exception is selective reads with predicate pushdown, where direct Azure wins by ~2×.</p>
+A reproducible benchmark comparing two ways of running DuckDB against Azure Blob Storage: the native <code>azure</code> extension (<code>az://</code>) versus fronting the same storage account with a properly tuned <strong>s3proxy</strong> and using <code>httpfs</code> (<code>s3://</code>). Results across four data sizes (5k → 2M rows) show that the s3proxy path wins clearly for the DuckLake-relevant patterns we care about most: partitioned writes, warm reopens, and larger cold scans. The main exception is selective reads with predicate pushdown, where direct Azure wins. A later rerun at 4M rows also showed a crossover where direct Azure became faster for one very large single-file write.</p>
 <hr>
 <h1 id="duckdb-on-azure-direct-az-vs-s3-compatible-proxy" tabindex="-1">DuckDB on Azure: direct <code>az://</code> vs S3-compatible proxy <a class="header-anchor" href="#duckdb-on-azure-direct-az-vs-s3-compatible-proxy" aria-label="Permalink to &quot;DuckDB on Azure: direct `az://` vs S3-compatible proxy&quot;">&ZeroWidthSpace;</a></h1>
 <blockquote>
-<p><strong>TL;DR</strong> — When using DuckDB against Azure Blob Storage, fronting your Azure account with a properly tuned <strong>s3proxy</strong> (using the <code>azureblob-sdk</code> jclouds backend) is <strong>substantially faster</strong> than the native <code>az://</code> driver for almost every operation that matters in a lakehouse workload — writes (1.5–5×), warm reads (30–200×), large cold scans (5×), globs. The only exception is selective reads with predicate pushdown, where direct Azure wins by ~2×.</p>
+<p><strong>TL;DR</strong> — When using DuckDB against Azure Blob Storage, fronting your Azure account with a properly tuned <strong>s3proxy</strong> (using the <code>azureblob-sdk</code> jclouds backend) remains the better path for the DuckLake-style workload we care about most: partitioned writes, repeated warm reads, and larger cold scans. The biggest and most stable win is still warm reopens (30–200× in the original benchmark). The main exception is selective reads with predicate pushdown, where direct Azure wins, and a later rerun at 4M rows showed that direct <code>az://</code> can also overtake s3proxy for a single very large parquet write.</p>
 </blockquote>
 <p><strong>Table of contents</strong></p>
-<nav class="table-of-contents"><ul><li><a href="#why-benchmark-this-at-all">Why benchmark this at all?</a></li><li><a href="#the-setup">The setup</a></li><li><a href="#the-big-picture">The big picture</a></li><li><a href="#results-operation-by-operation">Results, operation by operation</a><ul><li><a href="#single-file-parquet-writes">Single-file parquet writes</a></li><li><a href="#partitioned-writes-10-files">Partitioned writes (10 files)</a></li><li><a href="#cold-full-scan">Cold full scan</a></li><li><a href="#warm-read-log-scale">Warm read (log scale)</a></li><li><a href="#selective-read-with-predicate-pushdown">Selective read with predicate pushdown</a></li><li><a href="#glob-over-a-partitioned-dataset">Glob over a partitioned dataset</a></li></ul></li><li><a href="#full-results-table">Full results table</a></li><li><a href="#five-things-we-learned">Five things we learned</a><ul><li><a href="#_1-the-default-s3proxy-config-is-the-bottleneck-not-s3proxy-itself">1. The default s3proxy config is the bottleneck, not s3proxy itself</a></li><li><a href="#_2-the-duckdb-azure-extension-has-a-cpu-problem">2. The DuckDB azure extension has a CPU problem</a></li><li><a href="#_3-the-httpfs-metadata-cache-is-a-killer-feature-for-ducklake">3. The httpfs metadata cache is a killer feature for DuckLake</a></li><li><a href="#_4-network-matters-a-lot-for-range-request-workloads">4. Network matters a lot for range-request workloads</a></li><li><a href="#_5-direct-az-wins-at-exactly-one-thing-selective-reads-with-predicate-pushdown">5. Direct az:// wins at exactly one thing: selective reads with predicate pushdown</a></li></ul></li><li><a href="#final-verdict-for-ducklake-on-azure">Final verdict for DuckLake-on-Azure</a></li><li><a href="#reproduce-it-yourself">Reproduce it yourself</a></li><li><a href="#open-questions-next-steps">Open questions / next steps</a></li></ul></nav>
+<nav class="table-of-contents"><ul><li><a href="#why-benchmark-this-at-all">Why benchmark this at all?</a></li><li><a href="#the-setup">The setup</a></li><li><a href="#the-big-picture">The big picture</a></li><li><a href="#results-operation-by-operation">Results, operation by operation</a><ul><li><a href="#single-file-parquet-writes">Single-file parquet writes</a></li><li><a href="#partitioned-writes-10-files">Partitioned writes (10 files)</a></li><li><a href="#cold-full-scan">Cold full scan</a></li><li><a href="#warm-read-log-scale">Warm read (log scale)</a></li><li><a href="#selective-read-with-predicate-pushdown">Selective read with predicate pushdown</a></li><li><a href="#glob-over-a-partitioned-dataset">Glob over a partitioned dataset</a></li></ul></li><li><a href="#full-results-table">Full results table</a></li><li><a href="#five-things-we-learned">Five things we learned</a><ul><li><a href="#_1-the-default-s3proxy-config-is-the-bottleneck-not-s3proxy-itself">1. The default s3proxy config is the bottleneck, not s3proxy itself</a></li><li><a href="#_2-the-duckdb-azure-extension-has-a-cpu-problem">2. The DuckDB azure extension has a CPU problem</a></li><li><a href="#_3-the-httpfs-metadata-cache-is-a-killer-feature-for-ducklake">3. The httpfs metadata cache is a killer feature for DuckLake</a></li><li><a href="#_4-network-matters-a-lot-for-range-request-workloads">4. Network matters a lot for range-request workloads</a></li><li><a href="#_5-direct-az-wins-most-clearly-on-selective-reads-and-may-also-win-very-large-single-file-writes">5. Direct az:// wins most clearly on selective reads, and may also win very large single-file writes</a></li></ul></li><li><a href="#final-verdict-for-ducklake-on-azure">Final verdict for DuckLake-on-Azure</a></li><li><a href="#reproduce-it-yourself">Reproduce it yourself</a></li><li><a href="#open-questions-next-steps">Open questions / next steps</a></li></ul></nav>
 <hr>
 <h2 id="why-benchmark-this-at-all" tabindex="-1">Why benchmark this at all? <a class="header-anchor" href="#why-benchmark-this-at-all" aria-label="Permalink to &quot;Why benchmark this at all?&quot;">&ZeroWidthSpace;</a></h2>
 <p>We run a Dagster + DuckDB/DuckLake stack at the Fédération Wallonie-Bruxelles (CFWB) and our underlying object storage is Azure Blob. DuckDB has one official way to talk to Azure — the <code>azure</code> extension, which uses <code>az://</code> URLs. But it also has a generic S3-compatible extension (<code>httpfs</code>) that can talk to any S3-compatible gateway, including <strong>s3proxy</strong>. So we have two options for how to connect DuckDB to Azure:</p>
@@ -48,6 +48,7 @@ A reproducible benchmark comparing two ways of running DuckDB against Azure Blob
 </li>
 </ul>
 <p>We ran the same script across <strong>four data sizes</strong>: 5k, 50k, 500k, and 2M rows — to see how the per-request overhead amortizes as files grow.</p>
+<p>Update on 2026-04-10: I reran the benchmark locally with the same Azure account and the same <code>ducklake-test</code> container, extending it to <strong>4M rows</strong>. That rerun did not change the main DuckLake conclusion, but it did reveal one important nuance: for a <strong>single large parquet write</strong>, direct <code>az://</code> overtook s3proxy at 4M rows. Partitioned writes, warm reads, and cold reads still favored s3proxy in that rerun.</p>
 <p>We also tuned s3proxy in two iterations:</p>
 <ul>
 <li><strong>Pool tuning</strong>: bigger jclouds connection pool, OkHttp client, JVM heap.</li>
@@ -56,12 +57,13 @@ A reproducible benchmark comparing two ways of running DuckDB against Azure Blob
 <hr>
 <h2 id="the-big-picture" tabindex="-1">The big picture <a class="header-anchor" href="#the-big-picture" aria-label="Permalink to &quot;The big picture&quot;">&ZeroWidthSpace;</a></h2>
 <p>Before diving into individual charts, here is the whole story in a single heatmap. Each cell shows how much faster s3proxy is than direct Azure for one operation at one data size. <strong>Blue cells mean s3proxy wins, red cells mean direct Azure wins.</strong></p>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/00_summary_heatmap.png" alt="Summary heatmap: s3proxy speedup over direct az://" width="900" /><p>Blue dominates. The one consistently red row is &quot;Selective read&quot; — a genuine strength of the azure extension's range-request path. Everything else goes to s3proxy, sometimes by two orders of magnitude.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/00_summary_heatmap.png" alt="Summary heatmap: s3proxy speedup over direct az://" width="900" /><p>Blue dominates in the original 5k → 2M benchmark. The one consistently red row is &quot;Selective read&quot; — a genuine strength of the azure extension's range-request path. A later 4M rerun added one more red cell: single-file write.</p>
 <hr>
 <h2 id="results-operation-by-operation" tabindex="-1">Results, operation by operation <a class="header-anchor" href="#results-operation-by-operation" aria-label="Permalink to &quot;Results, operation by operation&quot;">&ZeroWidthSpace;</a></h2>
 <p>All numbers below are from a slow <strong>home connection</strong> with the tuned <code>azureblob-sdk</code> s3proxy backend.</p>
 <h3 id="single-file-parquet-writes" tabindex="-1">Single-file parquet writes <a class="header-anchor" href="#single-file-parquet-writes" aria-label="Permalink to &quot;Single-file parquet writes&quot;">&ZeroWidthSpace;</a></h3>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/01_write_single.png" alt="Single-file write benchmark" width="900" /><p>s3proxy wins at every size by 1.5–3×. At 2M rows (80 MB parquet), direct Azure takes <strong>26.7 s</strong> versus <strong>17.5 s</strong> for s3proxy.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/01_write_single.png" alt="Single-file write benchmark" width="900" /><p>s3proxy wins at every size in the original 5k → 2M benchmark by 1.5–3×. At 2M rows (80 MB parquet), direct Azure takes <strong>26.7 s</strong> versus <strong>17.5 s</strong> for s3proxy.</p>
+<p>Update from the 2026-04-10 rerun: at <strong>4M rows</strong>, this pattern flipped. In that run, single-file write was <strong>72.0 s via s3proxy</strong> versus <strong>55.7 s via direct <code>az://</code></strong>. So the more precise statement is: s3proxy wins single-file writes up through the original benchmark range, but there appears to be a crossover somewhere between 2M and 4M rows where direct Azure can become faster.</p>
 <h3 id="partitioned-writes-10-files" tabindex="-1">Partitioned writes (10 files) <a class="header-anchor" href="#partitioned-writes-10-files" aria-label="Permalink to &quot;Partitioned writes (10 files)&quot;">&ZeroWidthSpace;</a></h3>
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/02_write_partitioned.png" alt="Partitioned write benchmark" width="900" /><p>The most dramatic result. At 5k rows, s3proxy is <strong>5× faster</strong>. Even at 2M rows it stays <strong>1.6× faster</strong>. The gap on the Azure side is almost pure in-process CPU burn — see the &quot;CPU problem&quot; observation below.</p>
 <h3 id="cold-full-scan" tabindex="-1">Cold full scan <a class="header-anchor" href="#cold-full-scan" aria-label="Permalink to &quot;Cold full scan&quot;">&ZeroWidthSpace;</a></h3>
@@ -69,7 +71,7 @@ A reproducible benchmark comparing two ways of running DuckDB against Azure Blob
 <h3 id="warm-read-log-scale" tabindex="-1">Warm read (log scale) <a class="header-anchor" href="#warm-read-log-scale" aria-label="Permalink to &quot;Warm read (log scale)&quot;">&ZeroWidthSpace;</a></h3>
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/04_read_warm.png" alt="Warm read benchmark (log scale)" width="900" /><p><strong>30–200× faster warm reads on s3proxy.</strong> On httpfs, DuckDB caches parquet footers and row-group metadata in memory and reuses them on subsequent queries. The azure extension does not engage that cache — every open re-fetches metadata over the wire. For DuckLake workloads, which re-open the same files constantly, this is the single most important finding.</p>
 <h3 id="selective-read-with-predicate-pushdown" tabindex="-1">Selective read with predicate pushdown <a class="header-anchor" href="#selective-read-with-predicate-pushdown" aria-label="Permalink to &quot;Selective read with predicate pushdown&quot;">&ZeroWidthSpace;</a></h3>
-<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/05_read_selective.png" alt="Selective read benchmark" width="900" /><p>The one chart where direct Azure wins consistently (by ~2× at realistic sizes). The azure extension batches range requests more aggressively than httpfs-through-s3proxy. If your workload is dominated by big parquet files with predicate pushdown — the classic OLAP fact-table pattern — this matters.</p>
+<ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/05_read_selective.png" alt="Selective read benchmark" width="900" /><p>The one chart where direct Azure wins consistently in the original benchmark. The azure extension batches range requests more aggressively than httpfs-through-s3proxy. If your workload is dominated by big parquet files with predicate pushdown — the classic OLAP fact-table pattern — this matters.</p>
 <h3 id="glob-over-a-partitioned-dataset" tabindex="-1">Glob over a partitioned dataset <a class="header-anchor" href="#glob-over-a-partitioned-dataset" aria-label="Permalink to &quot;Glob over a partitioned dataset&quot;">&ZeroWidthSpace;</a></h3>
 <ImageCenter src="https://raw.githubusercontent.com/tintamarre/tintamarre.github.io/refs/heads/master/src/assets/images/ducklake-azure-vs-s3proxy/06_read_glob.png" alt="Glob benchmark" width="900" /><p>Tie at small sizes; s3proxy wins by ~2× on larger data. <strong>DuckLake never globs</strong> (the catalog already has the file list), so this column is informational only, but it's worth noting that the tuned s3proxy is no longer at a disadvantage for LIST-heavy operations.</p>
 <hr>
@@ -227,8 +229,9 @@ A reproducible benchmark comparing two ways of running DuckDB against Azure Blob
 <h3 id="_4-network-matters-a-lot-for-range-request-workloads" tabindex="-1">4. Network matters a lot for range-request workloads <a class="header-anchor" href="#_4-network-matters-a-lot-for-range-request-workloads" aria-label="Permalink to &quot;4. Network matters a lot for range-request workloads&quot;">&ZeroWidthSpace;</a></h3>
 <p>The earlier train-network run showed s3proxy's selective-read performance collapsing to 24 s for a 2 MB file — suggesting a range-header bug. On a home fibre connection, that regression disappears entirely (1.66 s for the same query). The high-RTT mobile link was amplifying every per-request overhead, and the many parallel range fetches httpfs issues were paying the latency cost sequentially.</p>
 <p>Takeaway: <strong>benchmark on the network you'll actually deploy on.</strong> If your Dagster workers run in the same region as your Azure storage (~1 ms RTT), the results here apply. If they run far away or over flaky links, add a larger margin on range-heavy queries.</p>
-<h3 id="_5-direct-az-wins-at-exactly-one-thing-selective-reads-with-predicate-pushdown" tabindex="-1">5. Direct <code>az://</code> wins at exactly one thing: selective reads with predicate pushdown <a class="header-anchor" href="#_5-direct-az-wins-at-exactly-one-thing-selective-reads-with-predicate-pushdown" aria-label="Permalink to &quot;5. Direct `az://` wins at exactly one thing: selective reads with predicate pushdown&quot;">&ZeroWidthSpace;</a></h3>
-<p>In the home-network runs, direct Azure consistently beats s3proxy by ~2× on the selective-read test at 50k rows and above. This is the one workload pattern where the azure extension's internal range-request batching is genuinely better than httpfs-through-s3proxy.</p>
+<h3 id="_5-direct-az-wins-most-clearly-on-selective-reads-and-may-also-win-very-large-single-file-writes" tabindex="-1">5. Direct <code>az://</code> wins most clearly on selective reads, and may also win very large single-file writes <a class="header-anchor" href="#_5-direct-az-wins-most-clearly-on-selective-reads-and-may-also-win-very-large-single-file-writes" aria-label="Permalink to &quot;5. Direct `az://` wins most clearly on selective reads, and may also win very large single-file writes&quot;">&ZeroWidthSpace;</a></h3>
+<p>In the home-network runs, direct Azure consistently beats s3proxy on the selective-read test at 50k rows and above. This is the workload pattern where the azure extension's internal range-request batching is genuinely better than httpfs-through-s3proxy.</p>
+<p>In the 2026-04-10 rerun, direct Azure also overtook s3proxy on the <strong>4M single-file write</strong> case. That does not change the DuckLake recommendation below, because DuckLake's pain point is repeated reopens and many-file patterns rather than one giant parquet export, but it is a useful correction to the broader &quot;s3proxy wins all writes&quot; framing.</p>
 <p>This is the <strong>classic OLAP fact-table</strong> pattern: scan a few large parquet files, filter aggressively, return a tiny result. If that's your workload, direct Azure is the right choice. For everything else — and definitely for DuckLake — s3proxy wins.</p>
 <hr>
 <h2 id="final-verdict-for-ducklake-on-azure" tabindex="-1">Final verdict for DuckLake-on-Azure <a class="header-anchor" href="#final-verdict-for-ducklake-on-azure" aria-label="Permalink to &quot;Final verdict for DuckLake-on-Azure&quot;">&ZeroWidthSpace;</a></h2>
@@ -244,17 +247,17 @@ A reproducible benchmark comparing two ways of running DuckDB against Azure Blob
 <tr>
 <td>Frequent small writes (DuckLake ingestion)</td>
 <td><strong>s3proxy</strong></td>
-<td>1.5–3×</td>
+<td>1.5–3× in original benchmark</td>
 </tr>
 <tr>
 <td>Partitioned writes</td>
 <td><strong>s3proxy</strong></td>
-<td>1.6–5×</td>
+<td>1.6–5×, still favored at 4M</td>
 </tr>
 <tr>
 <td>Repeated reads of the same files (DuckLake queries)</td>
 <td><strong>s3proxy</strong></td>
-<td>30–200×</td>
+<td>30–200× in original benchmark</td>
 </tr>
 <tr>
 <td>Cold full scans (small/medium)</td>
@@ -264,12 +267,17 @@ A reproducible benchmark comparing two ways of running DuckDB against Azure Blob
 <tr>
 <td>Cold full scans (large, 80 MB+)</td>
 <td><strong>s3proxy</strong></td>
-<td>5×</td>
+<td>5× in original benchmark; smaller but still positive in rerun</td>
 </tr>
 <tr>
 <td>Selective scans with predicate pushdown</td>
 <td><strong>direct azure</strong></td>
-<td>~2×</td>
+<td>direct Azure wins</td>
+</tr>
+<tr>
+<td>Very large single-file writes</td>
+<td>mixed</td>
+<td>direct Azure won at 4M rerun</td>
 </tr>
 <tr>
 <td>Glob/LIST</td>
@@ -278,7 +286,7 @@ A reproducible benchmark comparing two ways of running DuckDB against Azure Blob
 </tr>
 </tbody>
 </table>
-<p><strong>For DuckLake's actual access pattern — catalog-driven, lots of medium-sized parquet files, frequent re-opens, no globs — s3proxy + <code>azureblob-sdk</code> is the better path.</strong> The one weakness (selective range reads) only matters for a workload pattern DuckLake doesn't generate by default.</p>
+<p><strong>For DuckLake's actual access pattern — catalog-driven, lots of medium-sized parquet files, frequent re-opens, no globs — s3proxy + <code>azureblob-sdk</code> is still the better path from these benchmarks.</strong> The biggest reason is unchanged: warm reopens are dramatically faster on <code>httpfs</code>, and partitioned writes still favor s3proxy even in the later 4M rerun. The main caveats are that direct Azure wins selective range reads, and may become competitive or faster for very large single-file writes.</p>
 <p>The architectural cost is one extra container in your stack but even with that, the performance benefits are large enough to justify it for any non-trivial workload. If you're running DuckDB on Azure Blob Storage, you owe it to yourself to try the s3proxy path or better yet, to <a href="https://github.com/duckdb/duckdb-azure/issues" target="_blank" rel="noreferrer">invest in the upstream fixes that would make it even faster</a>.</p>
 <hr>
 <h2 id="reproduce-it-yourself" tabindex="-1">Reproduce it yourself <a class="header-anchor" href="#reproduce-it-yourself" aria-label="Permalink to &quot;Reproduce it yourself&quot;">&ZeroWidthSpace;</a></h2>
